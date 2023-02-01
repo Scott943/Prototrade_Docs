@@ -31,4 +31,4 @@ exclude_patterns = []
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
-sys.path.insert(0, os.path.abspath('../../../3rd_year_project/prototrade/src/prototrade'))
+sys.path.insert(0, os.path.abspath('../../../3rd_year_project/prototrade/src/'))
