@@ -10,7 +10,7 @@ Welcome to Prototrade's documentation!
    :maxdepth: 2
    :caption: Contents:
    
-   modules
+   modules.prototrade
 
 
 
@@ -21,4 +21,5 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-autofunction:: proto
+To inspect the function check
+.. automodule:: prototrade.exchange
