@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>prototrade package &mdash; Prototrade 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="prototrade.exceptions package" href="prototrade.exceptions.html" />
+    <link rel="prev" title="prototrade" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Prototrade
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">prototrade</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">prototrade package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exceptions.html">prototrade.exceptions package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html">prototrade.exchange package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.file_manager.html">prototrade.file_manager package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html">prototrade.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html">prototrade.position_management package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.test_strategies.html">prototrade.test_strategies package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.ticker_streamer.html">prototrade.ticker_streamer package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-prototrade.virtual_exchange">prototrade.virtual_exchange module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prototrade.virtual_exchange.CustomManager"><code class="docutils literal notranslate"><span class="pre">CustomManager</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prototrade.virtual_exchange.HistoricalAPI"><code class="docutils literal notranslate"><span class="pre">HistoricalAPI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prototrade.virtual_exchange.HistoricalAPIProxy"><code class="docutils literal notranslate"><span class="pre">HistoricalAPIProxy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prototrade.virtual_exchange.VirtualExchange"><code class="docutils literal notranslate"><span class="pre">VirtualExchange</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prototrade.virtual_exchange.handle_error"><code class="docutils literal notranslate"><span class="pre">handle_error()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prototrade.virtual_exchange.run_strategy"><code class="docutils literal notranslate"><span class="pre">run_strategy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-prototrade">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Prototrade</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">prototrade</a></li>
+      <li class="breadcrumb-item active">prototrade package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/prototrade.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="prototrade-package">
+<h1>prototrade package<a class="headerlink" href="#prototrade-package" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="prototrade.exceptions.html">prototrade.exceptions package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.exceptions.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.exceptions.html#module-prototrade.exceptions.error_processor">prototrade.exceptions.error_processor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.error_processor.ErrorProcessor"><code class="docutils literal notranslate"><span class="pre">ErrorProcessor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.error_processor.ErrorProcessor.join_thread"><code class="docutils literal notranslate"><span class="pre">ErrorProcessor.join_thread()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.error_processor.ErrorProcessor.stop_queue_polling"><code class="docutils literal notranslate"><span class="pre">ErrorProcessor.stop_queue_polling()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.exceptions.html#module-prototrade.exceptions.exceptions">prototrade.exceptions.exceptions module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.exceptions.ExchangeNotOpenException"><code class="docutils literal notranslate"><span class="pre">ExchangeNotOpenException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.exceptions.ExtraneousParameterException"><code class="docutils literal notranslate"><span class="pre">ExtraneousParameterException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.exceptions.InvalidOrderSideException"><code class="docutils literal notranslate"><span class="pre">InvalidOrderSideException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.exceptions.InvalidOrderTypeException"><code class="docutils literal notranslate"><span class="pre">InvalidOrderTypeException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.exceptions.InvalidPriceException"><code class="docutils literal notranslate"><span class="pre">InvalidPriceException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.exceptions.InvalidVolumeException"><code class="docutils literal notranslate"><span class="pre">InvalidVolumeException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.exceptions.MissingParameterException"><code class="docutils literal notranslate"><span class="pre">MissingParameterException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.exceptions.SubscriptionException"><code class="docutils literal notranslate"><span class="pre">SubscriptionException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.exceptions.UnavailableSymbolException"><code class="docutils literal notranslate"><span class="pre">UnavailableSymbolException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.exceptions.UnknownOrderIdException"><code class="docutils literal notranslate"><span class="pre">UnknownOrderIdException</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.exceptions.html#module-prototrade.exceptions">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="prototrade.exchange.html">prototrade.exchange package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.exchange.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.exchange.html#module-prototrade.exchange.exchange">prototrade.exchange.exchange module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange"><code class="docutils literal notranslate"><span class="pre">Exchange</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.cancel_order"><code class="docutils literal notranslate"><span class="pre">Exchange.cancel_order()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.create_order"><code class="docutils literal notranslate"><span class="pre">Exchange.create_order()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_orders"><code class="docutils literal notranslate"><span class="pre">Exchange.get_orders()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_pnl"><code class="docutils literal notranslate"><span class="pre">Exchange.get_pnl()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_pnl_over_time"><code class="docutils literal notranslate"><span class="pre">Exchange.get_pnl_over_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_positions"><code class="docutils literal notranslate"><span class="pre">Exchange.get_positions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_positions_over_time"><code class="docutils literal notranslate"><span class="pre">Exchange.get_positions_over_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_strategy_best_ask"><code class="docutils literal notranslate"><span class="pre">Exchange.get_strategy_best_ask()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_strategy_best_bid"><code class="docutils literal notranslate"><span class="pre">Exchange.get_strategy_best_bid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_subscribed_books"><code class="docutils literal notranslate"><span class="pre">Exchange.get_subscribed_books()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_subscriptions"><code class="docutils literal notranslate"><span class="pre">Exchange.get_subscriptions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_transactions"><code class="docutils literal notranslate"><span class="pre">Exchange.get_transactions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.is_running"><code class="docutils literal notranslate"><span class="pre">Exchange.is_running()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.position_manager_decorator"><code class="docutils literal notranslate"><span class="pre">Exchange.position_manager_decorator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.print_heap"><code class="docutils literal notranslate"><span class="pre">Exchange.print_heap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.subscribe"><code class="docutils literal notranslate"><span class="pre">Exchange.subscribe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.unsubscribe"><code class="docutils literal notranslate"><span class="pre">Exchange.unsubscribe()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.exchange.html#module-prototrade.exchange">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="prototrade.file_manager.html">prototrade.file_manager package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.file_manager.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.file_manager.html#module-prototrade.file_manager.file_manager">prototrade.file_manager.file_manager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.file_manager.html#prototrade.file_manager.file_manager.FileManager"><code class="docutils literal notranslate"><span class="pre">FileManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.file_manager.html#prototrade.file_manager.file_manager.FileManager.create_directory_for_run"><code class="docutils literal notranslate"><span class="pre">FileManager.create_directory_for_run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.file_manager.html#prototrade.file_manager.file_manager.FileManager.get_run_index"><code class="docutils literal notranslate"><span class="pre">FileManager.get_run_index()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.file_manager.html#module-prototrade.file_manager">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="prototrade.models.html">prototrade.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.books">prototrade.models.books module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.HalfQuote"><code class="docutils literal notranslate"><span class="pre">HalfQuote</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.HalfQuote.price"><code class="docutils literal notranslate"><span class="pre">HalfQuote.price</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.HalfQuote.side_str"><code class="docutils literal notranslate"><span class="pre">HalfQuote.side_str</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.HalfQuote.volume"><code class="docutils literal notranslate"><span class="pre">HalfQuote.volume</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.Quote"><code class="docutils literal notranslate"><span class="pre">Quote</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.Quote.ask"><code class="docutils literal notranslate"><span class="pre">Quote.ask</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.Quote.bid"><code class="docutils literal notranslate"><span class="pre">Quote.bid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.Quote.timestamp"><code class="docutils literal notranslate"><span class="pre">Quote.timestamp</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.dual_heap">prototrade.models.dual_heap module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.dual_heap.DualHeap"><code class="docutils literal notranslate"><span class="pre">DualHeap</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.error_event">prototrade.models.error_event module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.error_event.ErrorEvent"><code class="docutils literal notranslate"><span class="pre">ErrorEvent</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.order">prototrade.models.order module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order"><code class="docutils literal notranslate"><span class="pre">Order</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.strategy">prototrade.models.strategy module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.strategy.Strategy"><code class="docutils literal notranslate"><span class="pre">Strategy</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.subscription_event">prototrade.models.subscription_event module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.subscription_event.SubscribeType"><code class="docutils literal notranslate"><span class="pre">SubscribeType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.subscription_event.SubscribeType.SUBSCRIBE"><code class="docutils literal notranslate"><span class="pre">SubscribeType.SUBSCRIBE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.subscription_event.SubscribeType.UNSUBSCRIBE"><code class="docutils literal notranslate"><span class="pre">SubscribeType.UNSUBSCRIBE</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.subscription_event.SubscriptionEvent"><code class="docutils literal notranslate"><span class="pre">SubscriptionEvent</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.transaction">prototrade.models.transaction module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.transaction.Transaction"><code class="docutils literal notranslate"><span class="pre">Transaction</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="prototrade.position_management.html">prototrade.position_management package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.position_management.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.position_management.html#module-prototrade.position_management.position_manager">prototrade.position_management.position_manager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager"><code class="docutils literal notranslate"><span class="pre">PositionManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.cancel_order"><code class="docutils literal notranslate"><span class="pre">PositionManager.cancel_order()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.create_order"><code class="docutils literal notranslate"><span class="pre">PositionManager.create_order()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.execute_any_ask_orders"><code class="docutils literal notranslate"><span class="pre">PositionManager.execute_any_ask_orders()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.execute_any_bid_orders"><code class="docutils literal notranslate"><span class="pre">PositionManager.execute_any_bid_orders()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_orders"><code class="docutils literal notranslate"><span class="pre">PositionManager.get_orders()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_pnl"><code class="docutils literal notranslate"><span class="pre">PositionManager.get_pnl()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_pnl_over_time"><code class="docutils literal notranslate"><span class="pre">PositionManager.get_pnl_over_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_positions"><code class="docutils literal notranslate"><span class="pre">PositionManager.get_positions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_positions_over_time"><code class="docutils literal notranslate"><span class="pre">PositionManager.get_positions_over_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_realised_pnl"><code class="docutils literal notranslate"><span class="pre">PositionManager.get_realised_pnl()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_strategy_best_ask"><code class="docutils literal notranslate"><span class="pre">PositionManager.get_strategy_best_ask()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_strategy_best_bid"><code class="docutils literal notranslate"><span class="pre">PositionManager.get_strategy_best_bid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_transactions"><code class="docutils literal notranslate"><span class="pre">PositionManager.get_transactions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.hack_out"><code class="docutils literal notranslate"><span class="pre">PositionManager.hack_out()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.release_locks"><code class="docutils literal notranslate"><span class="pre">PositionManager.release_locks()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.position_manager.handle_error"><code class="docutils literal notranslate"><span class="pre">handle_error()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.position_management.html#module-prototrade.position_management.test_puller">prototrade.position_management.test_puller module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.test_puller.TestPuller"><code class="docutils literal notranslate"><span class="pre">TestPuller</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.position_management.html#prototrade.position_management.test_puller.TestPuller.test_pull"><code class="docutils literal notranslate"><span class="pre">TestPuller.test_pull()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.position_management.html#module-prototrade.position_management">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="prototrade.test_strategies.html">prototrade.test_strategies package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.test_strategies.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.test_strategies.html#module-prototrade.test_strategies.test_strategy_1">prototrade.test_strategies.test_strategy_1 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.test_strategies.html#prototrade.test_strategies.test_strategy_1.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.test_strategies.html#prototrade.test_strategies.test_strategy_1.test_strategy"><code class="docutils literal notranslate"><span class="pre">test_strategy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.test_strategies.html#module-prototrade.test_strategies">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="prototrade.ticker_streamer.html">prototrade.ticker_streamer package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.ticker_streamer.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.ticker_streamer.html#module-prototrade.ticker_streamer.alpaca_streamer">prototrade.ticker_streamer.alpaca_streamer module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.alpaca_streamer.AlpacaDataStreamer"><code class="docutils literal notranslate"><span class="pre">AlpacaDataStreamer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.alpaca_streamer.AlpacaDataStreamer.get_rest_api"><code class="docutils literal notranslate"><span class="pre">AlpacaDataStreamer.get_rest_api()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.alpaca_streamer.AlpacaDataStreamer.is_market_open"><code class="docutils literal notranslate"><span class="pre">AlpacaDataStreamer.is_market_open()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.alpaca_streamer.AlpacaDataStreamer.stop"><code class="docutils literal notranslate"><span class="pre">AlpacaDataStreamer.stop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.alpaca_streamer.AlpacaDataStreamer.subscribe"><code class="docutils literal notranslate"><span class="pre">AlpacaDataStreamer.subscribe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.alpaca_streamer.AlpacaDataStreamer.unsubscribe"><code class="docutils literal notranslate"><span class="pre">AlpacaDataStreamer.unsubscribe()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.ticker_streamer.html#module-prototrade.ticker_streamer.price_updater">prototrade.ticker_streamer.price_updater module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.price_updater.PriceUpdater"><code class="docutils literal notranslate"><span class="pre">PriceUpdater</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.price_updater.PriceUpdater.update_price"><code class="docutils literal notranslate"><span class="pre">PriceUpdater.update_price()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.ticker_streamer.html#module-prototrade.ticker_streamer.subscription_manager">prototrade.ticker_streamer.subscription_manager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.subscription_manager.SubscriptionManager"><code class="docutils literal notranslate"><span class="pre">SubscriptionManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.subscription_manager.SubscriptionManager.print_books_subscribed_to"><code class="docutils literal notranslate"><span class="pre">SubscriptionManager.print_books_subscribed_to()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.subscription_manager.SubscriptionManager.stop_queue_polling"><code class="docutils literal notranslate"><span class="pre">SubscriptionManager.stop_queue_polling()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.subscription_manager.SubscriptionManager.subscribe"><code class="docutils literal notranslate"><span class="pre">SubscriptionManager.subscribe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.subscription_manager.SubscriptionManager.unsubscribe"><code class="docutils literal notranslate"><span class="pre">SubscriptionManager.unsubscribe()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.ticker_streamer.html#module-prototrade.ticker_streamer">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-prototrade.virtual_exchange">
+<span id="prototrade-virtual-exchange-module"></span><h2>prototrade.virtual_exchange module<a class="headerlink" href="#module-prototrade.virtual_exchange" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="prototrade.virtual_exchange.CustomManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.virtual_exchange.</span></span><span class="sig-name descname"><span class="pre">CustomManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serializer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pickle'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.CustomManager" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseManager</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="prototrade.virtual_exchange.HistoricalAPI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.virtual_exchange.</span></span><span class="sig-name descname"><span class="pre">HistoricalAPI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.HistoricalAPI" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="prototrade.virtual_exchange.HistoricalAPIProxy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.virtual_exchange.</span></span><span class="sig-name descname"><span class="pre">HistoricalAPIProxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serializer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manager</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exposed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manager_owned</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.HistoricalAPIProxy" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NamespaceProxy</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="prototrade.virtual_exchange.VirtualExchange">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.virtual_exchange.</span></span><span class="sig-name descname"><span class="pre">VirtualExchange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">streamer_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streamer_username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streamer_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'iex'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_data_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.VirtualExchange" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.virtual_exchange.VirtualExchange.create_components">
+<span class="sig-name descname"><span class="pre">create_components</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.VirtualExchange.create_components" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.virtual_exchange.VirtualExchange.create_shared_rest_api_class">
+<span class="sig-name descname"><span class="pre">create_shared_rest_api_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.VirtualExchange.create_shared_rest_api_class" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.virtual_exchange.VirtualExchange.register_strategy">
+<span class="sig-name descname"><span class="pre">register_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strategy_func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.VirtualExchange.register_strategy" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.virtual_exchange.VirtualExchange.run_strategies">
+<span class="sig-name descname"><span class="pre">run_strategies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.VirtualExchange.run_strategies" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.virtual_exchange.VirtualExchange.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">should_exit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.VirtualExchange.stop" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="prototrade.virtual_exchange.handle_error">
+<span class="sig-prename descclassname"><span class="pre">prototrade.virtual_exchange.</span></span><span class="sig-name descname"><span class="pre">handle_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange_num</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.handle_error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="prototrade.virtual_exchange.run_strategy">
+<span class="sig-prename descclassname"><span class="pre">prototrade.virtual_exchange.</span></span><span class="sig-name descname"><span class="pre">run_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.run_strategy" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-prototrade">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-prototrade" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="prototrade" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="prototrade.exceptions.html" class="btn btn-neutral float-right" title="prototrade.exceptions package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Scott Parker.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>prototrade.position_management package &mdash; Prototrade 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="prototrade.test_strategies package" href="prototrade.test_strategies.html" />
+    <link rel="prev" title="prototrade.models package" href="prototrade.models.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Prototrade
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">prototrade</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="prototrade.html">prototrade package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="prototrade.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exceptions.html">prototrade.exceptions package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html">prototrade.exchange package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.file_manager.html">prototrade.file_manager package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html">prototrade.models package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">prototrade.position_management package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.test_strategies.html">prototrade.test_strategies package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.ticker_streamer.html">prototrade.ticker_streamer package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.html#module-prototrade.virtual_exchange">prototrade.virtual_exchange module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.html#module-prototrade">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Prototrade</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">prototrade</a></li>
+          <li class="breadcrumb-item"><a href="prototrade.html">prototrade package</a></li>
+      <li class="breadcrumb-item active">prototrade.position_management package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/prototrade.position_management.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="prototrade-position-management-package">
+<h1>prototrade.position_management package<a class="headerlink" href="#prototrade-position-management-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-prototrade.position_management.position_manager">
+<span id="prototrade-position-management-position-manager-module"></span><h2>prototrade.position_management.position_manager module<a class="headerlink" href="#module-prototrade.position_management.position_manager" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.position_management.position_manager.</span></span><span class="sig-name descname"><span class="pre">PositionManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order_books_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_books_dict_semaphore</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subscribed_symbols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_data_location</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.cancel_order">
+<span class="sig-name descname"><span class="pre">cancel_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_requested</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.cancel_order" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.create_order">
+<span class="sig-name descname"><span class="pre">create_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_side</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.create_order" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.execute_any_ask_orders">
+<span class="sig-name descname"><span class="pre">execute_any_ask_orders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ask_heap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">live_best_bid_half_quote</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.execute_any_ask_orders" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.execute_any_bid_orders">
+<span class="sig-name descname"><span class="pre">execute_any_bid_orders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bid_heap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">live_best_ask_half_quote</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.execute_any_bid_orders" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.get_orders">
+<span class="sig-name descname"><span class="pre">get_orders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.get_orders" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.get_pnl">
+<span class="sig-name descname"><span class="pre">get_pnl</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.get_pnl" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.get_pnl_over_time">
+<span class="sig-name descname"><span class="pre">get_pnl_over_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.get_pnl_over_time" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.get_positions">
+<span class="sig-name descname"><span class="pre">get_positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.get_positions" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.get_positions_over_time">
+<span class="sig-name descname"><span class="pre">get_positions_over_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.get_positions_over_time" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.get_realised_pnl">
+<span class="sig-name descname"><span class="pre">get_realised_pnl</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.get_realised_pnl" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.get_strategy_best_ask">
+<span class="sig-name descname"><span class="pre">get_strategy_best_ask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.get_strategy_best_ask" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.get_strategy_best_bid">
+<span class="sig-name descname"><span class="pre">get_strategy_best_bid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.get_strategy_best_bid" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.get_transactions">
+<span class="sig-name descname"><span class="pre">get_transactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.get_transactions" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.hack_out">
+<span class="sig-name descname"><span class="pre">hack_out</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.hack_out" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.PositionManager.release_locks">
+<span class="sig-name descname"><span class="pre">release_locks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.PositionManager.release_locks" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="prototrade.position_management.position_manager.handle_error">
+<span class="sig-prename descclassname"><span class="pre">prototrade.position_management.position_manager.</span></span><span class="sig-name descname"><span class="pre">handle_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange_num</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.position_manager.handle_error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-prototrade.position_management.test_puller">
+<span id="prototrade-position-management-test-puller-module"></span><h2>prototrade.position_management.test_puller module<a class="headerlink" href="#module-prototrade.position_management.test_puller" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="prototrade.position_management.test_puller.TestPuller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.position_management.test_puller.</span></span><span class="sig-name descname"><span class="pre">TestPuller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order_books_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_books_dict_semaphore</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_symbols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.test_puller.TestPuller" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="prototrade.position_management.test_puller.TestPuller.test_pull">
+<span class="sig-name descname"><span class="pre">test_pull</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.position_management.test_puller.TestPuller.test_pull" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-prototrade.position_management">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-prototrade.position_management" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="prototrade.models.html" class="btn btn-neutral float-left" title="prototrade.models package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="prototrade.test_strategies.html" class="btn btn-neutral float-right" title="prototrade.test_strategies package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Scott Parker.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
