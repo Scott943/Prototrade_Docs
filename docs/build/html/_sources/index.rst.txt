@@ -21,4 +21,4 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-To get started, inspect the :doc:`prototrade.exchange` class for the functions available.
+To get started, inspect the :doc:`prototrade.exchange` class for the functions available. Test
