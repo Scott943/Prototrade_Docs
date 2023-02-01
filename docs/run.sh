@@ -1,6 +1,6 @@
 #!/bin/bash
 for f in source/*.rst; do
-   if [ f != "source/index.rst" ] && [ f != "source/modules.rst" ] 
+   if [ $f != "source/index.rst" ] && [ $f != "source/modules.rst" ] 
    then
       echo "File -> $f"
    fi
