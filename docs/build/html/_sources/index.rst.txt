@@ -21,5 +21,4 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-To inspect the function 
-.. automodule:: prototrade.exchange
+To get started, inspect the :ref:`prototrade.exchange` section.
