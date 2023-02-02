@@ -96,7 +96,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="prototrade.models.html#prototrade.models.books.Quote.ask">ask (prototrade.models.books.Quote property)</a>
+      <li><a href="prototrade.models.html#prototrade.models.quotes.Quote.ask">ask (prototrade.models.quotes.Quote property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -104,7 +104,7 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="prototrade.models.html#prototrade.models.books.Quote.bid">bid (prototrade.models.books.Quote property)</a>
+      <li><a href="prototrade.models.html#prototrade.models.quotes.Quote.bid">bid (prototrade.models.quotes.Quote property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -228,7 +228,7 @@
         <li><a href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_strategy_best_bid">(prototrade.position_management.position_manager.PositionManager method)</a>
 </li>
       </ul></li>
-      <li><a href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_subscribed_books">get_subscribed_books() (prototrade.exchange.exchange.Exchange method)</a>
+      <li><a href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_subscribed_quotes">get_subscribed_quotes() (prototrade.exchange.exchange.Exchange method)</a>
 </li>
       <li><a href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_subscriptions">get_subscriptions() (prototrade.exchange.exchange.Exchange method)</a>
 </li>
@@ -246,7 +246,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.hack_out">hack_out() (prototrade.position_management.position_manager.PositionManager method)</a>
 </li>
-      <li><a href="prototrade.models.html#prototrade.models.books.HalfQuote">HalfQuote (class in prototrade.models.books)</a>
+      <li><a href="prototrade.models.html#prototrade.models.quotes.HalfQuote">HalfQuote (class in prototrade.models.quotes)</a>
 </li>
       <li><a href="prototrade.position_management.html#prototrade.position_management.position_manager.handle_error">handle_error() (in module prototrade.position_management.position_manager)</a>
 
@@ -320,13 +320,13 @@
 </li>
         <li><a href="prototrade.models.html#module-prototrade.models">prototrade.models</a>
 </li>
-        <li><a href="prototrade.models.html#module-prototrade.models.books">prototrade.models.books</a>
-</li>
         <li><a href="prototrade.models.html#module-prototrade.models.dual_heap">prototrade.models.dual_heap</a>
 </li>
         <li><a href="prototrade.models.html#module-prototrade.models.error_event">prototrade.models.error_event</a>
 </li>
         <li><a href="prototrade.models.html#module-prototrade.models.order">prototrade.models.order</a>
+</li>
+        <li><a href="prototrade.models.html#module-prototrade.models.quotes">prototrade.models.quotes</a>
 </li>
         <li><a href="prototrade.models.html#module-prototrade.models.strategy">prototrade.models.strategy</a>
 </li>
@@ -373,13 +373,11 @@
 </li>
       <li><a href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager">PositionManager (class in prototrade.position_management.position_manager)</a>
 </li>
-      <li><a href="prototrade.models.html#prototrade.models.books.HalfQuote.price">price (prototrade.models.books.HalfQuote property)</a>
+      <li><a href="prototrade.models.html#prototrade.models.quotes.HalfQuote.price">price (prototrade.models.quotes.HalfQuote property)</a>
 </li>
       <li><a href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.price_updater.PriceUpdater">PriceUpdater (class in prototrade.ticker_streamer.price_updater)</a>
 </li>
       <li><a href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.subscription_manager.SubscriptionManager.print_books_subscribed_to">print_books_subscribed_to() (prototrade.ticker_streamer.subscription_manager.SubscriptionManager method)</a>
-</li>
-      <li><a href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.print_heap">print_heap() (prototrade.exchange.exchange.Exchange method)</a>
 </li>
       <li>
     prototrade
@@ -445,13 +443,6 @@
 </li>
       </ul></li>
       <li>
-    prototrade.models.books
-
-      <ul>
-        <li><a href="prototrade.models.html#module-prototrade.models.books">module</a>
-</li>
-      </ul></li>
-      <li>
     prototrade.models.dual_heap
 
       <ul>
@@ -465,13 +456,20 @@
         <li><a href="prototrade.models.html#module-prototrade.models.error_event">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     prototrade.models.order
 
       <ul>
         <li><a href="prototrade.models.html#module-prototrade.models.order">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    prototrade.models.quotes
+
+      <ul>
+        <li><a href="prototrade.models.html#module-prototrade.models.quotes">module</a>
 </li>
       </ul></li>
       <li>
@@ -571,7 +569,7 @@
 <h2 id="Q">Q</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="prototrade.models.html#prototrade.models.books.Quote">Quote (class in prototrade.models.books)</a>
+      <li><a href="prototrade.models.html#prototrade.models.quotes.Quote">Quote (class in prototrade.models.quotes)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -595,7 +593,7 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="prototrade.models.html#prototrade.models.books.HalfQuote.side_str">side_str (prototrade.models.books.HalfQuote property)</a>
+      <li><a href="prototrade.models.html#prototrade.models.quotes.HalfQuote.side_str">side_str (prototrade.models.quotes.HalfQuote property)</a>
 </li>
       <li><a href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.alpaca_streamer.AlpacaDataStreamer.stop">stop() (prototrade.ticker_streamer.alpaca_streamer.AlpacaDataStreamer method)</a>
 
@@ -645,7 +643,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="prototrade.position_management.html#prototrade.position_management.test_puller.TestPuller">TestPuller (class in prototrade.position_management.test_puller)</a>
 </li>
-      <li><a href="prototrade.models.html#prototrade.models.books.Quote.timestamp">timestamp (prototrade.models.books.Quote property)</a>
+      <li><a href="prototrade.models.html#prototrade.models.quotes.Quote.timestamp">timestamp (prototrade.models.quotes.Quote property)</a>
 </li>
       <li><a href="prototrade.models.html#prototrade.models.transaction.Transaction">Transaction (class in prototrade.models.transaction)</a>
 </li>
@@ -683,7 +681,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="prototrade.models.html#prototrade.models.books.HalfQuote.volume">volume (prototrade.models.books.HalfQuote property)</a>
+      <li><a href="prototrade.models.html#prototrade.models.quotes.HalfQuote.volume">volume (prototrade.models.quotes.HalfQuote property)</a>
 </li>
   </ul></td>
 </tr></table>

@@ -93,51 +93,6 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
-<section id="module-prototrade.models.books">
-<span id="prototrade-models-books-module"></span><h2>prototrade.models.books module<a class="headerlink" href="#module-prototrade.models.books" title="Permalink to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="prototrade.models.books.HalfQuote">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.models.books.</span></span><span class="sig-name descname"><span class="pre">HalfQuote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.models.books.HalfQuote" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py property">
-<dt class="sig sig-object py" id="prototrade.models.books.HalfQuote.price">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">price</span></span><a class="headerlink" href="#prototrade.models.books.HalfQuote.price" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="prototrade.models.books.HalfQuote.side_str">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">side_str</span></span><a class="headerlink" href="#prototrade.models.books.HalfQuote.side_str" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="prototrade.models.books.HalfQuote.volume">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">volume</span></span><a class="headerlink" href="#prototrade.models.books.HalfQuote.volume" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="prototrade.models.books.Quote">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.models.books.</span></span><span class="sig-name descname"><span class="pre">Quote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bid_volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bid_price</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ask_volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ask_price</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.models.books.Quote" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py property">
-<dt class="sig sig-object py" id="prototrade.models.books.Quote.ask">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ask</span></span><a class="headerlink" href="#prototrade.models.books.Quote.ask" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="prototrade.models.books.Quote.bid">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bid</span></span><a class="headerlink" href="#prototrade.models.books.Quote.bid" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="prototrade.models.books.Quote.timestamp">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">timestamp</span></span><a class="headerlink" href="#prototrade.models.books.Quote.timestamp" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-</section>
 <section id="module-prototrade.models.dual_heap">
 <span id="prototrade-models-dual-heap-module"></span><h2>prototrade.models.dual_heap module<a class="headerlink" href="#module-prototrade.models.dual_heap" title="Permalink to this heading"></a></h2>
 <dl class="py class">
@@ -162,6 +117,51 @@
 <dt class="sig sig-object py" id="prototrade.models.order.Order">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.models.order.</span></span><span class="sig-name descname"><span class="pre">Order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_side</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.models.order.Order" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</section>
+<section id="module-prototrade.models.quotes">
+<span id="prototrade-models-quotes-module"></span><h2>prototrade.models.quotes module<a class="headerlink" href="#module-prototrade.models.quotes" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="prototrade.models.quotes.HalfQuote">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.models.quotes.</span></span><span class="sig-name descname"><span class="pre">HalfQuote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.models.quotes.HalfQuote" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="prototrade.models.quotes.HalfQuote.price">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">price</span></span><a class="headerlink" href="#prototrade.models.quotes.HalfQuote.price" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="prototrade.models.quotes.HalfQuote.side_str">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">side_str</span></span><a class="headerlink" href="#prototrade.models.quotes.HalfQuote.side_str" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="prototrade.models.quotes.HalfQuote.volume">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">volume</span></span><a class="headerlink" href="#prototrade.models.quotes.HalfQuote.volume" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="prototrade.models.quotes.Quote">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.models.quotes.</span></span><span class="sig-name descname"><span class="pre">Quote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bid_volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bid_price</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ask_volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ask_price</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.models.quotes.Quote" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="prototrade.models.quotes.Quote.ask">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ask</span></span><a class="headerlink" href="#prototrade.models.quotes.Quote.ask" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="prototrade.models.quotes.Quote.bid">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bid</span></span><a class="headerlink" href="#prototrade.models.quotes.Quote.bid" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="prototrade.models.quotes.Quote.timestamp">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">timestamp</span></span><a class="headerlink" href="#prototrade.models.quotes.Quote.timestamp" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>

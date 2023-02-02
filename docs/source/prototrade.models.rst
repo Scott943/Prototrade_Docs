@@ -4,14 +4,6 @@ prototrade.models package
 Submodules
 ----------
 
-prototrade.models.books module
-------------------------------
-
-.. automodule:: prototrade.models.books
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 prototrade.models.dual\_heap module
 -----------------------------------
 
@@ -32,6 +24,14 @@ prototrade.models.order module
 ------------------------------
 
 .. automodule:: prototrade.models.order
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+prototrade.models.quotes module
+-------------------------------
+
+.. automodule:: prototrade.models.quotes
    :members:
    :undoc-members:
    :show-inheritance:

@@ -140,12 +140,11 @@
 <li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_positions_over_time"><code class="docutils literal notranslate"><span class="pre">Exchange.get_positions_over_time()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_strategy_best_ask"><code class="docutils literal notranslate"><span class="pre">Exchange.get_strategy_best_ask()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_strategy_best_bid"><code class="docutils literal notranslate"><span class="pre">Exchange.get_strategy_best_bid()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_subscribed_books"><code class="docutils literal notranslate"><span class="pre">Exchange.get_subscribed_books()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_subscribed_quotes"><code class="docutils literal notranslate"><span class="pre">Exchange.get_subscribed_quotes()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_subscriptions"><code class="docutils literal notranslate"><span class="pre">Exchange.get_subscriptions()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_transactions"><code class="docutils literal notranslate"><span class="pre">Exchange.get_transactions()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.is_running"><code class="docutils literal notranslate"><span class="pre">Exchange.is_running()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.position_manager_decorator"><code class="docutils literal notranslate"><span class="pre">Exchange.position_manager_decorator()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.print_heap"><code class="docutils literal notranslate"><span class="pre">Exchange.print_heap()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.subscribe"><code class="docutils literal notranslate"><span class="pre">Exchange.subscribe()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.unsubscribe"><code class="docutils literal notranslate"><span class="pre">Exchange.unsubscribe()</span></code></a></li>
 </ul>
@@ -170,21 +169,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="prototrade.models.html">prototrade.models package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.books">prototrade.models.books module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.HalfQuote"><code class="docutils literal notranslate"><span class="pre">HalfQuote</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.HalfQuote.price"><code class="docutils literal notranslate"><span class="pre">HalfQuote.price</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.HalfQuote.side_str"><code class="docutils literal notranslate"><span class="pre">HalfQuote.side_str</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.HalfQuote.volume"><code class="docutils literal notranslate"><span class="pre">HalfQuote.volume</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.Quote"><code class="docutils literal notranslate"><span class="pre">Quote</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.Quote.ask"><code class="docutils literal notranslate"><span class="pre">Quote.ask</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.Quote.bid"><code class="docutils literal notranslate"><span class="pre">Quote.bid</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.books.Quote.timestamp"><code class="docutils literal notranslate"><span class="pre">Quote.timestamp</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.dual_heap">prototrade.models.dual_heap module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.dual_heap.DualHeap"><code class="docutils literal notranslate"><span class="pre">DualHeap</span></code></a></li>
 </ul>
@@ -195,6 +179,21 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.order">prototrade.models.order module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order"><code class="docutils literal notranslate"><span class="pre">Order</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.quotes">prototrade.models.quotes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.quotes.HalfQuote"><code class="docutils literal notranslate"><span class="pre">HalfQuote</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.quotes.HalfQuote.price"><code class="docutils literal notranslate"><span class="pre">HalfQuote.price</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.quotes.HalfQuote.side_str"><code class="docutils literal notranslate"><span class="pre">HalfQuote.side_str</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.quotes.HalfQuote.volume"><code class="docutils literal notranslate"><span class="pre">HalfQuote.volume</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.quotes.Quote"><code class="docutils literal notranslate"><span class="pre">Quote</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.quotes.Quote.ask"><code class="docutils literal notranslate"><span class="pre">Quote.ask</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.quotes.Quote.bid"><code class="docutils literal notranslate"><span class="pre">Quote.bid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.quotes.Quote.timestamp"><code class="docutils literal notranslate"><span class="pre">Quote.timestamp</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.strategy">prototrade.models.strategy module</a><ul>
