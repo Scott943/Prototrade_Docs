@@ -104,7 +104,16 @@ Allows user to place orders, retrieve information on transactions/positions, (un
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.cancel_order">
 <span class="sig-name descname"><span class="pre">cancel_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_requested</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.cancel_order" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Removes the order with order_id from the list of open orders.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>order_id</strong> (<cite>int</cite>) – The id of the order to remove</p></li>
+<li><p><strong>volume_requested</strong> (<cite>int</cite>, optional) – The amount of the order to cancel (allows for partial cancellation). If parameter not specified, the entire order will be cancelled, defaults to None</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.create_order">
@@ -114,18 +123,18 @@ When a ‘fok’ (Fill-Or-Kill) order is submitted, the framework will check whe
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>symbol</strong> (<em>str</em>) – The symbol to place the order for</p></li>
-<li><p><strong>order_side</strong> (<em>str</em>) – The side of the order book to place the order in. Either ‘bid’ or ‘ask’.</p></li>
-<li><p><strong>order_type</strong> (<em>str</em>) – The type of order to submit. One of ‘market’, ‘limit’, ‘fok’. If ‘limit’ or ‘fok’ specified, then the price parameter must also be specified</p></li>
-<li><p><strong>volume</strong> (<em>int</em>) – The volume of the order. Must be &gt; 0</p></li>
-<li><p><strong>price</strong> (<em>float</em><em> | </em><em>int</em><em>, </em><em>optional</em>) – The limit price / Fill-Or-Kill price, defaults to None</p></li>
+<li><p><strong>symbol</strong> (<cite>str</cite>) – The symbol to place the order for</p></li>
+<li><p><strong>order_side</strong> (<cite>str</cite>) – The side of the order book to place the order in. Either ‘bid’ or ‘ask’.</p></li>
+<li><p><strong>order_type</strong> (<cite>str</cite>) – The type of order to submit. One of ‘market’, ‘limit’, ‘fok’. If ‘limit’ or ‘fok’ specified, then the price parameter must also be specified</p></li>
+<li><p><strong>volume</strong> (<cite>int</cite>) – The volume of the order. Must be &gt; 0</p></li>
+<li><p><strong>price</strong> (<cite>float</cite> | <cite>int</cite>, optional) – The limit price / Fill-Or-Kill price, defaults to None</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The ID of the order created</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>int</p>
+<dd class="field-odd"><p><cite>int</cite></p>
 </dd>
 </dl>
 </dd></dl>
@@ -137,7 +146,7 @@ When a ‘fok’ (Fill-Or-Kill) order is submitted, the framework will check whe
 Otherwise, all open orders for the strategy are returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>symbol</strong> (<em>str</em><em>, </em><em>optional</em>) – The symbol to retrieve open orders for, defaults to None</p>
+<dd class="field-odd"><p><strong>symbol</strong> (<cite>str</cite>, optional) – The symbol to retrieve open orders for, defaults to None</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>dictionary of (int -&gt; <a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a>) where the key is the order_id and the value is the corresponding <a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a> object)</p>
@@ -171,7 +180,20 @@ Otherwise, all open orders for the strategy are returned.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_strategy_best_ask">
 <span class="sig-name descname"><span class="pre">get_strategy_best_ask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_strategy_best_ask" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Get the current best ask in the strategy’s open orders for a specified symbol. Simply, this is the lowest price that the strategy is ‘willing to sell’ a particular stock at.
+In the framework implementation, this reads the top of ask heap for the particular symbol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>symbol</strong> (<cite>str</cite>) – symbol</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Quote</span></code> object corresponding to the best ask for the calling strategy</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_strategy_best_bid">
@@ -180,13 +202,13 @@ Otherwise, all open orders for the strategy are returned.</p>
 In the framework implementation, this reads the top of bid heap for the particular symbol.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>symbol</strong> (<em>str</em>) – symbol</p>
+<dd class="field-odd"><p><strong>symbol</strong> (<cite>str</cite>) – symbol</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Quote</p>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Quote</span></code> object corresponding to the best bid for the calling strategy</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p><a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -199,10 +221,10 @@ e.g. to access latest bid price for AAPL, use exchange.get_subscribed_quotes()[�
 e.g. to access latest volume at ask price for AAPL, use exchange.get_subscribed_quotes()[“AAPL”].ask.volume</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>A dictionary of (str -&gt; Quote) where the key is the symbol and the value is the corresponding quote object.</p>
+<dd class="field-odd"><p>A dictionary of (<cite>str</cite> -&gt; <code class="xref py py-class docutils literal notranslate"><span class="pre">Quote</span></code>) where the key is the symbol and the value is the corresponding quote object.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>dict</p>
+<dd class="field-even"><p><cite>dict</cite></p>
 </dd>
 </dl>
 </dd></dl>
@@ -216,7 +238,7 @@ e.g. to access latest volume at ask price for AAPL, use exchange.get_subscribed_
 <dd class="field-odd"><p>set of symbols that the strategy is currently subscribed to</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>set</p>
+<dd class="field-even"><p><cite>set</cite></p>
 </dd>
 </dl>
 </dd></dl>
@@ -237,7 +259,7 @@ operations after their strategy has finished execution.</p>
 <dd class="field-odd"><p>A boolean value representing whether the framework is still running</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>bool</p>
+<dd class="field-even"><p><cite>bool</cite></p>
 </dd>
 </dl>
 </dd></dl>
@@ -254,7 +276,7 @@ operations after their strategy has finished execution.</p>
 Once a symbol is subscribed to, market data for that symbol will be avaiable using the get_subscribed_quotes() member function</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>symbol</strong> (<em>str TETS</em>) – The symbol to subscribe to</p>
+<dd class="field-odd"><p><strong>symbol</strong> (<cite>str</cite>) – The symbol to subscribe to</p>
 </dd>
 </dl>
 </dd></dl>
@@ -265,7 +287,7 @@ Once a symbol is subscribed to, market data for that symbol will be avaiable usi
 <dd><p>Unsubscribes from a symbol. Data for the specified symbol will no longer be subscribed to.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>symbol</strong> (<em>str</em>) – The symbol to unsubscribe from</p>
+<dd class="field-odd"><p><strong>symbol</strong> (<cite>str</cite>) – The symbol to unsubscribe from</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.exceptions.SubscriptionException" title="prototrade.exceptions.exceptions.SubscriptionException"><strong>SubscriptionException</strong></a> – If the strategy is not currently subscribed to the specified symbol, this exception will be thrown</p>
