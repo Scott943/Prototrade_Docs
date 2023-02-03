@@ -152,7 +152,7 @@ Otherwise, all open orders for the strategy are returned.</p>
 <dd class="field-even"><p>The dictionary where the key is the order_id and the value is the corresponding <a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a> object</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><em>dict*(*int</em> -&gt; <a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a>)</p>
+<dd class="field-odd"><p><em>dict</em>(<em>int</em> -&gt; <a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -180,7 +180,7 @@ Otherwise, all open orders for the strategy are returned.</p>
 <dd class="field-odd"><p>A list of (<em>timestamp</em>, <em>int</em>) where each entry indicated the PnL at the specified timestamp</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><em>list*(*tuple*(*timestamp</em>, <em>int</em>))</p>
+<dd class="field-even"><p><em>list</em>(<em>tuple</em>(<em>timestamp</em>, <em>int</em>))</p>
 </dd>
 </dl>
 </dd></dl>
@@ -197,7 +197,7 @@ Otherwise, all open orders for the strategy are returned.</p>
 <dd class="field-even"><p>A dictionary where the key is a symbol and the value is the corresponding number of lots held</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><em>dict*(*str</em>-&gt;*int*)</p>
+<dd class="field-odd"><p><em>dict</em> (<em>str</em> -&gt; <em>int</em>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -214,7 +214,7 @@ Otherwise, all open orders for the strategy are returned.</p>
 <dd class="field-even"><p>a dictionary where the key is a symbol and the value is a list of positions over time</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><em>dict*(*str</em>,*list*(<em>tuple*(*timestamp</em>, <em>int</em>)))</p>
+<dd class="field-odd"><p><em>dict</em>(<em>str</em>,*list*(<em>tuple</em>(<em>timestamp</em>, <em>int</em>)))</p>
 </dd>
 </dl>
 </dd></dl>
@@ -266,7 +266,7 @@ e.g. to access latest volume at ask price for AAPL, use exchange.get_subscribed_
 <dd class="field-odd"><p>A dictionary where the key is a symbol and the value is the corresponding quote object.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><em>dict*(*str</em> -&gt; <a class="reference internal" href="prototrade.models.html#prototrade.models.quotes.Quote" title="prototrade.models.quotes.Quote"><code class="xref py py-class docutils literal notranslate"><span class="pre">Quote</span></code></a>)</p>
+<dd class="field-even"><p><em>dict</em>(<em>str</em> -&gt; <a class="reference internal" href="prototrade.models.html#prototrade.models.quotes.Quote" title="prototrade.models.quotes.Quote"><code class="xref py py-class docutils literal notranslate"><span class="pre">Quote</span></code></a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -297,7 +297,7 @@ e.g. to access latest volume at ask price for AAPL, use exchange.get_subscribed_
 <dd class="field-even"><p>A list of transactions</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><cite>list`(`Transaction&lt;prototrade.models.transaction.Transaction&gt;</cite>)</p>
+<dd class="field-odd"><p><em>list</em>(<cite>Transaction&lt;prototrade.models.transaction.Transaction&gt;</cite>)</p>
 </dd>
 </dl>
 </dd></dl>
