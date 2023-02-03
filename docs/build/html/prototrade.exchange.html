@@ -108,8 +108,8 @@ Allows user to place orders, retrieve information on transactions/positions, (un
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>order_id</strong> (<cite>int</cite>) – The id of the order to remove</p></li>
-<li><p><strong>volume_requested</strong> (<cite>int</cite>, optional) – The amount of the order to cancel (allows for partial cancellation). If parameter not specified, the entire order will be cancelled, defaults to None</p></li>
+<li><p><strong>order_id</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – The id of the order to remove</p></li>
+<li><p><strong>volume_requested</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) – The amount of the order to cancel (allows for partial cancellation). If parameter not specified, the entire order will be cancelled, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
 </ul>
 </dd>
 </dl>
@@ -118,23 +118,23 @@ Allows user to place orders, retrieve information on transactions/positions, (un
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.create_order">
 <span class="sig-name descname"><span class="pre">create_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_side</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.create_order" title="Permalink to this definition"></a></dt>
-<dd><p>Submit an order to the framework. When a ‘market’ or ‘limit’ order is submitted, the framework will repeatedly check whether it can be executed.
-When a ‘fok’ (Fill-Or-Kill) order is submitted, the framework will check whether it can be executed once. If it cannot be executed at the specified price, the order will be cancelled.</p>
+<dd><p>Submit an order to the framework. When a <code class="docutils literal notranslate"><span class="pre">'market'</span></code> or <code class="docutils literal notranslate"><span class="pre">'limit'</span></code> order is submitted, the framework will repeatedly check whether it can be executed.
+When a <code class="docutils literal notranslate"><span class="pre">'fok'</span></code> (Fill-Or-Kill) order is submitted, the framework will check whether it can be executed once. If it cannot be executed at the specified price, the order will be cancelled.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>symbol</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) – The symbol to place the order for</p></li>
-<li><p><strong>order_side</strong> (<cite>str</cite>) – The side of the order book to place the order in. Either ‘bid’ or ‘ask’.</p></li>
-<li><p><strong>order_type</strong> (<cite>str</cite>) – The type of order to submit. One of ‘market’, ‘limit’, ‘fok’. If ‘limit’ or ‘fok’ specified, then the price parameter must also be specified</p></li>
-<li><p><strong>volume</strong> (<cite>int</cite>) – The volume of the order. Must be &gt; 0</p></li>
-<li><p><strong>price</strong> (<cite>float</cite> | <cite>int</cite>, optional) – The limit price / Fill-Or-Kill price, defaults to None</p></li>
+<li><p><strong>order_side</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) – The side of the order book to place the order in. Either <code class="docutils literal notranslate"><span class="pre">'bid'</span></code> or <code class="docutils literal notranslate"><span class="pre">'ask'</span></code>.</p></li>
+<li><p><strong>order_type</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) – The type of order to submit. One of <code class="docutils literal notranslate"><span class="pre">'market'</span></code>, <code class="docutils literal notranslate"><span class="pre">'limit'</span></code>, <code class="docutils literal notranslate"><span class="pre">'fok'</span></code>. If <code class="docutils literal notranslate"><span class="pre">'limit'</span></code> or <code class="docutils literal notranslate"><span class="pre">'fok'</span></code> specified, then the price parameter must also be specified</p></li>
+<li><p><strong>volume</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – The volume of the order. Must be &gt; 0</p></li>
+<li><p><strong>price</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code> | <code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) – The limit price / Fill-Or-Kill price, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The ID of the order created</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><cite>int</cite></p>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -146,13 +146,13 @@ When a ‘fok’ (Fill-Or-Kill) order is submitted, the framework will check whe
 Otherwise, all open orders for the strategy are returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>symbol</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) – The symbol to retrieve open orders for, defaults to None</p>
+<dd class="field-odd"><p><strong>symbol</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) – The symbol to retrieve open orders for, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>dictionary of (<code class="docutils literal notranslate"><span class="pre">int</span></code> -&gt; <a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a>) where the key is the order_id and the value is the corresponding <a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a> object)</p>
+<dd class="field-even"><p>The dictionary where the key is the order_id and the value is the corresponding <a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a> object</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">dict``(``int</span></code> -&gt; <a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -160,12 +160,30 @@ Otherwise, all open orders for the strategy are returned.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_pnl">
 <span class="sig-name descname"><span class="pre">get_pnl</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_pnl" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Retrieves the Profit-And-Loss for the calling strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>PnL</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_pnl_over_time">
 <span class="sig-name descname"><span class="pre">get_pnl_over_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_pnl_over_time" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Retrieves the PnL for a strategy over several time-intervals (since the strategy started)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A list of (<code class="docutils literal notranslate"><span class="pre">timestamp</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span></code>) where each entry indicated the PnL at the specified timestamp</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">list``(``tuple``(``timestamp</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span></code>))</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_positions">
@@ -173,13 +191,13 @@ Otherwise, all open orders for the strategy are returned.</p>
 <dd><p>Retrieve a dictionary of the strategy’s current positions held. Here, a negative value in the dictionary implies a short position is being held.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>symbol_filter</strong> (<cite>int</cite>, optional) – The symbol to retrieve positions data for. If not symbol specified, retrieves positions for all stocks held, defaults to None</p>
+<dd class="field-odd"><p><strong>symbol_filter</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) – The symbol to retrieve positions data for. If not symbol specified, retrieves positions for all stocks held, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>A dictionary where the key is a symbol and the value is the corresponding number of lots held</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">dict``(``str</span></code>-&gt;``int``)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -187,7 +205,19 @@ Otherwise, all open orders for the strategy are returned.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_positions_over_time">
 <span class="sig-name descname"><span class="pre">get_positions_over_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_positions_over_time" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Retrieves the positions dictionary over several time-intervals (since the strategy started)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>symbol</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) – The symbol to return positions over time for. If not specified, returns a dictionary of every symbol, defaults to None</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dictionary where the key is a symbol and the value is a list of positions over time</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">dict``(``str</span></code>,``list``(<code class="docutils literal notranslate"><span class="pre">tuple``(``timestamp</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span></code>)))</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_strategy_best_ask">
@@ -196,10 +226,10 @@ Otherwise, all open orders for the strategy are returned.</p>
 In the framework implementation, this reads the top of ask heap for the particular symbol.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>symbol</strong> (<cite>str</cite>) – symbol</p>
+<dd class="field-odd"><p><strong>symbol</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) – symbol</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Quote</span></code> object corresponding to the best ask for the calling strategy</p>
+<dd class="field-even"><p>A <a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a> object corresponding to the best ask for the calling strategy</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a></p>
@@ -214,10 +244,10 @@ In the framework implementation, this reads the top of ask heap for the particul
 In the framework implementation, this reads the top of bid heap for the particular symbol.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>symbol</strong> (<cite>str</cite>) – symbol</p>
+<dd class="field-odd"><p><strong>symbol</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) – symbol</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Quote</span></code> object corresponding to the best bid for the calling strategy</p>
+<dd class="field-even"><p>A <a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a> object corresponding to the best bid for the calling strategy</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a></p>
@@ -233,10 +263,10 @@ e.g. to access latest bid price for AAPL, use exchange.get_subscribed_quotes()[�
 e.g. to access latest volume at ask price for AAPL, use exchange.get_subscribed_quotes()[“AAPL”].ask.volume</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>A dictionary of (<code class="docutils literal notranslate"><span class="pre">str</span></code> -&gt; <code class="xref py py-class docutils literal notranslate"><span class="pre">Quote</span></code>) where the key is the symbol and the value is the corresponding quote object.</p>
+<dd class="field-odd"><p>A dictionary where the key is a symbol and the value is the corresponding quote object.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">dict</span></code></p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">dict``(``str</span></code> -&gt; <a class="reference internal" href="prototrade.models.html#prototrade.models.quotes.Quote" title="prototrade.models.quotes.Quote"><code class="xref py py-class docutils literal notranslate"><span class="pre">Quote</span></code></a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -258,7 +288,19 @@ e.g. to access latest volume at ask price for AAPL, use exchange.get_subscribed_
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_transactions">
 <span class="sig-name descname"><span class="pre">get_transactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_transactions" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Get a list of all previous transactions made (for a particular symbol)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>symbol_filter</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) – If specified, returns transactions for a particular symbol. Otherwise returns all transactions in chronological order, defaults to None</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of transactions</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>list`(`Transaction&lt;prototrade.models.transaction.Transaction&gt;</cite>)</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.is_running">
