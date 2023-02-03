@@ -15,7 +15,8 @@ help:
 .PHONY: help Makefile
 
 github:
-	@make clean html
+	@make clean
+	@make html
 	@cp -a build/html/. ../docs
 
 # Catch-all target: route all unknown targets to Sphinx using the new
