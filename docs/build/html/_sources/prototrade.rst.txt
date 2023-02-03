@@ -12,11 +12,7 @@ Subpackages
    prototrade.file_manager
    prototrade.models
    prototrade.position_management
-   prototrade.test_strategies
    prototrade.ticker_streamer
-
-Submodules
-----------
 
 prototrade.virtual\_exchange module
 -----------------------------------
