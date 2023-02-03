@@ -1,18 +1,16 @@
-.. Prototrade documentation master file, created by
-   sphinx-quickstart on Tue Jan 31 16:36:00 2023.
+.. prototrade documentation master file, created by
+   sphinx-quickstart on Fri Feb  3 18:56:33 2023.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Prototrade's documentation!
+Welcome to prototrade's documentation!
 ======================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-   
+
    modules
-
-
 
 Indices and tables
 ==================
@@ -20,5 +18,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-To get started, inspect the :doc:`prototrade.exchange` class for the functions available. Test
