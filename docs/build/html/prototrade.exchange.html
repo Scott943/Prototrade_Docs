@@ -140,7 +140,7 @@ Otherwise, all open orders for the strategy are returned.</p>
 <dd class="field-odd"><p><strong>symbol</strong> (<em>str</em><em>, </em><em>optional</em>) – The symbol to retrieve open orders for, defaults to None</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>dictionary of (int -&gt; Order) where the key is the order_id and the value is the corresponding Order object (see <a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">prototrade.models.order.Order</span></code></a>)</p>
+<dd class="field-even"><p>dictionary of (int -&gt; <a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a>) where the key is the order_id and the value is the corresponding <a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order" title="prototrade.models.order.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a> object)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>_type_</p>
@@ -176,7 +176,20 @@ Otherwise, all open orders for the strategy are returned.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_strategy_best_bid">
 <span class="sig-name descname"><span class="pre">get_strategy_best_bid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_strategy_best_bid" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Get the current best bid in the strategy’s open orders for a specified symbol. Simply, this is the highest price that the strategy is ‘willing to pay’ for a particular stock.
+In the framework implementation, this reads the top of bid heap for the particular symbol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>symbol</strong> (<em>str</em>) – symbol</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Quote</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>_type_</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_subscribed_quotes">
