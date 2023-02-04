@@ -1,4 +1,4 @@
-example\_strategies package
+Example Strategies
 ===========================
 This package contains some example strategies to help learn the framework.
 Press the `\[\ source\ \]\ ` button to view the code for each strategy.

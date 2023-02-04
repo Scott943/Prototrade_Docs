@@ -1,4 +1,4 @@
-prototrade package
+Documentation
 ==================
 
 Subpackages
