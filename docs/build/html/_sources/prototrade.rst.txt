@@ -13,7 +13,7 @@ Subpackages
    
 
 prototrade.strategy\_registry module
------------------------------------
+------------------------------------
 
 .. automodule:: prototrade.strategy_registry
    :members:
