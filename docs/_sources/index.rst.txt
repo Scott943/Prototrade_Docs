@@ -18,3 +18,7 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+A parallelised Python framework for the rapid prototyping of autotrading strategies.
+
