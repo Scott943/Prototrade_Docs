@@ -11,6 +11,7 @@ Welcome to prototrade's documentation!
    :caption: Contents:
 
    modules
+   example_strategies
 
 Indices and tables
 ==================
