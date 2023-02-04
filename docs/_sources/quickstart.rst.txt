@@ -5,7 +5,7 @@ Quickstart
 1. Use ``pip install prototrade -U`` to install the latest version of the package
 2. Create a new python file (e.g. ``script.py``) and paste in the `minimal boilerplate strategy <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main>`_ .
 3. Use ``python3 script.py`` to run the boilerplate code. Refer to the Key Points below for an explanation
-4. Look at the :py:mod:`example strategies <example_strategies>` section for more examples of how the framework operates.
+4. Look at the :py:mod:`Example Strategies <example_strategies>` section for more examples of how the framework operates.
 
 
 Creating a Strategy Function
@@ -39,18 +39,17 @@ Registering Strategies for execution
 
 * Ensure the :py:class:`VirtualExchange <prototrade.virtual_exchange.VirtualExchange>` class has been imported
 * In a :code:`main()` function, create an instance of the :py:class:`VirtualExchange <prototrade.virtual_exchange.VirtualExchange>` class
-* Use the member function, :py:meth:`register_strategy <prototrade.virtual_exchange.VirtualExchange.register_strategy>` to register a function/strategy to the framework :py:class:`VirtualExchange <prototrade.virtual_exchange.VirtualExchange>` 
+* Use the member function, :py:meth:`register_strategy <prototrade.virtual_exchange.VirtualExchange.register_strategy>` to register a function/strategy to the framework
 * When all strategies are registered, use the member function, :py:meth:`run_strategies <prototrade.virtual_exchange.VirtualExchange.run_strategies>` to start the simulated execution of the strategies.
 
 
 Common Errors
 -------------
 
-* Ensure that the Python script is starting using format below. Otherwise a :code:`freeze_support` error can occur.
-
+* Ensure that the Python script is starting using format below. Without the first line below, a :code:`freeze_support` error can occur.
 .. code-block:: python
 
    if __name__ == '__main__': 
-      main()
+      main() # where main contains code for initalising the VirtualExchange and registering strategies
    
     

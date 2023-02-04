@@ -221,7 +221,7 @@
 
 <div class="viewcode-block" id="VirtualExchange.register_strategy"><a class="viewcode-back" href="../../prototrade.html#prototrade.virtual_exchange.VirtualExchange.register_strategy">[docs]</a>    <span class="k">def</span> <span class="nf">register_strategy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy_func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a function to be executed. Include any arguments that the strategy function should be provided (any number of arguments is permissible). N.B. When the strategies are started, each strategy function</span>
-<span class="sd">        is always provided with an `Exchange &lt;prototrade.exchange.exchange.Exchange&gt;` object as the first parameter. This enables the strategy to interact with the framework.</span>
+<span class="sd">        is always provided with an :py:class:`Exchange &lt;prototrade.exchange.exchange.Exchange&gt;` object as the first parameter. This enables the strategy to interact with the framework.</span>
 
 <span class="sd">        :param strategy_func: A strategy function to register</span>
 <span class="sd">        :type strategy_func: function</span>
