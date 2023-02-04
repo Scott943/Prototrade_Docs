@@ -75,16 +75,33 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../example_strategies.html#example_strategies.repeated_market_order.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    We register two strategies here (both executing the same function but with different function parameters). </span>
+<span class="sd">    One strategy repeatedly places orders of low volume, whilst the other places orders with a higher volume.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">pt</span> <span class="o">=</span> <span class="n">VirtualExchange</span><span class="p">(</span><span class="s2">&quot;alpaca&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;AKFA6O7FWKEQ30SFPB9H&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;z6Cb3RW4lyp3ykub09tUHjdGF7aNYsGuqXh7WWJs&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;sip&quot;</span><span class="p">)</span>
-    <span class="n">pt</span><span class="o">.</span><span class="n">register_strategy</span><span class="p">(</span><span class="n">test_strategy</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="n">pt</span><span class="o">.</span><span class="n">register_strategy</span><span class="p">(</span><span class="n">test_strategy</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># First variation of the strategy only places small volume orders</span>
+    <span class="n">pt</span><span class="o">.</span><span class="n">register_strategy</span><span class="p">(</span><span class="n">test_strategy</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="c1"># Second variation of the strategy places higher volume orders</span>
     <span class="n">pt</span><span class="o">.</span><span class="n">run_strategies</span><span class="p">()</span></div>
 
-<span class="c1"># Boilerplate strategy that retrieves the price of Apple stock and places a market order every 3 seconds</span>
-<span class="c1"># Example parameters to to specify the arguments for the random.randrange function in the market order</span>
+
 <div class="viewcode-block" id="test_strategy"><a class="viewcode-back" href="../../example_strategies.html#example_strategies.repeated_market_order.test_strategy">[docs]</a><span class="k">def</span> <span class="nf">test_strategy</span><span class="p">(</span><span class="n">exchange</span><span class="p">,</span> <span class="n">lower_volume</span><span class="p">,</span> <span class="n">upper_volume</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Boilerplate strategy that retrieves the price of Apple stock and places a market order every 3 seconds</span>
+<span class="sd">    We defined two arguments to the test_strategy, lower_volume and upper_volume. These illustrate how we can pass</span>
+<span class="sd">    in different parameters to alter the execution of the strategy.</span>
+
+<span class="sd">    :param exchange: The exchange object that the strategy uses to interact with the framework</span>
+<span class="sd">    :type exchange: :py:class:`Exchange &lt;prototrade.exchange.exchange.Exchange&gt;`</span>
+<span class="sd">    :param lower_volume: The lower bound for the order&#39;s random volume </span>
+<span class="sd">    :type lower_volume: int</span>
+<span class="sd">    :param upper_volume: The upper bound for the order&#39;s random volume</span>
+<span class="sd">    :type upper_volume: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Lower volume:</span><span class="si">{</span><span class="n">lower_volume</span><span class="si">}</span><span class="s2"> p2:</span><span class="si">{</span><span class="n">upper_volume</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="n">exchange</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">)</span> <span class="c1"># Subscribe to live data from Apple</span>
