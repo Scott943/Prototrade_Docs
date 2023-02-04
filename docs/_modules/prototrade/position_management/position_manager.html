@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>prototrade.position_management.position_manager &mdash; Prototrade 0.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Prototrade
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">prototrade</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Prototrade</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">prototrade.position_management.position_manager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for prototrade.position_management.position_manager</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Create new thread that pulls from central data and checks if can execute open order</span>
+<span class="c1"># every x seconds</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">heapq</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">from</span> <span class="nn">prototrade.models.dual_heap</span> <span class="kn">import</span> <span class="n">DualHeap</span>
+<span class="kn">from</span> <span class="nn">prototrade.exceptions.exceptions</span> <span class="kn">import</span> <span class="n">InvalidOrderTypeException</span><span class="p">,</span> <span class="n">InvalidOrderSideException</span><span class="p">,</span> <span class="n">UnknownOrderIdException</span><span class="p">,</span> <span class="n">MissingParameterException</span><span class="p">,</span> <span class="n">ExtraneousParameterException</span><span class="p">,</span> <span class="n">UnavailableSymbolException</span><span class="p">,</span> <span class="n">InvalidPriceException</span><span class="p">,</span> <span class="n">InvalidVolumeException</span>
+<span class="kn">from</span> <span class="nn">prototrade.models.order</span> <span class="kn">import</span> <span class="n">Order</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">prototrade.models.transaction</span> <span class="kn">import</span> <span class="n">Transaction</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Lock</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">prototrade.models.error_event</span> <span class="kn">import</span> <span class="n">ErrorEvent</span>
+
+<span class="n">SYMBOL_REQUEST_TIMEOUT</span> <span class="o">=</span> <span class="mi">5</span>
+<div class="viewcode-block" id="PositionManager"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager">[docs]</a><span class="k">class</span> <span class="nc">PositionManager</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_books_dict</span><span class="p">,</span> <span class="n">order_books_dict_semaphore</span><span class="p">,</span> <span class="n">stop_event</span><span class="p">,</span> <span class="n">error_queue</span><span class="p">,</span> <span class="n">exchange_num</span><span class="p">,</span> <span class="n">subscribed_symbols</span><span class="p">,</span> <span class="n">save_data_location</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;L:DSJF:LDSFJL:DSFJ:LSF&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict</span> <span class="o">=</span> <span class="n">order_books_dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span> <span class="o">=</span> <span class="n">order_books_dict_semaphore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span> <span class="o">=</span> <span class="n">stop_event</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_error_queue</span> <span class="o">=</span> <span class="n">error_queue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_exchange_num</span> <span class="o">=</span> <span class="n">exchange_num</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subscribed_symbols</span> <span class="o">=</span> <span class="n">subscribed_symbols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_save_data_location</span> <span class="o">=</span> <span class="n">save_data_location</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders_polling_thread</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span> <span class="c1"># symbol name -&gt; (bid heap, ask heap)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span> <span class="c1"># order_id -&gt; heap object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_largest_order_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="c1">#Initally no orders placed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders_polling_thread</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span> <span class="c1"># have to acquire lock whenever accessing order_dict or open_orders</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+        
+
+<div class="viewcode-block" id="PositionManager.create_order"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.create_order">[docs]</a>    <span class="k">def</span> <span class="nf">create_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># FOC: check if order can be executed immediately (don&#39;t add to open orders)</span>
+        <span class="c1"># Limit: add order with limit price to open orders</span>
+        <span class="c1"># Market: add order with inf bid price / 0 ask price</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders_polling_thread</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create_thread_to_poll_open_orders</span><span class="p">()</span> <span class="c1">#Start thread to poll open orders</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders</span><span class="p">:</span>
+            <span class="c1"># Create dual heap if this is the 1st order</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">=</span> <span class="n">DualHeap</span><span class="p">()</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Creating heap for </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">dual_heap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="n">price</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isreal</span><span class="p">(</span><span class="n">price</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The price parameter given, </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">, must be an integer or float. </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">price</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">volume</span><span class="p">,(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The volume parameter given, </span><span class="si">{</span><span class="n">volume</span><span class="si">}</span><span class="s2">, must be an integer.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">volume</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidVolumeException</span><span class="p">(</span><span class="s2">&quot;Order volume must be greater than zero&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">price</span> <span class="ow">and</span> <span class="n">price</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidPriceException</span><span class="p">(</span><span class="s2">&quot;Order price must be zero or greater&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">order_side</span> <span class="o">==</span> <span class="s2">&quot;bid&quot;</span><span class="p">:</span>
+            <span class="n">heap_to_use</span> <span class="o">=</span> <span class="n">dual_heap</span><span class="o">.</span><span class="n">bid_heap</span>
+        <span class="k">elif</span> <span class="n">order_side</span> <span class="o">==</span> <span class="s2">&quot;ask&quot;</span><span class="p">:</span>
+            <span class="n">heap_to_use</span> <span class="o">=</span> <span class="n">dual_heap</span><span class="o">.</span><span class="n">ask_heap</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="n">InvalidOrderSideException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">order_side</span><span class="si">}</span><span class="s2">&#39; is an invalid order side. Valid order sides: &#39;bid&#39;, &#39;ask&#39;&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">order_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;fok&quot;</span><span class="p">,</span> <span class="s2">&quot;limit&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">price</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="n">MissingParameterException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Must include price as a parameter when inserting a </span><span class="si">{</span><span class="n">order_type</span><span class="si">}</span><span class="s2"> order in create_order&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">order_type</span> <span class="o">==</span> <span class="s2">&quot;market&quot;</span> <span class="ow">and</span> <span class="n">price</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="n">ExtraneousParameterException</span><span class="p">(</span><span class="s2">&quot;Price cannot be used as parameter when a market order type is specified in create_order&quot;</span><span class="p">)</span>
+            
+        <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscribed_symbols</span><span class="p">:</span> <span class="c1"># needs live data for symbol as otherwise cannot simulate execution </span>
+            <span class="k">raise</span> <span class="n">UnavailableSymbolException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Subscribe to symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39; before creating an order for &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">order_type</span> <span class="o">==</span> <span class="s2">&quot;fok&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span> <span class="c1"># fok doesn&#39;t use heap so can release lock</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_fok</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">order_type</span> <span class="o">==</span> <span class="s2">&quot;limit&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_limit_order</span><span class="p">(</span><span class="n">heap_to_use</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">order_type</span> <span class="o">==</span> <span class="s2">&quot;market&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_market_order</span><span class="p">(</span><span class="n">heap_to_use</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="n">InvalidOrderTypeException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">order_type</span><span class="si">}</span><span class="s2">&#39; is an invalid order type. Valid order types: &#39;market&#39;, &#39;limit&#39;, &#39;fok&#39;&quot;</span><span class="p">)</span></div>
+
+        <span class="c1"># Need to add the order to dual heap, then add a entry in the _order_dict to that new object</span>
+        <span class="c1"># As the key for the entry, create a new order_id</span>
+        <span class="c1"># return newly created order_id</span>
+
+    <span class="k">def</span> <span class="nf">_insert_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heap_to_use</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
+        <span class="n">order_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_next_order_id</span><span class="p">()</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="n">Order</span><span class="p">(</span><span class="n">order_id</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span>
+        <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap_to_use</span><span class="p">,</span> <span class="n">order</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_dict</span><span class="p">[</span><span class="n">order_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">order</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Order with order_id </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2"> inserted&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">order_id</span>
+
+    <span class="k">def</span> <span class="nf">_handle_fok</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_symbol_to_arrive</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+
+        <span class="n">quote_for_symbol</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict</span><span class="p">[</span><span class="n">symbol</span><span class="p">])</span> <span class="c1"># get a copy of the current prices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">order_side</span> <span class="o">==</span> <span class="s2">&quot;bid&quot;</span><span class="p">:</span>
+            <span class="n">best_ask_half_quote</span> <span class="o">=</span> <span class="n">quote_for_symbol</span><span class="o">.</span><span class="n">ask</span> <span class="c1">#match strategy bid against real ask</span>
+            <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;=</span> <span class="n">best_ask_half_quote</span><span class="o">.</span><span class="n">price</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_register_new_transaction</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="s2">&quot;fok&quot;</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">best_ask_half_quote</span><span class="o">.</span><span class="n">price</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">best_bid_half_quote</span> <span class="o">=</span> <span class="n">quote_for_symbol</span><span class="o">.</span><span class="n">bid</span> <span class="c1">#match strategy bid against real ask</span>
+            <span class="k">if</span> <span class="n">price</span> <span class="o">&lt;=</span> <span class="n">best_bid_half_quote</span><span class="o">.</span><span class="n">price</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_register_new_transaction</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="s2">&quot;fok&quot;</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">best_bid_half_quote</span><span class="o">.</span><span class="n">price</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+        
+        <span class="k">return</span> <span class="kc">None</span> <span class="c1"># None if FOK order was killed</span>
+
+    <span class="k">def</span> <span class="nf">_handle_limit_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heap_to_use</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_insert_order</span><span class="p">(</span><span class="n">heap_to_use</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_handle_market_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heap_to_use</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">order_side</span> <span class="o">==</span> <span class="s2">&quot;bid&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_insert_order</span><span class="p">(</span><span class="n">heap_to_use</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_insert_order</span><span class="p">(</span><span class="n">heap_to_use</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_wait_for_symbol_to_arrive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscribed_symbols</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="n">UnavailableSymbolException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;In strategy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_exchange_num</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> requesting live data on symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39;, but strategy is not subscribed to &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PM Waiting for </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2"> to come in&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span> <span class="o">&gt;</span> <span class="n">SYMBOL_REQUEST_TIMEOUT</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span>
+                <span class="k">raise</span> <span class="n">UnavailableSymbolException</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Symbol request timeout: strategy number </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_exchange_num</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> cannot find requested symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39; from exchange. Check symbol exists &amp; exchange is open.&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span>
+                <span class="k">raise</span> <span class="n">UnavailableSymbolException</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Interrupt while waiting for symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39; to arrive in strategy number </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_exchange_num</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PositionManager.cancel_order"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.cancel_order">[docs]</a>    <span class="k">def</span> <span class="nf">cancel_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_id</span><span class="p">,</span> <span class="n">volume_requested</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># remove volume from order</span>
+        <span class="c1"># if volume_requested &gt; order_volume -&gt; remove entire order</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">order_id</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The order_id parameter given, </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2">, must be an integer.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">volume_requested</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">volume_requested</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The volume_requested parameter given, </span><span class="si">{</span><span class="n">volume_requested</span><span class="si">}</span><span class="s2">, must be an integer.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">order_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_dict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="n">UnknownOrderIdException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Order ID </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2"> unknown&quot;</span><span class="p">)</span>
+        
+        <span class="n">order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_dict</span><span class="p">[</span><span class="n">order_id</span><span class="p">]</span>
+        <span class="n">dual_heap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders</span><span class="p">[</span><span class="n">order</span><span class="o">.</span><span class="n">symbol</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">order</span><span class="o">.</span><span class="n">order_side</span> <span class="o">==</span> <span class="s2">&quot;bid&quot;</span><span class="p">:</span>
+            <span class="n">heap_to_use</span> <span class="o">=</span> <span class="n">dual_heap</span><span class="o">.</span><span class="n">bid_heap</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">heap_to_use</span> <span class="o">=</span> <span class="n">dual_heap</span><span class="o">.</span><span class="n">ask_heap</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">volume_requested</span> <span class="ow">or</span> <span class="n">volume_requested</span> <span class="o">&gt;=</span> <span class="n">order</span><span class="o">.</span><span class="n">volume</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_remove_from_heap</span><span class="p">(</span><span class="n">heap_to_use</span><span class="p">,</span> <span class="n">order</span><span class="p">)</span> <span class="c1">#Remove from heap</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_dict</span><span class="p">[</span><span class="n">order_id</span><span class="p">]</span> <span class="c1">#Remove from order dict</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2"> deleted&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">order</span><span class="o">.</span><span class="n">volume</span> <span class="o">-=</span> <span class="n">volume_requested</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_remove_from_heap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heap_to_use</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+        <span class="c1"># Remove order from heap and re-heapify</span>
+        <span class="n">heap_to_use</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+        <span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">heap_to_use</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PositionManager.get_orders"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_orders">[docs]</a>    <span class="k">def</span> <span class="nf">get_orders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># dictionary of order_id -&gt; Order Object</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">symbol</span><span class="p">:</span>
+            <span class="c1"># Only return orders for requested symbol</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="n">symbol</span><span class="p">}</span> 
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_order_dict</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ret</span> </div>
+
+    <span class="c1"># Next order ID to assign</span>
+    <span class="k">def</span> <span class="nf">_get_next_order_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_largest_order_id</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_largest_order_id</span>
+
+    <span class="k">def</span> <span class="nf">_get_heap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="n">heap</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_open_orders</span><span class="p">[</span><span class="n">symbol</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">heap</span>
+
+<div class="viewcode-block" id="PositionManager.get_strategy_best_bid"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_strategy_best_bid">[docs]</a>    <span class="k">def</span> <span class="nf">get_strategy_best_bid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span> <span class="c1">#If no orders ever placed, we can just return None</span>
+
+        <span class="n">bid_heap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span><span class="o">.</span><span class="n">bid_heap</span>
+        <span class="k">if</span> <span class="n">bid_heap</span><span class="p">:</span>
+            <span class="n">best_bid</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">bid_heap</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">best_bid</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">best_bid</span></div>
+
+<div class="viewcode-block" id="PositionManager.get_strategy_best_ask"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_strategy_best_ask">[docs]</a>    <span class="k">def</span> <span class="nf">get_strategy_best_ask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span> <span class="c1">#If no orders ever placed, we can just return None</span>
+
+        <span class="n">ask_heap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span><span class="o">.</span><span class="n">ask_heap</span>
+        <span class="k">if</span> <span class="n">ask_heap</span><span class="p">:</span>
+            <span class="n">best_ask</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">ask_heap</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">best_ask</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">best_ask</span></div>
+
+    <span class="k">def</span> <span class="nf">_create_thread_to_poll_open_orders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders_polling_thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span>
+            <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_start_thread</span><span class="p">)</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders_polling_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_start_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_check_for_executable_orders</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="c1"># if exception in thread then release all locks and place error on queue</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span> 
+            <span class="n">handle_error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_error_queue</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exchange_num</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PositionManager.release_locks"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.release_locks">[docs]</a>    <span class="k">def</span> <span class="nf">release_locks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Releasing all PM locks&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">locked</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">locked</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map_lock</span><span class="o">.</span><span class="n">locked</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl_lock</span><span class="o">.</span><span class="n">locked</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl_lock</span><span class="o">.</span><span class="n">release</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history_lock</span><span class="o">.</span><span class="n">locked</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_check_for_executable_orders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting open order polling thread&quot;</span><span class="p">)</span>
+        <span class="n">last_pnl_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict</span><span class="p">:</span> 
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_symbol_to_arrive</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span> 
+            <span class="n">order_books_snapshot</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict</span><span class="p">)</span> <span class="c1"># get a copy of the current prices</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">dual_heap</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders</span><span class="o">.</span><span class="n">items</span><span class="p">():</span> <span class="c1"># look through every symbol&#39;s dual heap </span>
+                <span class="n">symbol_quote</span> <span class="o">=</span> <span class="n">order_books_snapshot</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">execute_any_bid_orders</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">dual_heap</span><span class="o">.</span><span class="n">bid_heap</span><span class="p">,</span> <span class="n">symbol_quote</span><span class="o">.</span><span class="n">ask</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">execute_any_ask_orders</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">dual_heap</span><span class="o">.</span><span class="n">ask_heap</span><span class="p">,</span> <span class="n">symbol_quote</span><span class="o">.</span><span class="n">bid</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_pnl_time</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="n">pnl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pnl</span><span class="p">()</span>
+                <span class="n">positions</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_positions_map</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">pnl</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">positions</span><span class="p">[</span><span class="n">symbol</span><span class="p">]])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+                <span class="n">last_pnl_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+  
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Open order polling thread finished&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PositionManager.get_pnl_over_time"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_pnl_over_time">[docs]</a>    <span class="k">def</span> <span class="nf">get_pnl_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="n">pnl</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">pnl</span></div>
+
+<div class="viewcode-block" id="PositionManager.get_positions_over_time"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_positions_over_time">[docs]</a>    <span class="k">def</span> <span class="nf">get_positions_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">symbol</span><span class="p">:</span>
+            <span class="n">positions</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict</span><span class="p">[</span><span class="n">symbol</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">positions</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">positions</span></div>
+
+    <span class="k">def</span> <span class="nf">_register_new_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+        <span class="n">transaction</span> <span class="o">=</span> <span class="n">Transaction</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">order_side</span> <span class="o">==</span> <span class="s2">&quot;bid&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">+=</span> <span class="n">volume</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">-=</span> <span class="n">volume</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+        <span class="n">transaction_amount</span> <span class="o">=</span> <span class="n">transaction</span><span class="o">.</span><span class="n">price</span> <span class="o">*</span> <span class="n">transaction</span><span class="o">.</span><span class="n">volume</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">transaction</span><span class="o">.</span><span class="n">order_side</span> <span class="o">==</span> <span class="s2">&quot;bid&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl</span> <span class="o">-=</span> <span class="n">transaction_amount</span> <span class="c1"># bid side so lost money and gained assets</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl</span> <span class="o">+=</span> <span class="n">transaction_amount</span> <span class="c1"># ask side so gained money and lost assets</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">transaction</span>
+
+<div class="viewcode-block" id="PositionManager.execute_any_bid_orders"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.execute_any_bid_orders">[docs]</a>    <span class="k">def</span> <span class="nf">execute_any_bid_orders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">bid_heap</span><span class="p">,</span> <span class="n">live_best_ask_half_quote</span><span class="p">):</span>
+        <span class="k">while</span> <span class="n">bid_heap</span> <span class="ow">and</span> <span class="n">bid_heap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">price</span> <span class="o">&gt;=</span> <span class="n">live_best_ask_half_quote</span><span class="o">.</span><span class="n">price</span><span class="p">:</span>
+            <span class="n">executed</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">bid_heap</span><span class="p">)</span>
+
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;EXECUTED bid order at price </span><span class="si">{</span><span class="n">live_best_ask_half_quote</span><span class="o">.</span><span class="n">price</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">executed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_register_new_transaction</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">executed</span><span class="o">.</span><span class="n">order_side</span><span class="p">,</span> <span class="n">executed</span><span class="o">.</span><span class="n">order_type</span><span class="p">,</span> <span class="n">executed</span><span class="o">.</span><span class="n">volume</span><span class="p">,</span> <span class="n">live_best_ask_half_quote</span><span class="o">.</span><span class="n">price</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_dict</span><span class="p">[</span><span class="n">executed</span><span class="o">.</span><span class="n">order_id</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="PositionManager.execute_any_ask_orders"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.execute_any_ask_orders">[docs]</a>    <span class="k">def</span> <span class="nf">execute_any_ask_orders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">ask_heap</span><span class="p">,</span> <span class="n">live_best_bid_half_quote</span><span class="p">):</span>
+        <span class="k">while</span> <span class="n">ask_heap</span> <span class="ow">and</span> <span class="n">ask_heap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">price</span> <span class="o">&lt;=</span> <span class="n">live_best_bid_half_quote</span><span class="o">.</span><span class="n">price</span><span class="p">:</span>
+            <span class="n">executed</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">ask_heap</span><span class="p">)</span>
+
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;EXECUTED ask order at price </span><span class="si">{</span><span class="n">live_best_bid_half_quote</span><span class="o">.</span><span class="n">price</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">executed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">_register_new_transaction</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">executed</span><span class="o">.</span><span class="n">order_side</span><span class="p">,</span> <span class="n">executed</span><span class="o">.</span><span class="n">order_type</span><span class="p">,</span> <span class="n">executed</span><span class="o">.</span><span class="n">volume</span><span class="p">,</span> <span class="n">live_best_bid_half_quote</span><span class="o">.</span><span class="n">price</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_dict</span><span class="p">[</span><span class="n">executed</span><span class="o">.</span><span class="n">order_id</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="PositionManager.get_positions"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_positions">[docs]</a>    <span class="k">def</span> <span class="nf">get_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol_filter</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">symbol_filter</span><span class="p">:</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map</span><span class="p">[</span><span class="n">symbol_filter</span><span class="p">]</span> <span class="c1"># int of positions</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_positions_map</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">pos</span></div>
+
+<div class="viewcode-block" id="PositionManager.get_transactions"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol_filter</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">symbol_filter</span><span class="p">:</span>
+            <span class="n">trans</span> <span class="o">=</span>  <span class="n">deepcopy</span><span class="p">([</span><span class="n">trans</span> <span class="k">for</span> <span class="n">trans</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history</span> <span class="k">if</span> <span class="n">trans</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="n">symbol_filter</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">trans</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">trans</span></div>
+
+<div class="viewcode-block" id="PositionManager.get_realised_pnl"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_realised_pnl">[docs]</a>    <span class="k">def</span> <span class="nf">get_realised_pnl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">val</span></div>
+
+<div class="viewcode-block" id="PositionManager.get_pnl"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_pnl">[docs]</a>    <span class="k">def</span> <span class="nf">get_pnl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># for each transaction: price * -volume if bid (lost money gained assets). price * volume if ask (gained money lost assets)</span>
+        <span class="c1"># for each current position: if position_vol &gt; 0: best_ask * position_vol, if position_vol &lt; 0: best_bid * position_vol</span>
+        
+        <span class="n">pnl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl</span> <span class="c1"># pnl acquired by the transaction history</span>
+        <span class="c1"># atomic so doesn&#39;t need a lock</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_symbol_to_arrive</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+        <span class="n">order_books_snapshot</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict</span><span class="p">)</span> <span class="c1"># get a copy of the current prices</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+        <span class="c1"># add all unrealised pnl from current positions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">amount</span> <span class="ow">in</span> <span class="n">positions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">pnl</span> <span class="o">+=</span> <span class="n">order_books_snapshot</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span><span class="o">.</span><span class="n">bid</span><span class="o">.</span><span class="n">price</span> <span class="o">*</span> <span class="n">amount</span> <span class="c1"># the money obtained if all shares were sold at best bid price</span>
+            <span class="k">elif</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">pnl</span> <span class="o">+=</span> <span class="n">order_books_snapshot</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span><span class="o">.</span><span class="n">ask</span><span class="o">.</span><span class="n">price</span> <span class="o">*</span> <span class="n">amount</span> <span class="c1"># the money spent to obtain all shares back at best ask price</span>
+
+        <span class="k">return</span> <span class="n">pnl</span></div>
+
+<div class="viewcode-block" id="PositionManager.hack_out"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.hack_out">[docs]</a>    <span class="k">def</span> <span class="nf">hack_out</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">order_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_dict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cancel_order</span><span class="p">(</span><span class="n">order_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div></div>
+    
+<span class="c1"># Thread that pseudo-executes orders must give a transaction price of the corresponding bid/ask price, not the limit price </span>
+<span class="c1"># MATCHING ORDERS AGAINST OWN ORDERS?</span>
+
+<div class="viewcode-block" id="handle_error"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.handle_error">[docs]</a><span class="k">def</span> <span class="nf">handle_error</span><span class="p">(</span><span class="n">error_queue</span><span class="p">,</span> <span class="n">exchange_num</span><span class="p">):</span>
+    <span class="n">exception_info</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span> <span class="c1"># Get a string with full original stack trace</span>
+    <span class="n">error_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">ErrorEvent</span><span class="p">(</span><span class="n">exchange_num</span><span class="p">,</span> <span class="n">exception_info</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Process PM </span><span class="si">{</span><span class="n">exchange_num</span><span class="si">}</span><span class="s2"> EXCEPTION&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Scott Parker.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

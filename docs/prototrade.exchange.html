@@ -93,13 +93,13 @@
 <span id="prototrade-exchange-exchange-module"></span><h2>prototrade.exchange.exchange module<a class="headerlink" href="#module-prototrade.exchange.exchange" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.exchange.exchange.</span></span><span class="sig-name descname"><span class="pre">Exchange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order_books_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_books_dict_semaphore</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subscription_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shared_rest_api</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_data_location</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.exchange.exchange.</span></span><span class="sig-name descname"><span class="pre">Exchange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order_books_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_books_dict_semaphore</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subscription_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shared_rest_api</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_data_location</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>To interact with the framework, the user calls functions in the Exchange object.
 Allows user to place orders, retrieve information on transactions/positions, (un)subscribe to stock data, and retrieve the latest prices for subscribed stocks.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.cancel_order">
-<span class="sig-name descname"><span class="pre">cancel_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_requested</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.cancel_order" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">cancel_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_requested</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.cancel_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.cancel_order" title="Permalink to this definition"></a></dt>
 <dd><p>Removes the order with order_id from the list of open orders.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -113,7 +113,7 @@ Allows user to place orders, retrieve information on transactions/positions, (un
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.create_order">
-<span class="sig-name descname"><span class="pre">create_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_side</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.create_order" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_side</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.create_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.create_order" title="Permalink to this definition"></a></dt>
 <dd><p>Submit an order to the framework. When a <em>‘market’</em> or <em>‘limit’</em> order is submitted, the framework will repeatedly check whether it can be executed.
 When a <em>‘fok’</em> (Fill-Or-Kill) order is submitted, the framework will check whether it can be executed once. If it cannot be executed at the specified price, the order will be cancelled.</p>
 <dl class="field-list simple">
@@ -137,7 +137,7 @@ When a <em>‘fok’</em> (Fill-Or-Kill) order is submitted, the framework will 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_orders">
-<span class="sig-name descname"><span class="pre">get_orders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_orders" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_orders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.get_orders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_orders" title="Permalink to this definition"></a></dt>
 <dd><p>Retrive the open orders for a strategy. If the symbol argument is specified, then only retrieves orders for that particular symbol.
 Otherwise, all open orders for the strategy are returned.</p>
 <dl class="field-list simple">
@@ -155,7 +155,7 @@ Otherwise, all open orders for the strategy are returned.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_pnl">
-<span class="sig-name descname"><span class="pre">get_pnl</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_pnl" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_pnl</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.get_pnl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_pnl" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves the Profit-And-Loss for the calling strategy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -169,7 +169,7 @@ Otherwise, all open orders for the strategy are returned.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_pnl_over_time">
-<span class="sig-name descname"><span class="pre">get_pnl_over_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_pnl_over_time" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_pnl_over_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.get_pnl_over_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_pnl_over_time" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves the PnL for a strategy over several time-intervals (since the strategy started)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -183,7 +183,7 @@ Otherwise, all open orders for the strategy are returned.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_positions">
-<span class="sig-name descname"><span class="pre">get_positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_positions" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.get_positions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_positions" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieve a dictionary of the strategy’s current positions held. Here, a negative value in the dictionary implies a short position is being held.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -200,7 +200,7 @@ Otherwise, all open orders for the strategy are returned.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_positions_over_time">
-<span class="sig-name descname"><span class="pre">get_positions_over_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_positions_over_time" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_positions_over_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.get_positions_over_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_positions_over_time" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves the positions dictionary over several time-intervals (since the strategy started)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -217,7 +217,7 @@ Otherwise, all open orders for the strategy are returned.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_strategy_best_ask">
-<span class="sig-name descname"><span class="pre">get_strategy_best_ask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_strategy_best_ask" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_strategy_best_ask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.get_strategy_best_ask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_strategy_best_ask" title="Permalink to this definition"></a></dt>
 <dd><p>Get the current best ask in the strategy’s open orders for a specified symbol. Simply, this is the lowest price that the strategy is ‘willing to sell’ a particular stock at.
 In the framework implementation, this reads the top of ask heap for the particular symbol.</p>
 <dl class="field-list simple">
@@ -235,7 +235,7 @@ In the framework implementation, this reads the top of ask heap for the particul
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_strategy_best_bid">
-<span class="sig-name descname"><span class="pre">get_strategy_best_bid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_strategy_best_bid" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_strategy_best_bid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.get_strategy_best_bid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_strategy_best_bid" title="Permalink to this definition"></a></dt>
 <dd><p>Get the current best bid in the strategy’s open orders for a specified symbol. Simply, this is the highest price that the strategy is ‘willing to pay’ for a particular stock.
 In the framework implementation, this reads the top of bid heap for the particular symbol.</p>
 <dl class="field-list simple">
@@ -253,7 +253,7 @@ In the framework implementation, this reads the top of bid heap for the particul
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_subscribed_quotes">
-<span class="sig-name descname"><span class="pre">get_subscribed_quotes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_subscribed_quotes" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_subscribed_quotes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.get_subscribed_quotes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_subscribed_quotes" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves the latest quotes for the symbols that are subscribed to.
 e.g. to access latest bid price for AAPL, use exchange.get_subscribed_quotes()[“AAPL”].bid.price
 e.g. to access latest volume at ask price for AAPL, use exchange.get_subscribed_quotes()[“AAPL”].ask.volume</p>
@@ -269,7 +269,7 @@ e.g. to access latest volume at ask price for AAPL, use exchange.get_subscribed_
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_subscriptions">
-<span class="sig-name descname"><span class="pre">get_subscriptions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_subscriptions" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_subscriptions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.get_subscriptions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_subscriptions" title="Permalink to this definition"></a></dt>
 <dd><p>Returns a set symbols that the strategy is currently subscribed to</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -283,7 +283,7 @@ e.g. to access latest volume at ask price for AAPL, use exchange.get_subscribed_
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_transactions">
-<span class="sig-name descname"><span class="pre">get_transactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_transactions" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_transactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.get_transactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_transactions" title="Permalink to this definition"></a></dt>
 <dd><p>Get a list of all previous transactions made (for a particular symbol)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -314,7 +314,7 @@ of PLTR stock over the given date with a 1 minute granularity.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.is_running">
-<span class="sig-name descname"><span class="pre">is_running</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.is_running" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">is_running</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.is_running"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.is_running" title="Permalink to this definition"></a></dt>
 <dd><p>Check whether the framework is still running. If the user exits or any strategy encounters an exception, this will return ‘False’
 This should be used in the main ‘while’ loop condition for the user strategy. This way, the user can perform clearup operations or data analysis 
 operations after their strategy has finished execution.</p>
@@ -330,7 +330,7 @@ operations after their strategy has finished execution.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.subscribe">
-<span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.subscribe" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.subscribe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.subscribe" title="Permalink to this definition"></a></dt>
 <dd><p>Subscribes to the specified symbol.
 Once a symbol is subscribed to, market data for that symbol will be avaiable using the get_subscribed_quotes() member function</p>
 <dl class="field-list simple">
@@ -342,7 +342,7 @@ Once a symbol is subscribed to, market data for that symbol will be avaiable usi
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.unsubscribe">
-<span class="sig-name descname"><span class="pre">unsubscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.unsubscribe" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">unsubscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.unsubscribe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.unsubscribe" title="Permalink to this definition"></a></dt>
 <dd><p>Unsubscribes from a symbol. Data for the specified symbol will no longer be subscribed to.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
