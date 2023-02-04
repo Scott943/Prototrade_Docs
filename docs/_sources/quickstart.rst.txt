@@ -1,10 +1,11 @@
 
 Quickstart
 ======================================
+*Only supports Python 3.8 and later*
 
-1. Use ``pip install prototrade -U`` to install the latest version of the package
+1. Use ``pip install prototrade -U`` to install the latest version of the package. 
 2. Create a new python file (e.g. ``script.py``) and paste in the `minimal boilerplate strategy <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main>`_ .
-3. Use ``python3 script.py`` to run the boilerplate code.
+3. Use ``python3 script.py`` to run the boilerplate code. 
 4. Look at the tutorial below and the :py:mod:`Example Strategies <example_strategies>` section for more examples of how the framework operates.
 
 
@@ -34,11 +35,11 @@ Placing Orders
 * Orders can be cancelled with the :py:meth:`cancel_order <prototrade.exchange.exchange.Exchange.cancel_order>` member function.
 * See the :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` for more functions.
 
-Registering Strategies for execution
+Registering Strategies for Execution
 ------------------------------------
 
 * Ensure the :py:class:`VirtualExchange <prototrade.virtual_exchange.VirtualExchange>` class has been imported
-* In a :code:`main()` function, create an instance of the :py:class:`VirtualExchange <prototrade.virtual_exchange.VirtualExchange>` class
+* In the script's :code:`main()` function, create an instance of the :py:class:`VirtualExchange <prototrade.virtual_exchange.VirtualExchange>` class
 * Use the member function, :py:meth:`register_strategy <prototrade.virtual_exchange.VirtualExchange.register_strategy>` to register a function/strategy to the framework
 * When all strategies are registered, use the member function, :py:meth:`run_strategies <prototrade.virtual_exchange.VirtualExchange.run_strategies>` to start the simulated execution of the strategies.
 
@@ -51,6 +52,6 @@ Common Errors
 .. code-block:: python
 
    if __name__ == '__main__': 
-      main() # where main contains code for initalising the VirtualExchange and registering strategies
+      main() # main should contain the code for initalising the VirtualExchange and registering strategies
    
     

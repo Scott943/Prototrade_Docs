@@ -46,7 +46,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#creating-a-strategy-function">Creating a Strategy Function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#retrieving-stock-data">Retrieving Stock data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#placing-orders">Placing Orders</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#registering-strategies-for-execution">Registering Strategies for execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#registering-strategies-for-execution">Registering Strategies for Execution</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#common-errors">Common Errors</a></li>
 </ul>
 </li>
@@ -78,8 +78,9 @@
              
   <section id="quickstart">
 <h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading"></a></h1>
+<p><em>Only supports Python 3.8 and later</em></p>
 <ol class="arabic simple">
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">prototrade</span> <span class="pre">-U</span></code> to install the latest version of the package</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">prototrade</span> <span class="pre">-U</span></code> to install the latest version of the package.</p></li>
 <li><p>Create a new python file (e.g. <code class="docutils literal notranslate"><span class="pre">script.py</span></code>) and paste in the <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main">minimal boilerplate strategy</a> .</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">script.py</span></code> to run the boilerplate code.</p></li>
 <li><p>Look at the tutorial below and the <a class="reference internal" href="example_strategies.html#module-example_strategies" title="example_strategies"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Example</span> <span class="pre">Strategies</span></code></a> section for more examples of how the framework operates.</p></li>
@@ -113,10 +114,10 @@ for an example.</p>
 </ul>
 </section>
 <section id="registering-strategies-for-execution">
-<h2>Registering Strategies for execution<a class="headerlink" href="#registering-strategies-for-execution" title="Permalink to this heading"></a></h2>
+<h2>Registering Strategies for Execution<a class="headerlink" href="#registering-strategies-for-execution" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Ensure the <a class="reference internal" href="prototrade.html#prototrade.virtual_exchange.VirtualExchange" title="prototrade.virtual_exchange.VirtualExchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">VirtualExchange</span></code></a> class has been imported</p></li>
-<li><p>In a <code class="code docutils literal notranslate"><span class="pre">main()</span></code> function, create an instance of the <a class="reference internal" href="prototrade.html#prototrade.virtual_exchange.VirtualExchange" title="prototrade.virtual_exchange.VirtualExchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">VirtualExchange</span></code></a> class</p></li>
+<li><p>In the script’s <code class="code docutils literal notranslate"><span class="pre">main()</span></code> function, create an instance of the <a class="reference internal" href="prototrade.html#prototrade.virtual_exchange.VirtualExchange" title="prototrade.virtual_exchange.VirtualExchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">VirtualExchange</span></code></a> class</p></li>
 <li><p>Use the member function, <a class="reference internal" href="prototrade.html#prototrade.virtual_exchange.VirtualExchange.register_strategy" title="prototrade.virtual_exchange.VirtualExchange.register_strategy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_strategy</span></code></a> to register a function/strategy to the framework</p></li>
 <li><p>When all strategies are registered, use the member function, <a class="reference internal" href="prototrade.html#prototrade.virtual_exchange.VirtualExchange.run_strategies" title="prototrade.virtual_exchange.VirtualExchange.run_strategies"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run_strategies</span></code></a> to start the simulated execution of the strategies.</p></li>
 </ul>
@@ -127,7 +128,7 @@ for an example.</p>
 <li><p>Ensure that the Python script is starting using format below. Without the first line below, a <code class="code docutils literal notranslate"><span class="pre">freeze_support</span></code> error can occur.</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-   <span class="n">main</span><span class="p">()</span> <span class="c1"># where main contains code for initalising the VirtualExchange and registering strategies</span>
+   <span class="n">main</span><span class="p">()</span> <span class="c1"># main should contain the code for initalising the VirtualExchange and registering strategies</span>
 </pre></div>
 </div>
 </section>
