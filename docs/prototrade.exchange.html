@@ -20,8 +20,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="prototrade.models package" href="prototrade.models.html" />
-    <link rel="prev" title="prototrade.exceptions package" href="prototrade.exceptions.html" /> 
+    <link rel="next" title="prototrade.exceptions package" href="prototrade.exceptions.html" />
+    <link rel="prev" title="Documentation" href="prototrade.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,13 +43,13 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="prototrade.html">Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="prototrade.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="prototrade.exceptions.html">prototrade.exceptions package</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">prototrade.exchange package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-prototrade.exchange.exchange">prototrade.exchange.exchange module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-prototrade.exchange">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.exceptions.html">prototrade.exceptions package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="prototrade.models.html">prototrade.models package</a></li>
 </ul>
 </li>
@@ -98,7 +98,8 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.exchange.exchange.</span></span><span class="sig-name descname"><span class="pre">Exchange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order_books_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_books_dict_semaphore</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subscription_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shared_rest_api</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_data_location</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>To interact with the framework, the user calls functions in the Exchange object.
-Allows user to place orders, retrieve information on transactions/positions, (un)subscribe to stock data, and retrieve the latest prices for subscribed stocks.</p>
+Allows user to place orders, retrieve information on transactions/positions, (un)subscribe to stock data, and retrieve the latest prices for subscribed stocks.
+This object is automatically initalised by the <a class="reference internal" href="prototrade.html#prototrade.virtual_exchange.VirtualExchange" title="prototrade.virtual_exchange.VirtualExchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">VirtualExchange</span></code></a> object for every strategy function that has been registered.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.cancel_order">
 <span class="sig-name descname"><span class="pre">cancel_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_requested</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.cancel_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.cancel_order" title="Permalink to this definition"></a></dt>
@@ -368,8 +369,8 @@ Once a symbol is subscribed to, market data for that symbol will be avaiable usi
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="prototrade.exceptions.html" class="btn btn-neutral float-left" title="prototrade.exceptions package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="prototrade.models.html" class="btn btn-neutral float-right" title="prototrade.models package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="prototrade.html" class="btn btn-neutral float-left" title="Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="prototrade.exceptions.html" class="btn btn-neutral float-right" title="prototrade.exceptions package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

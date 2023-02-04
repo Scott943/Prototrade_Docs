@@ -7,9 +7,10 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   prototrade.exceptions
    prototrade.exchange
+   prototrade.exceptions
    prototrade.models
+   
 
 prototrade.virtual\_exchange module
 -----------------------------------

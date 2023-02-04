@@ -82,11 +82,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    To interact with the framework, the user calls functions in the Exchange object.</span>
 <span class="sd">    Allows user to place orders, retrieve information on transactions/positions, (un)subscribe to stock data, and retrieve the latest prices for subscribed stocks.</span>
+<span class="sd">    This object is automatically initalised by the :py:class:`VirtualExchange &lt;prototrade.virtual_exchange.VirtualExchange&gt;` object for every strategy function that has been registered.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_books_dict</span><span class="p">,</span> <span class="n">order_books_dict_semaphore</span><span class="p">,</span> <span class="n">subscription_queue</span><span class="p">,</span> <span class="n">error_queue</span><span class="p">,</span> <span class="n">exchange_num</span><span class="p">,</span> <span class="n">stop_event</span><span class="p">,</span> <span class="n">shared_rest_api</span><span class="p">,</span> <span class="n">save_data_location</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initalises an exchange object (initialisation performed automatically in the VirutalExchange class)</span>
+<span class="sd">        Initalises an exchange object (initialisation performed automatically in the :py:class:`VirtualExchange &lt;prototrade.virtual_exchange.VirtualExchange&gt;` class)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict</span> <span class="o">=</span> <span class="n">order_books_dict</span>
