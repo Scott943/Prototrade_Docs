@@ -68,13 +68,13 @@
            <div itemprop="articleBody">
              
   <h1>Source code for example_strategies.minimal_boilerplate</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">prototrade.virtual_exchange</span> <span class="kn">import</span> <span class="n">VirtualExchange</span>
+<span></span><span class="kn">from</span> <span class="nn">prototrade.strategy_registry</span> <span class="kn">import</span> <span class="n">StrategyRegistry</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../example_strategies.html#example_strategies.minimal_boilerplate.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Here we register a single strategy that repeatedly places a market order for Apple with a volume of 5.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">pt</span> <span class="o">=</span> <span class="n">VirtualExchange</span><span class="p">(</span><span class="s2">&quot;alpaca&quot;</span><span class="p">,</span>
+    <span class="n">pt</span> <span class="o">=</span> <span class="n">StrategyRegistry</span><span class="p">(</span><span class="s2">&quot;alpaca&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;AKFA6O7FWKEQ30SFPB9H&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;z6Cb3RW4lyp3ykub09tUHjdGF7aNYsGuqXh7WWJs&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;sip&quot;</span><span class="p">)</span>

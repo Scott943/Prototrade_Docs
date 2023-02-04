@@ -12,10 +12,10 @@ Subpackages
    prototrade.models
    
 
-prototrade.virtual\_exchange module
+prototrade.strategy\_registry module
 -----------------------------------
 
-.. automodule:: prototrade.virtual_exchange
+.. automodule:: prototrade.strategy_registry
    :members:
    :undoc-members:
    :show-inheritance:

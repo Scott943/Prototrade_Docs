@@ -14,7 +14,7 @@ Creating a Strategy Function
 
 Below are the key components needed for creating a strategy.
 
-* Import the :py:class:`VirtualExchange <prototrade.virtual_exchange.VirtualExchange>` from :py:mod:`prototrade.virtual_exchange` at the top of your python script.
+* Import the :py:class:`StrategyRegistry <prototrade.strategy_registry.StrategyRegistry>` from :py:mod:`prototrade.strategy_registry` at the top of your python script.
 * Create a strategy function, following the same format as the `boilerplate strategy <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main>`_ . This will take in an :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` object as its first argument. The :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` parameter is how a strategy can retrieve the latest quotes for subscribed stocks and place orders for symbols. 
 * The strategy function can also take as many other arguments as desired.
 * Subscribe to desired symbols (stocks) using the :py:meth:`subscribe <prototrade.exchange.exchange.Exchange.subscribe>` member function of the :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` object. 
@@ -37,10 +37,10 @@ Placing Orders
 Registering Strategies for Execution
 ------------------------------------
 
-* Ensure the :py:class:`VirtualExchange <prototrade.virtual_exchange.VirtualExchange>` class has been imported
-* In the script's :code:`main()` function, create an instance of the :py:class:`VirtualExchange <prototrade.virtual_exchange.VirtualExchange>` class
-* Use the member function, :py:meth:`register_strategy <prototrade.virtual_exchange.VirtualExchange.register_strategy>` to register a function/strategy to the framework
-* When all strategies are registered, use the member function, :py:meth:`run_strategies <prototrade.virtual_exchange.VirtualExchange.run_strategies>` to start the simulated execution of the strategies.
+* Ensure the :py:class:`StrategyRegistry <prototrade.strategy_registry.StrategyRegistry>` class has been imported
+* In the script's :code:`main()` function, create an instance of the :py:class:`StrategyRegistry <prototrade.strategy_registry.StrategyRegistry>` class
+* Use the member function, :py:meth:`register_strategy <prototrade.strategy_registry.StrategyRegistry.register_strategy>` to register a function/strategy to the framework
+* When all strategies are registered, use the member function, :py:meth:`run_strategies <prototrade.strategy_registry.StrategyRegistry.run_strategies>` to start the simulated execution of the strategies.
 
 
 Common Errors
@@ -51,6 +51,6 @@ Common Errors
 .. code-block:: python
 
    if __name__ == '__main__': 
-      main() # main should contain the code for initalising the VirtualExchange and registering strategies
+      main() # main should contain the code for initalising the StrategyRegistry and registering strategies
    
     

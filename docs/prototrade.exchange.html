@@ -53,7 +53,7 @@
 <li class="toctree-l3"><a class="reference internal" href="prototrade.models.html">prototrade.models package</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="prototrade.html#module-prototrade.virtual_exchange">prototrade.virtual_exchange module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.html#prototrade-strategy-registry-module">prototrade.strategy_registry module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="prototrade.html#module-prototrade">Module contents</a></li>
 </ul>
 </li>
@@ -99,7 +99,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>To interact with the framework, the user calls functions in the Exchange object.
 Allows user to place orders, retrieve information on transactions/positions, (un)subscribe to stock data, and retrieve the latest prices for subscribed stocks.
-Within the <a class="reference internal" href="prototrade.html#prototrade.virtual_exchange.VirtualExchange" title="prototrade.virtual_exchange.VirtualExchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">VirtualExchange</span></code></a> object, Exchange objects are created for every strategy function that has been registered.
+Within the <code class="xref py py-class docutils literal notranslate"><span class="pre">VirtualExchange</span></code> object, Exchange objects are created for every strategy function that has been registered.
 Then, each Exchange object is passed as the first parameter to the corresponding registered strategy function.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.cancel_order">
