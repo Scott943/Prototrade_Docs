@@ -96,7 +96,7 @@ Press the <code class="code docutils literal notranslate"><span class="pre">[sou
 <dl class="py function">
 <dt class="sig sig-object py" id="example_strategies.minimal_boilerplate.main">
 <span class="sig-prename descclassname"><span class="pre">example_strategies.minimal_boilerplate.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/example_strategies/minimal_boilerplate.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#example_strategies.minimal_boilerplate.main" title="Permalink to this definition"></a></dt>
-<dd><p>Here we register a single function that places a market order for Apple with a volume of 5.</p>
+<dd><p>Here we register a single strategy that repeatedly places a market order for Apple with a volume of 5.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -126,8 +126,8 @@ One strategy repeatedly places orders of low volume, whilst the other places ord
 <dl class="py function">
 <dt class="sig sig-object py" id="example_strategies.repeated_market_order.test_strategy">
 <span class="sig-prename descclassname"><span class="pre">example_strategies.repeated_market_order.</span></span><span class="sig-name descname"><span class="pre">test_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exchange</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_volume</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/example_strategies/repeated_market_order.html#test_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#example_strategies.repeated_market_order.test_strategy" title="Permalink to this definition"></a></dt>
-<dd><p>Boilerplate strategy that retrieves the price of Apple stock and places a market order every 3 seconds
-We defined two arguments to the test_strategy, lower_volume and upper_volume. These illustrate how we can pass
+<dd><p>Boilerplate strategy that retrieves the price of Apple stock and places a market order every 3 seconds.
+Takes in two arguments, lower_volume and upper_volume. These illustrate how we can pass
 in different parameters to alter the execution of the strategy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
