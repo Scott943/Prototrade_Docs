@@ -25,7 +25,7 @@ Retrieving Stock data
 
 * To (un)subscribe to particular symbols, use the :py:meth:`subscribe <prototrade.exchange.exchange.Exchange.subscribe>` and :py:meth:`unsubscribe <prototrade.exchange.exchange.Exchange.unsubscribe>` functions from the :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` object.
 * Use :py:meth:`get_subscribed_quotes <prototrade.exchange.exchange.Exchange.get_subscribed_quotes>` to get the latest quotes for all the stocks that are subscribed to.
-* To access historical data use the :py:attr:`Historical Property <prototrade.exchange.exchange.Exchange.historical>`.
+* To access historical data use the :py:attr:`Historical <prototrade.exchange.exchange.Exchange.historical>` property in the :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` class.
 
 Placing Orders
 --------------
