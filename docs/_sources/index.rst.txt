@@ -10,7 +10,9 @@ Welcome to prototrade's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   prototrade
+   prototrade.exceptions
+   prototrade.models
+   prototrade.virtual_exchange
    example_strategies
 
 Indices and tables
