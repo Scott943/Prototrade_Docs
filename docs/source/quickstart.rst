@@ -5,7 +5,7 @@ Quickstart
 1. Use ``pip install prototrade -U`` to install the latest version of the package
 2. Create a new python file (e.g. ``script.py``) and paste in the `minimal boilerplate strategy <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main>`_ .
 3. Use ``python3 script.py`` to run the boilerplate code. Refer to the Key Points below for an explanation
-4. Look at the :py:mod:`example strategies <example_strategies>` section for more ideas of how the framework operates.
+4. Look at the :py:mod:`example strategies <example_strategies>` section for more examples of how the framework operates.
 
 
 Creating a Strategy Function
@@ -23,9 +23,9 @@ for an example.
 Retrieving Stock data
 ---------------------
 
-* To (un)subscribe to particular symbols, use the :py:meth:`subscribe <prototrade.exchange.exchange.Exchange.subscribe>` and `unsubscribe <prototrade.exchange.exchange.Exchange.unsubscribe>` functions
+* To (un)subscribe to particular symbols, use the :py:meth:`subscribe <prototrade.exchange.exchange.Exchange.subscribe>` and :py:meth:`unsubscribe <prototrade.exchange.exchange.Exchange.unsubscribe>` functions
 * Use :py:meth:`get_subscribed_quotes <prototrade.exchange.exchange.Exchange.get_subscribed_quotes>` to get the latest quotes for all the stocks that are subscribed to.
-* To access historical data use the :py:attr:`Historical Property <prototrade.exchange.exchange.historical>`.
+* To access historical data use the :py:attr:`Historical Property <prototrade.exchange.exchange.Exchange.historical>`.
 
 Placing Orders
 --------------

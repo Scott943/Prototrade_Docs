@@ -82,7 +82,7 @@
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">prototrade</span> <span class="pre">-U</span></code> to install the latest version of the package</p></li>
 <li><p>Create a new python file (e.g. <code class="docutils literal notranslate"><span class="pre">script.py</span></code>) and paste in the <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main">minimal boilerplate strategy</a> .</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">script.py</span></code> to run the boilerplate code. Refer to the Key Points below for an explanation</p></li>
-<li><p>Look at the <a class="reference internal" href="example_strategies.html#module-example_strategies" title="example_strategies"><code class="xref py py-mod docutils literal notranslate"><span class="pre">example</span> <span class="pre">strategies</span></code></a> section for more ideas of how the framework operates.</p></li>
+<li><p>Look at the <a class="reference internal" href="example_strategies.html#module-example_strategies" title="example_strategies"><code class="xref py py-mod docutils literal notranslate"><span class="pre">example</span> <span class="pre">strategies</span></code></a> section for more examples of how the framework operates.</p></li>
 </ol>
 <section id="creating-a-strategy-function">
 <h2>Creating a Strategy Function<a class="headerlink" href="#creating-a-strategy-function" title="Permalink to this heading"></a></h2>
@@ -99,9 +99,9 @@ for an example.</p>
 <section id="retrieving-stock-data">
 <h2>Retrieving Stock data<a class="headerlink" href="#retrieving-stock-data" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li><p>To (un)subscribe to particular symbols, use the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.subscribe" title="prototrade.exchange.exchange.Exchange.subscribe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">subscribe</span></code></a> and <cite>unsubscribe &lt;prototrade.exchange.exchange.Exchange.unsubscribe&gt;</cite> functions</p></li>
+<li><p>To (un)subscribe to particular symbols, use the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.subscribe" title="prototrade.exchange.exchange.Exchange.subscribe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">subscribe</span></code></a> and <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.unsubscribe" title="prototrade.exchange.exchange.Exchange.unsubscribe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unsubscribe</span></code></a> functions</p></li>
 <li><p>Use <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_subscribed_quotes" title="prototrade.exchange.exchange.Exchange.get_subscribed_quotes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_subscribed_quotes</span></code></a> to get the latest quotes for all the stocks that are subscribed to.</p></li>
-<li><p>To access historical data use the <code class="xref py py-attr docutils literal notranslate"><span class="pre">Historical</span> <span class="pre">Property</span></code>.</p></li>
+<li><p>To access historical data use the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.historical" title="prototrade.exchange.exchange.Exchange.historical"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Historical</span> <span class="pre">Property</span></code></a>.</p></li>
 </ul>
 </section>
 <section id="placing-orders">
