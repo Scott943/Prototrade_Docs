@@ -9,10 +9,7 @@ Subpackages
 
    prototrade.exceptions
    prototrade.exchange
-   prototrade.file_manager
    prototrade.models
-   prototrade.position_management
-   prototrade.ticker_streamer
 
 prototrade.virtual\_exchange module
 -----------------------------------
