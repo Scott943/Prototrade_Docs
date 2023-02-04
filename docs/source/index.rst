@@ -10,7 +10,7 @@ Welcome to prototrade's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   modules
+   prototrade
    example_strategies
 
 Indices and tables
