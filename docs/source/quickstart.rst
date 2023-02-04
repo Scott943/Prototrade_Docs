@@ -4,8 +4,8 @@ Quickstart
 
 1. Use ``pip install prototrade -U`` to install the latest version of the package
 2. Create a new python file (e.g. ``script.py``) and paste in the `minimal boilerplate strategy <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main>`_ .
-3. Use ``python3 script.py`` to run the boilerplate code. Refer to the Key Points below for an explanation
-4. Look at the :py:mod:`Example Strategies <example_strategies>` section for more examples of how the framework operates.
+3. Use ``python3 script.py`` to run the boilerplate code.
+4. Look at the tutorial below and the :py:mod:`Example Strategies <example_strategies>` section for more examples of how the framework operates.
 
 
 Creating a Strategy Function
@@ -14,7 +14,7 @@ Creating a Strategy Function
 Below are the key components needed for creating a strategy. See the `minimal boilerplate strategy <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main>`_
 for an example.
 
-* Import the :py:class:`VirtualExchange <prototrade.virtual_exchange.VirtualExchange>`
+* Import the :py:class:`VirtualExchange <prototrade.virtual_exchange.VirtualExchange>` from :py:mod:`prototrade.virutal_exchange`.
 * Create a strategy function, following the same format as the boilerplate strategy. This will take in an :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` object as its first argument. The :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` parameter is how a strategy can retrieve the latest quotes for subscribed stocks and place orders for symbols. 
 * The strategy function can also take as many other arguments as desired.
 * Subscribe to desired symbols using the :py:meth:`subscribe <prototrade.exchange.exchange.Exchange.subscribe>` member function of the :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` object. 
