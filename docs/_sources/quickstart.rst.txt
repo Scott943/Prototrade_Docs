@@ -38,7 +38,7 @@ Common Errors
 
 * Ensure that the Python script is starting using format below. Otherwise a :code:`freeze_support` error can occur.
 
-::
+.. code-block:: python
    if __name__ == '__main__': 
       main()
    
