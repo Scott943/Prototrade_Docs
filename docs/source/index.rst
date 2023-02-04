@@ -12,7 +12,7 @@ Welcome to prototrade's documentation!
 
    prototrade.exceptions
    prototrade.models
-   prototrade.virtual_exchange
+   prototrade
    example_strategies
 
 Indices and tables
