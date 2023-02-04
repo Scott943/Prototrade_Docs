@@ -32,7 +32,7 @@ Placing Orders
 
 * To submit orders, use the :py:meth:`create_order <prototrade.exchange.exchange.Exchange.create_order>` member function.
 * Orders can be cancelled with the :py:meth:`cancel_order <prototrade.exchange.exchange.Exchange.cancel_order>` member function.
-* See the :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` for more functions.
+* See the :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` for more available functions.
 
 Registering Strategies for Execution
 ------------------------------------
