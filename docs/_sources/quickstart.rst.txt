@@ -12,13 +12,12 @@ Quickstart
 Creating a Strategy Function
 ----------------------------
 
-Below are the key components needed for creating a strategy. See the `boilerplate strategy <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main>`_
-for an example.
+Below are the key components needed for creating a strategy.
 
-* Import the :py:class:`VirtualExchange <prototrade.virtual_exchange.VirtualExchange>` from :py:mod:`prototrade.virutal_exchange` at the top of the script.
+* Import the :py:class:`VirtualExchange <prototrade.virtual_exchange.VirtualExchange>` from :py:mod:`prototrade.virtual_exchange` at the top of the script.
 * Create a strategy function, following the same format as the `boilerplate strategy <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main>`_ . This will take in an :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` object as its first argument. The :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` parameter is how a strategy can retrieve the latest quotes for subscribed stocks and place orders for symbols. 
 * The strategy function can also take as many other arguments as desired.
-* Subscribe to desired symbols using the :py:meth:`subscribe <prototrade.exchange.exchange.Exchange.subscribe>` member function of the :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` object. 
+* Subscribe to desired symbols (stocks) using the :py:meth:`subscribe <prototrade.exchange.exchange.Exchange.subscribe>` member function of the :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` object. 
 * Create a while loop that repeatedly checks whether the exchange is running with the member function :py:meth:`is_running <prototrade.exchange.exchange.Exchange.is_running>`
 
 Retrieving Stock data
