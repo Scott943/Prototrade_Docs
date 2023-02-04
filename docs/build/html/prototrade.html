@@ -198,13 +198,14 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.virtual_exchange.VirtualExchange.register_strategy">
 <span class="sig-name descname"><span class="pre">register_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strategy_func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.VirtualExchange.register_strategy" title="Permalink to this definition"></a></dt>
-<dd><p>Register a function to be executed. Include any arguments that the strategy function should be provided. N.B. When the strategies are started, each strategy function
+<dd><p>Register a function to be executed. Include any arguments that the strategy function should be provided (any number of arguments is permissible). N.B. When the strategies are started, each strategy function
 is always provided with an <cite>Exchange &lt;prototrade.exchange.exchange.Exchange&gt;</cite> object as the first parameter. This enables the strategy to interact with the framework.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>strategy_func</strong> (<em>function</em>) – A strategy function to register</p></li>
-<li><p><strong>args</strong> (<em>any</em>) – the parameters to pass to the strategy function, optional</p></li>
+<li><p><strong>*args</strong> – <p>the parameters to pass to the strategy function, optional</p>
+</p></li>
 </ul>
 </dd>
 </dl>
