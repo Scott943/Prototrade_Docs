@@ -89,21 +89,9 @@
 </section>
 <section id="module-prototrade.models.dual_heap">
 <span id="prototrade-models-dual-heap-module"></span><h2>prototrade.models.dual_heap module<a class="headerlink" href="#module-prototrade.models.dual_heap" title="Permalink to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="prototrade.models.dual_heap.DualHeap">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.models.dual_heap.</span></span><span class="sig-name descname"><span class="pre">DualHeap</span></span><a class="headerlink" href="#prototrade.models.dual_heap.DualHeap" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-</dd></dl>
-
 </section>
 <section id="module-prototrade.models.error_event">
 <span id="prototrade-models-error-event-module"></span><h2>prototrade.models.error_event module<a class="headerlink" href="#module-prototrade.models.error_event" title="Permalink to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="prototrade.models.error_event.ErrorEvent">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.models.error_event.</span></span><span class="sig-name descname"><span class="pre">ErrorEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">process_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exception</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.models.error_event.ErrorEvent" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-</dd></dl>
-
 </section>
 <section id="module-prototrade.models.order">
 <span id="prototrade-models-order-module"></span><h2>prototrade.models.order module<a class="headerlink" href="#module-prototrade.models.order" title="Permalink to this heading"></a></h2>
@@ -203,38 +191,9 @@
 </section>
 <section id="module-prototrade.models.strategy">
 <span id="prototrade-models-strategy-module"></span><h2>prototrade.models.strategy module<a class="headerlink" href="#module-prototrade.models.strategy" title="Permalink to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="prototrade.models.strategy.Strategy">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.models.strategy.</span></span><span class="sig-name descname"><span class="pre">Strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strategy_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.models.strategy.Strategy" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-</dd></dl>
-
 </section>
 <section id="module-prototrade.models.subscription_event">
 <span id="prototrade-models-subscription-event-module"></span><h2>prototrade.models.subscription_event module<a class="headerlink" href="#module-prototrade.models.subscription_event" title="Permalink to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="prototrade.models.subscription_event.SubscribeType">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.models.subscription_event.</span></span><span class="sig-name descname"><span class="pre">SubscribeType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.models.subscription_event.SubscribeType" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
-<p>An enumeration.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="prototrade.models.subscription_event.SubscribeType.SUBSCRIBE">
-<span class="sig-name descname"><span class="pre">SUBSCRIBE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#prototrade.models.subscription_event.SubscribeType.SUBSCRIBE" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="prototrade.models.subscription_event.SubscribeType.UNSUBSCRIBE">
-<span class="sig-name descname"><span class="pre">UNSUBSCRIBE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#prototrade.models.subscription_event.SubscribeType.UNSUBSCRIBE" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="prototrade.models.subscription_event.SubscriptionEvent">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.models.subscription_event.</span></span><span class="sig-name descname"><span class="pre">SubscriptionEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy_num</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.models.subscription_event.SubscriptionEvent" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-</dd></dl>
-
 </section>
 <section id="module-prototrade.models.transaction">
 <span id="prototrade-models-transaction-module"></span><h2>prototrade.models.transaction module<a class="headerlink" href="#module-prototrade.models.transaction" title="Permalink to this heading"></a></h2>

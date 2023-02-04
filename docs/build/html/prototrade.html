@@ -142,14 +142,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="prototrade.models.html">prototrade.models package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.dual_heap">prototrade.models.dual_heap module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.dual_heap.DualHeap"><code class="docutils literal notranslate"><span class="pre">DualHeap</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.error_event">prototrade.models.error_event module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.error_event.ErrorEvent"><code class="docutils literal notranslate"><span class="pre">ErrorEvent</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.dual_heap">prototrade.models.dual_heap module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.error_event">prototrade.models.error_event module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.order">prototrade.models.order module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order"><code class="docutils literal notranslate"><span class="pre">Order</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order.order_id"><code class="docutils literal notranslate"><span class="pre">Order.order_id</span></code></a></li>
@@ -177,19 +171,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.strategy">prototrade.models.strategy module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.strategy.Strategy"><code class="docutils literal notranslate"><span class="pre">Strategy</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.subscription_event">prototrade.models.subscription_event module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.subscription_event.SubscribeType"><code class="docutils literal notranslate"><span class="pre">SubscribeType</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.subscription_event.SubscribeType.SUBSCRIBE"><code class="docutils literal notranslate"><span class="pre">SubscribeType.SUBSCRIBE</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.subscription_event.SubscribeType.UNSUBSCRIBE"><code class="docutils literal notranslate"><span class="pre">SubscribeType.UNSUBSCRIBE</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.subscription_event.SubscriptionEvent"><code class="docutils literal notranslate"><span class="pre">SubscriptionEvent</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.strategy">prototrade.models.strategy module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.subscription_event">prototrade.models.subscription_event module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.transaction">prototrade.models.transaction module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.transaction.Transaction"><code class="docutils literal notranslate"><span class="pre">Transaction</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.transaction.Transaction.order_side"><code class="docutils literal notranslate"><span class="pre">Transaction.order_side</span></code></a></li>
@@ -214,32 +197,32 @@
 <dt class="sig sig-object py" id="prototrade.virtual_exchange.VirtualExchange">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.virtual_exchange.</span></span><span class="sig-name descname"><span class="pre">VirtualExchange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">streamer_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streamer_username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streamer_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'iex'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_data_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.VirtualExchange" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>_summary_</p>
+<p>The master class used for initialising &amp; running the framework. Handles allocating processes to each of the registered strategies.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.exceptions.ExchangeNotOpenException" title="prototrade.exceptions.exceptions.ExchangeNotOpenException"><strong>ExchangeNotOpenException</strong></a> – _description_</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>_description_</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.exceptions.ExchangeNotOpenException" title="prototrade.exceptions.exceptions.ExchangeNotOpenException"><strong>ExchangeNotOpenException</strong></a> – If the exchange is currently closed, this error is raised</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.virtual_exchange.VirtualExchange.register_strategy">
 <span class="sig-name descname"><span class="pre">register_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strategy_func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.VirtualExchange.register_strategy" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Register a function to be executed. Include any arguments that the strategy function should be provided. N.B. When the strategies are started, each strategy function
+is always provided with an <cite>Exchange &lt;prototrade.exchange.exchange.Exchange&gt;</cite> object as the first parameter. This enables the strategy to interact with the framework.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strategy_func</strong> (<em>function</em>) – A strategy function to register</p></li>
+<li><p><strong>args</strong> (<em>any</em>) – the parameters to pass to the strategy function, optional</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.virtual_exchange.VirtualExchange.run_strategies">
 <span class="sig-name descname"><span class="pre">run_strategies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.VirtualExchange.run_strategies" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="prototrade.virtual_exchange.VirtualExchange.stop">
-<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">should_exit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#prototrade.virtual_exchange.VirtualExchange.stop" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Begins the execution of all strategies</p>
+</dd></dl>
 
 </dd></dl>
 

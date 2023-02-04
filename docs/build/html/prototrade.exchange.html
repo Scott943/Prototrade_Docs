@@ -301,7 +301,7 @@ e.g. to access latest volume at ask price for AAPL, use exchange.get_subscribed_
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.historical">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">historical</span></span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.historical" title="Permalink to this definition"></a></dt>
 <dd><p>A REST API proxy that allows access to historical API functions (depends on the market data source being used). 
-If using alpaca, all functions in the <a class="reference external" href="https://github.com/alpacahq/alpaca-trade-api-python/blob/master/alpaca_trade_api/rest.py">REST</a> are available.
+If using alpaca, all functions in the <a class="reference external" href="https://github.com/alpacahq/alpaca-trade-api-python/blob/master/alpaca_trade_api/rest.py">REST</a> module are available.
 Example usage within a user strategy: <code class="docutils literal notranslate"><span class="pre">exchange.historical.get_bars(&quot;PLTR&quot;,</span> <span class="pre">&quot;1minute&quot;,</span> <span class="pre">&quot;2022-01-18&quot;,</span> <span class="pre">&quot;2022-01-18&quot;).df</span></code>. This retrieves changes in the price
 of PLTR stock over the given date with a 1 minute granularity.</p>
 <dl class="field-list simple">
