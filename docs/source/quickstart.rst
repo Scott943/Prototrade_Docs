@@ -9,7 +9,7 @@ Quickstart
 
 
 Creating a Strategy Function
--------------------
+----------------------------
 
 Below are the key components needed for creating a strategy. See the `minimal boilerplate strategy <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main>`_
 for an example.
@@ -49,7 +49,7 @@ Common Errors
 * Ensure that the Python script is starting using format below. Otherwise a :code:`freeze_support` error can occur.
 
 .. code-block:: python
-   
+
    if __name__ == '__main__': 
       main()
    
