@@ -12,6 +12,7 @@ Welcome to prototrade's documentation!
 
    prototrade
    example_strategies
+   quickstart
 
 Indices and tables
 ==================
