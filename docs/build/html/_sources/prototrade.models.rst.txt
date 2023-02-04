@@ -1,9 +1,6 @@
 prototrade.models package
 =========================
 
-Submodules
-----------
-
 prototrade.models.order module
 ------------------------------
 
@@ -24,14 +21,6 @@ prototrade.models.transaction module
 ------------------------------------
 
 .. automodule:: prototrade.models.transaction
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: prototrade.models
    :members:
    :undoc-members:
    :show-inheritance:

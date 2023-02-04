@@ -19,11 +19,3 @@ prototrade.strategy\_registry module
    :members:
    :undoc-members:
    :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: prototrade
-   :members:
-   :undoc-members:
-   :show-inheritance:
