@@ -4,14 +4,6 @@ prototrade.exceptions package
 Submodules
 ----------
 
-prototrade.exceptions.error\_processor module
----------------------------------------------
-
-.. automodule:: prototrade.exceptions.error_processor
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 prototrade.exceptions.exceptions module
 ---------------------------------------
 

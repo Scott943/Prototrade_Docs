@@ -4,22 +4,6 @@ prototrade.models package
 Submodules
 ----------
 
-prototrade.models.dual\_heap module
------------------------------------
-
-.. automodule:: prototrade.models.dual_heap
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-prototrade.models.error\_event module
--------------------------------------
-
-.. automodule:: prototrade.models.error_event
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 prototrade.models.order module
 ------------------------------
 
@@ -32,22 +16,6 @@ prototrade.models.quotes module
 -------------------------------
 
 .. automodule:: prototrade.models.quotes
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-prototrade.models.strategy module
----------------------------------
-
-.. automodule:: prototrade.models.strategy
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-prototrade.models.subscription\_event module
---------------------------------------------
-
-.. automodule:: prototrade.models.subscription_event
    :members:
    :undoc-members:
    :show-inheritance:
