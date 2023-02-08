@@ -43,3 +43,11 @@ example\_strategies.plot\_positions module
    :members:
    :undoc-members:
    :show-inheritance:
+
+example\_strategies.plot\_positions\_multi module
+------------------------------------------
+
+.. automodule:: example_strategies.plot_positions_multi
+   :members:
+   :undoc-members:
+   :show-inheritance:

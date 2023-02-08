@@ -82,12 +82,13 @@ N.B. this function is expensive, so try to not use this every while loop.
 .. code-block:: python
 
    pnl_over_time = exchange.get_pnl_over_time() # returns a list of lists.  
-   pnl_df = pd.DataFrame(pnl_over_time, columns = ['timestamp', 'pnl']) # convert to dataframe
-   plt.plot(pnl_df['timestamp'], pnl_df['pnl'])
-   plt.xlabel("TimeStamp")
-   plt.ylabel("Profit / Loss")
-   plt.gcf().autofmt_xdate()
-   plt.savefig("pnl_for_strategy")
+   if pnl_over_time:
+      pnl_df = pd.DataFrame(pnl_over_time, columns = ['timestamp', 'pnl']) # convert to dataframe
+      plt.plot(pnl_df['timestamp'], pnl_df['pnl'])
+      plt.xlabel("TimeStamp")
+      plt.ylabel("Profit / Loss")
+      plt.gcf().autofmt_xdate()
+      plt.savefig("pnl_for_strategy")
 
 .. image:: images/pnl_for_strategy.png
 
@@ -107,12 +108,15 @@ To graph how positions change over time, use the :py:meth:`get_positions_over_ti
       plt.gcf().autofmt_xdate()
       plt.savefig("positions_for_strategy")
 
+.. image:: images/positions_for_strategy.png
+
 
 With a bit more effort, we can plot position data for multiple symbols on the same data. This is particularly useful
-when a strategy holds positions over multiple stocks (see `plotting positions multi <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/positions_for_strategy_multi.html#main>`_\ ).
+when a strategy holds positions over multiple stocks (see `plotting positions multi <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_positions_multi.html#main>`_\ ).
 
 .. code-block:: python
 
+   pos_over_time = exchange.get_positions_over_time() # retrieves position data on all stocks
    if pos_over_time:
       pos_df = pd.DataFrame(pos_over_time, columns = ['timestamp', 'symbol', 'position']) # convert to dataframe
       fig, ax = plt.subplots()
@@ -126,3 +130,5 @@ when a strategy holds positions over multiple stocks (see `plotting positions mu
       ax.legend(loc='best')
       plt.gcf().autofmt_xdate()
       fig.savefig("positions_for_strategy_multi")
+
+.. image:: images/positions_for_strategy_multi.png
