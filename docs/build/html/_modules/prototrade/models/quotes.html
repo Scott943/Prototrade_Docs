@@ -41,6 +41,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../prototrade.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../example_strategies.html">Example Strategies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common_errors.html">Common Errors</a></li>
 </ul>
 
         </div>
@@ -69,7 +70,7 @@
              
   <h1>Source code for prototrade.models.quotes</h1><div class="highlight"><pre>
 <div class="viewcode-block" id="HalfQuote"><a class="viewcode-back" href="../../../prototrade.models.html#prototrade.models.quotes.HalfQuote">[docs]</a><span></span><span class="k">class</span> <span class="nc">HalfQuote</span><span class="p">:</span>
-<span class="w">   </span><span class="sd">&quot;&quot;&quot;A class that represents one half of a :py:class:`Quote&lt;prototrade.models.quotes.Quote&gt;` object.</span>
+   <span class="sd">&quot;&quot;&quot;A class that represents one half of a :py:class:`Quote&lt;prototrade.models.quotes.Quote&gt;` object.</span>
 <span class="sd">   &quot;&quot;&quot;</span>
    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">order_side</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_volume</span> <span class="o">=</span> <span class="n">volume</span>
@@ -78,19 +79,19 @@
    
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">      </span><span class="sd">&quot;&quot;&quot;Volume at the corresponding price in the order book</span>
+      <span class="sd">&quot;&quot;&quot;Volume at the corresponding price in the order book</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_volume</span>
    
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">price</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">      </span><span class="sd">&quot;&quot;&quot;Price in the order book</span>
+      <span class="sd">&quot;&quot;&quot;Price in the order book</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_price</span>
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">order_side</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">      </span><span class="sd">&quot;&quot;&quot;The side of the order book</span>
+      <span class="sd">&quot;&quot;&quot;The side of the order book</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_side</span>
 
@@ -99,7 +100,7 @@
 
 <span class="c1"># Our order book is composed of two half books (one for the bid and another for the ask)</span>
 <div class="viewcode-block" id="Quote"><a class="viewcode-back" href="../../../prototrade.models.html#prototrade.models.quotes.Quote">[docs]</a><span class="k">class</span> <span class="nc">Quote</span><span class="p">:</span>
-<span class="w">   </span><span class="sd">&quot;&quot;&quot;A class representing a quote for a stock at a given timestamp. Consists of two :py:class:`HalfQuote&lt;prototrade.models.quotes.HalfQuote&gt;` objects (one for the bid side</span>
+   <span class="sd">&quot;&quot;&quot;A class representing a quote for a stock at a given timestamp. Consists of two :py:class:`HalfQuote&lt;prototrade.models.quotes.HalfQuote&gt;` objects (one for the bid side</span>
 <span class="sd">   and one for the ask side) as well as the timestamp.</span>
 <span class="sd">   &quot;&quot;&quot;</span>
    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bid_volume</span><span class="p">,</span> <span class="n">bid_price</span><span class="p">,</span> <span class="n">ask_volume</span><span class="p">,</span> <span class="n">ask_price</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">):</span>
@@ -109,19 +110,19 @@
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">bid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">      </span><span class="sd">&quot;&quot;&quot;:py:class:`HalfQuote&lt;prototrade.models.quotes.HalfQuote&gt;` object corresponding to the bid side of the Quote</span>
+      <span class="sd">&quot;&quot;&quot;:py:class:`HalfQuote&lt;prototrade.models.quotes.HalfQuote&gt;` object corresponding to the bid side of the Quote</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bid</span>
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">ask</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">      </span><span class="sd">&quot;&quot;&quot;:py:class:`HalfQuote&lt;prototrade.models.quotes.HalfQuote&gt;` object corresponding to the ask side of the Quote</span>
+      <span class="sd">&quot;&quot;&quot;:py:class:`HalfQuote&lt;prototrade.models.quotes.HalfQuote&gt;` object corresponding to the ask side of the Quote</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ask</span>
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">      </span><span class="sd">&quot;&quot;&quot;Timestamp of when the framework received the Quote.</span>
+      <span class="sd">&quot;&quot;&quot;Timestamp of when the framework received the Quote.</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span>
 

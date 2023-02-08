@@ -41,6 +41,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../prototrade.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../example_strategies.html">Example Strategies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common_errors.html">Common Errors</a></li>
 </ul>
 
         </div>
@@ -86,10 +87,13 @@
 <span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Lock</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">csv</span>
 
 <span class="kn">from</span> <span class="nn">prototrade.models.error_event</span> <span class="kn">import</span> <span class="n">ErrorEvent</span>
 
 <span class="n">SYMBOL_REQUEST_TIMEOUT</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">DATETIME_FORMAT</span> <span class="o">=</span> <span class="s2">&quot;%y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span>
 <div class="viewcode-block" id="PositionManager"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager">[docs]</a><span class="k">class</span> <span class="nc">PositionManager</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_books_dict</span><span class="p">,</span> <span class="n">order_books_dict_semaphore</span><span class="p">,</span> <span class="n">stop_event</span><span class="p">,</span> <span class="n">error_queue</span><span class="p">,</span> <span class="n">exchange_num</span><span class="p">,</span> <span class="n">subscribed_symbols</span><span class="p">,</span> <span class="n">save_data_location</span><span class="p">):</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;L:DSJF:LDSFJL:DSFJ:LSF&quot;</span><span class="p">)</span>
@@ -100,6 +104,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_exchange_num</span> <span class="o">=</span> <span class="n">exchange_num</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_subscribed_symbols</span> <span class="o">=</span> <span class="n">subscribed_symbols</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_save_data_location</span> <span class="o">=</span> <span class="n">save_data_location</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Strategy saving at </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_save_data_location</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders_polling_thread</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
@@ -112,14 +118,29 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders_polling_thread</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialise_locks</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialise_file_pointers</span><span class="p">()</span>
+        
+<div class="viewcode-block" id="PositionManager.initialise_locks"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.initialise_locks">[docs]</a>    <span class="k">def</span> <span class="nf">initialise_locks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span> <span class="c1"># have to acquire lock whenever accessing order_dict or open_orders</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span> 
         <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="PositionManager.initialise_file_pointers"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.initialise_file_pointers">[docs]</a>    <span class="k">def</span> <span class="nf">initialise_file_pointers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pnl_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_save_data_location</span><span class="o">/</span><span class="s2">&quot;PnL.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;a+&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer_pnl</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pnl_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_reader_pnl</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pnl_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">transactions_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_save_data_location</span><span class="o">/</span><span class="s2">&quot;Transactions.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;a+&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer_transactions</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transactions_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_reader_transactions</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transactions_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">positions_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_save_data_location</span><span class="o">/</span><span class="s2">&quot;Positions.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;a+&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer_positions</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_reader_positions</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span></div>
         
 
 <div class="viewcode-block" id="PositionManager.create_order"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.create_order">[docs]</a>    <span class="k">def</span> <span class="nf">create_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -228,7 +249,7 @@
         <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscribed_symbols</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span>
-            <span class="k">raise</span> <span class="n">UnavailableSymbolException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;In strategy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_exchange_num</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> requesting live data on symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39;, but strategy is not subscribed to &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">UnavailableSymbolException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;In strategy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_exchange_num</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2"> requesting live data on symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39;, but strategy is not subscribed to &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
         
         <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="k">while</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict</span><span class="p">:</span>
@@ -241,13 +262,13 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span>
                 <span class="k">raise</span> <span class="n">UnavailableSymbolException</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Symbol request timeout: strategy number </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_exchange_num</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> cannot find requested symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39; from exchange. Check symbol exists &amp; exchange is open.&quot;</span><span class="p">)</span>
+                    <span class="sa">f</span><span class="s2">&quot;Symbol request timeout: strategy number </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_exchange_num</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2"> cannot find requested symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39; from exchange. Check symbol exists &amp; exchange is open.&quot;</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span>
                 <span class="k">raise</span> <span class="n">UnavailableSymbolException</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Interrupt while waiting for symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39; to arrive in strategy number </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_exchange_num</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="sa">f</span><span class="s2">&quot;Interrupt while waiting for symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39; to arrive in strategy number </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_exchange_num</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PositionManager.cancel_order"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.cancel_order">[docs]</a>    <span class="k">def</span> <span class="nf">cancel_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_id</span><span class="p">,</span> <span class="n">volume_requested</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="c1"># remove volume from order</span>
@@ -347,11 +368,17 @@
     <span class="k">def</span> <span class="nf">_start_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_check_for_executable_orders</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="c1"># if exception in thread then release all locks and place error on queue</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span> 
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="c1"># if exception in thread then release all locks and place error on queue       </span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">release_locks</span><span class="p">()</span>
             <span class="n">handle_error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_error_queue</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exchange_num</span><span class="p">)</span>
-
+       
 <div class="viewcode-block" id="PositionManager.release_locks"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.release_locks">[docs]</a>    <span class="k">def</span> <span class="nf">release_locks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Closing files&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pnl_file</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pnl_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transactions_file</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transactions_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Releasing all PM locks&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">locked</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
@@ -370,7 +397,7 @@
 
     <span class="k">def</span> <span class="nf">_check_for_executable_orders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting open order polling thread&quot;</span><span class="p">)</span>
-        <span class="n">last_pnl_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">last_log_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_orders</span><span class="p">:</span>
@@ -386,41 +413,65 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">execute_any_ask_orders</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">dual_heap</span><span class="o">.</span><span class="n">ask_heap</span><span class="p">,</span> <span class="n">symbol_quote</span><span class="o">.</span><span class="n">bid</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_order_objects_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
 
-            <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_pnl_time</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-                <span class="n">pnl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pnl</span><span class="p">()</span>
-                <span class="n">positions</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_positions_map</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">pnl</span><span class="p">])</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">positions</span><span class="p">[</span><span class="n">symbol</span><span class="p">]])</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
-                <span class="n">last_pnl_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_log_time</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">write_pnl_to_csv</span><span class="p">()</span>
+                <span class="n">last_log_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
   
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Open order polling thread finished&quot;</span><span class="p">)</span>
 
+<div class="viewcode-block" id="PositionManager.write_positions_to_csv"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.write_positions_to_csv">[docs]</a>    <span class="k">def</span> <span class="nf">write_positions_to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">DATETIME_FORMAT</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Writing positions to csv&quot;</span><span class="p">)</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_positions_map</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">positions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer_positions</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">])</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">DATETIME_FORMAT</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PositionManager.write_pnl_to_csv"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.write_pnl_to_csv">[docs]</a>    <span class="k">def</span> <span class="nf">write_pnl_to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_timestamp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="n">pnl</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_pnl</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer_pnl</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">pnl</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="PositionManager.get_pnl_over_time"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_pnl_over_time">[docs]</a>    <span class="k">def</span> <span class="nf">get_pnl_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
-        <span class="n">pnl</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">pnl</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pnl_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># seek to start of file to read all</span>
+        
+        <span class="n">pnl_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csv_reader_pnl</span><span class="p">)</span>
 
-<div class="viewcode-block" id="PositionManager.get_positions_over_time"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_positions_over_time">[docs]</a>    <span class="k">def</span> <span class="nf">get_positions_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">symbol</span><span class="p">:</span>
-            <span class="n">positions</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict</span><span class="p">[</span><span class="n">symbol</span><span class="p">])</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">positions</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_position_dict_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pnl_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">pnl_list</span><span class="p">:</span>
+            <span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">DATETIME_FORMAT</span><span class="p">)</span>
+            <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">pnl_list</span></div>
+
+<div class="viewcode-block" id="PositionManager.get_positions_over_time"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_positions_over_time">[docs]</a>    <span class="k">def</span> <span class="nf">get_positions_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol_filter</span><span class="p">):</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">positions_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">csv_reader_positions</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">symbol_filter</span><span class="p">:</span> 
+                <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">positions</span><span class="p">:</span>
+            <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">DATETIME_FORMAT</span><span class="p">)</span>
+            <span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">positions</span></div>
 
     <span class="k">def</span> <span class="nf">_register_new_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
-        <span class="n">transaction</span> <span class="o">=</span> <span class="n">Transaction</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">Transaction</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer_transactions</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">symbol</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">order_side</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">order_type</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">volume</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">price</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">timestamp</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">order_side</span> <span class="o">==</span> <span class="s2">&quot;bid&quot;</span><span class="p">:</span>
@@ -429,34 +480,39 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">-=</span> <span class="n">volume</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
 
-        <span class="n">transaction_amount</span> <span class="o">=</span> <span class="n">transaction</span><span class="o">.</span><span class="n">price</span> <span class="o">*</span> <span class="n">transaction</span><span class="o">.</span><span class="n">volume</span>
+        <span class="n">transaction_amount</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">price</span> <span class="o">*</span> <span class="n">t</span><span class="o">.</span><span class="n">volume</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">transaction</span><span class="o">.</span><span class="n">order_side</span> <span class="o">==</span> <span class="s2">&quot;bid&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">order_side</span> <span class="o">==</span> <span class="s2">&quot;bid&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl</span> <span class="o">-=</span> <span class="n">transaction_amount</span> <span class="c1"># bid side so lost money and gained assets</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl</span> <span class="o">+=</span> <span class="n">transaction_amount</span> <span class="c1"># ask side so gained money and lost assets</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_pnl_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">transaction</span>
+        <span class="k">return</span> <span class="n">t</span>
 
 <div class="viewcode-block" id="PositionManager.execute_any_bid_orders"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.execute_any_bid_orders">[docs]</a>    <span class="k">def</span> <span class="nf">execute_any_bid_orders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">bid_heap</span><span class="p">,</span> <span class="n">live_best_ask_half_quote</span><span class="p">):</span>
+        <span class="n">executed</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">while</span> <span class="n">bid_heap</span> <span class="ow">and</span> <span class="n">bid_heap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">price</span> <span class="o">&gt;=</span> <span class="n">live_best_ask_half_quote</span><span class="o">.</span><span class="n">price</span><span class="p">:</span>
             <span class="n">executed</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">bid_heap</span><span class="p">)</span>
-
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;EXECUTED bid order at price </span><span class="si">{</span><span class="n">live_best_ask_half_quote</span><span class="o">.</span><span class="n">price</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">executed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_register_new_transaction</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">executed</span><span class="o">.</span><span class="n">order_side</span><span class="p">,</span> <span class="n">executed</span><span class="o">.</span><span class="n">order_type</span><span class="p">,</span> <span class="n">executed</span><span class="o">.</span><span class="n">volume</span><span class="p">,</span> <span class="n">live_best_ask_half_quote</span><span class="o">.</span><span class="n">price</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
-            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_dict</span><span class="p">[</span><span class="n">executed</span><span class="o">.</span><span class="n">order_id</span><span class="p">]</span></div>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_dict</span><span class="p">[</span><span class="n">executed</span><span class="o">.</span><span class="n">order_id</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="n">executed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_positions_to_csv</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="PositionManager.execute_any_ask_orders"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.execute_any_ask_orders">[docs]</a>    <span class="k">def</span> <span class="nf">execute_any_ask_orders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">ask_heap</span><span class="p">,</span> <span class="n">live_best_bid_half_quote</span><span class="p">):</span>
+        <span class="n">executed</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">while</span> <span class="n">ask_heap</span> <span class="ow">and</span> <span class="n">ask_heap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">price</span> <span class="o">&lt;=</span> <span class="n">live_best_bid_half_quote</span><span class="o">.</span><span class="n">price</span><span class="p">:</span>
             <span class="n">executed</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">ask_heap</span><span class="p">)</span>
-
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;EXECUTED ask order at price </span><span class="si">{</span><span class="n">live_best_bid_half_quote</span><span class="o">.</span><span class="n">price</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">executed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             
             <span class="bp">self</span><span class="o">.</span><span class="n">_register_new_transaction</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">executed</span><span class="o">.</span><span class="n">order_side</span><span class="p">,</span> <span class="n">executed</span><span class="o">.</span><span class="n">order_type</span><span class="p">,</span> <span class="n">executed</span><span class="o">.</span><span class="n">volume</span><span class="p">,</span> <span class="n">live_best_bid_half_quote</span><span class="o">.</span><span class="n">price</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
-            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_dict</span><span class="p">[</span><span class="n">executed</span><span class="o">.</span><span class="n">order_id</span><span class="p">]</span></div>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_dict</span><span class="p">[</span><span class="n">executed</span><span class="o">.</span><span class="n">order_id</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">executed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_positions_to_csv</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="PositionManager.get_positions"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_positions">[docs]</a>    <span class="k">def</span> <span class="nf">get_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol_filter</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_positions_map_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
@@ -469,10 +525,16 @@
 
 <div class="viewcode-block" id="PositionManager.get_transactions"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol_filter</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transactions_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># seek to start of file to read all</span>
+        <span class="n">trans</span> <span class="o">=</span> <span class="p">[]</span>
+        
         <span class="k">if</span> <span class="n">symbol_filter</span><span class="p">:</span>
-            <span class="n">trans</span> <span class="o">=</span>  <span class="n">deepcopy</span><span class="p">([</span><span class="n">trans</span> <span class="k">for</span> <span class="n">trans</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history</span> <span class="k">if</span> <span class="n">trans</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="n">symbol_filter</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">csv_reader_transactions</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span>  <span class="n">symbol_filter</span><span class="p">:</span>
+                    <span class="n">trans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Transaction</span><span class="p">(</span><span class="o">*</span><span class="n">row</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">trans</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">csv_reader_transactions</span><span class="p">:</span>
+                <span class="n">trans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Transaction</span><span class="p">(</span><span class="o">*</span><span class="n">row</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_history_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">trans</span></div>
 

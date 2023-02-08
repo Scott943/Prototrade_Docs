@@ -13,6 +13,7 @@ Welcome to prototrade's documentation!
    prototrade
    example_strategies
    quickstart
+   common_errors
 
 Indices and tables
 ==================

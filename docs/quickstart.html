@@ -20,6 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Common Errors" href="common_errors.html" />
     <link rel="prev" title="Example Strategies" href="example_strategies.html" /> 
 </head>
 
@@ -47,9 +48,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#retrieving-stock-data">Retrieving Stock data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#placing-orders">Placing Orders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#registering-strategies-for-execution">Registering Strategies for Execution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#common-errors">Common Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-graphs">Creating Graphs</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="common_errors.html">Common Errors</a></li>
 </ul>
 
         </div>
@@ -81,10 +83,14 @@
 <ol class="arabic simple">
 <li><p>Ensure Python 3.8 or higher is installed (use <code class="code docutils literal notranslate"><span class="pre">python3</span> <span class="pre">--version</span></code> to check)</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">prototrade</span> <span class="pre">-U</span></code> to install the latest version of the package.</p></li>
-<li><p>Create a new python file (e.g. <code class="docutils literal notranslate"><span class="pre">script.py</span></code>) and paste in the <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main">boilerplate strategy</a> .</p></li>
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">script.py</span></code> to run the boilerplate code.</p></li>
-<li><p>Look at the tutorial below and the <code class="xref py py-mod docutils literal notranslate"><span class="pre">Example</span> <span class="pre">Strategies</span></code> section for more examples of how the framework operates.</p></li>
 </ol>
+<p>3. Create a new python file (e.g. <code class="docutils literal notranslate"><span class="pre">script.py</span></code>) and paste in the <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main">boilerplate strategy</a> .
+3. Ensure you have an API username and API key from <cite>Alpaca &lt;https://alpaca.markets/&gt;</cite>*
+4. Place in your API username and API Key within the initaliser for the <a class="reference internal" href="prototrade.html#prototrade.strategy_registry.StrategyRegistry" title="prototrade.strategy_registry.StrategyRegistry"><code class="xref py py-class docutils literal notranslate"><span class="pre">StrategyRegistry</span></code></a> class.
+5. Use <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">script.py</span></code> to run the boilerplate code.</p>
+<p>* Alpaca offers a paid subscription alongside a free plan. The only market available with the free plan is <cite>‘iex’</cite>.
+With the paid subscription, you can change the market parameter to <cite>‘sip’</cite> to receive quotes across all US markets.</p>
+<p>Look at the tutorial below and the <code class="xref py py-mod docutils literal notranslate"><span class="pre">Example</span> <span class="pre">Strategies</span></code> section for more examples of how the framework operates.</p>
 <section id="creating-a-strategy-function">
 <h2>Creating a Strategy Function<a class="headerlink" href="#creating-a-strategy-function" title="Permalink to this heading"></a></h2>
 <p>Below are the key components needed for creating a strategy, following the same format as the <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main">boilerplate strategy</a> .</p>
@@ -121,15 +127,25 @@
 <li><p>When all strategies are registered, use the member function, <a class="reference internal" href="prototrade.html#prototrade.strategy_registry.StrategyRegistry.run_strategies" title="prototrade.strategy_registry.StrategyRegistry.run_strategies"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run_strategies</span></code></a> to start the simulated execution of the strategies.</p></li>
 </ul>
 </section>
-<section id="common-errors">
-<h2>Common Errors<a class="headerlink" href="#common-errors" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><p>Ensure that the Python script is starting using format below. Without the first line below, a <code class="code docutils literal notranslate"><span class="pre">freeze_support</span></code> error can occur.</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-   <span class="n">main</span><span class="p">()</span> <span class="c1"># main should contain the code for initalising the StrategyRegistry and registering strategies</span>
+<section id="creating-graphs">
+<h2>Creating Graphs<a class="headerlink" href="#creating-graphs" title="Permalink to this heading"></a></h2>
+<p>To graph data for a particular stock, use the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.historical" title="prototrade.exchange.exchange.Exchange.historical"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Historical</span></code></a> property in the the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange" title="prototrade.exchange.exchange.Exchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exchange</span></code></a> class.</p>
+<p>The following execerpt was taken from the <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_pnl.html#main">plotting stock prices</a> example strategy.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">aapl_price_bars</span> <span class="o">=</span> <span class="n">exchange</span><span class="o">.</span><span class="n">historical</span><span class="o">.</span><span class="n">get_bars</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">,</span> <span class="s2">&quot;1minute&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-01-13&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-01-13&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">df</span>
+<span class="c1"># Reformat data (drop multiindex, rename columns, reset index)</span>
+<span class="n">aapl_price_bars</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">aapl_price_bars</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_flat_index</span><span class="p">()</span>
+<span class="n">aapl_price_bars</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Plot stock price data</span>
+<span class="n">plot</span> <span class="o">=</span> <span class="n">aapl_price_bars</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;close&quot;</span><span class="p">)</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Apple Close Price ($)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;aapl_bars&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>To graph PnL, you can use the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_pnl_over_time" title="prototrade.exchange.exchange.Exchange.get_pnl_over_time"><code class="xref py py-meth docutils literal notranslate"><span class="pre">subscribe</span></code></a> method.
+N.B. this function is expensive, so try to not use this every while loop.</p>
+<p>The following excerpt is taken from the <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_pnl.html#main">plotting pnl</a> example strategy.</p>
 </section>
 </section>
 
@@ -138,6 +154,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="example_strategies.html" class="btn btn-neutral float-left" title="Example Strategies" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="common_errors.html" class="btn btn-neutral float-right" title="Common Errors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

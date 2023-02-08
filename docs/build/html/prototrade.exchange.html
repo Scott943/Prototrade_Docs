@@ -56,6 +56,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="example_strategies.html">Example Strategies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common_errors.html">Common Errors</a></li>
 </ul>
 
         </div>
@@ -198,7 +199,7 @@ Otherwise, all open orders for the strategy are returned.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.get_positions_over_time">
-<span class="sig-name descname"><span class="pre">get_positions_over_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.get_positions_over_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_positions_over_time" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_positions_over_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol_filter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.get_positions_over_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.get_positions_over_time" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves the positions dictionary over several time-intervals (since the strategy started)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -322,6 +323,20 @@ operations after their strategy has finished execution.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><em>bool</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.strategy_number">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">strategy_number</span></span><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.strategy_number" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve the strategy number of the calling strategy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The strategy number (1 indexed)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
 </dd>
 </dl>
 </dd></dl>

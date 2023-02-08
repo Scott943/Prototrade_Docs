@@ -41,6 +41,7 @@
 <li class="toctree-l1"><a class="reference internal" href="prototrade.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example_strategies.html">Example Strategies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common_errors.html">Common Errors</a></li>
 </ul>
 
         </div>
@@ -87,6 +88,7 @@
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
  
 </div>
 <h2 id="A">A</h2>
@@ -141,17 +143,10 @@
         <li><a href="example_strategies.html#module-example_strategies.minimal_boilerplate">module</a>
 </li>
       </ul></li>
-      <li>
-    example_strategies.repeated_market_order
-
-      <ul>
-        <li><a href="example_strategies.html#module-example_strategies.repeated_market_order">module</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange">Exchange (class in prototrade.exchange.exchange)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="prototrade.exceptions.html#prototrade.exceptions.exceptions.ExchangeNotOpenException">ExchangeNotOpenException</a>
 </li>
       <li><a href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.execute_any_ask_orders">execute_any_ask_orders() (prototrade.position_management.position_manager.PositionManager method)</a>
@@ -204,10 +199,10 @@
         <li><a href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_positions_over_time">(prototrade.position_management.position_manager.PositionManager method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_realised_pnl">get_realised_pnl() (prototrade.position_management.position_manager.PositionManager method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.alpaca_streamer.AlpacaDataStreamer.get_rest_api">get_rest_api() (prototrade.ticker_streamer.alpaca_streamer.AlpacaDataStreamer method)</a>
 </li>
       <li><a href="prototrade.file_manager.html#prototrade.file_manager.file_manager.FileManager.get_run_index">get_run_index() (prototrade.file_manager.file_manager.FileManager method)</a>
@@ -224,6 +219,8 @@
         <li><a href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_strategy_best_bid">(prototrade.position_management.position_manager.PositionManager method)</a>
 </li>
       </ul></li>
+      <li><a href="prototrade.file_manager.html#prototrade.file_manager.file_manager.FileManager.get_strategy_save_location">get_strategy_save_location() (prototrade.file_manager.file_manager.FileManager method)</a>
+</li>
       <li><a href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_subscribed_quotes">get_subscribed_quotes() (prototrade.exchange.exchange.Exchange method)</a>
 </li>
       <li><a href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_subscriptions">get_subscriptions() (prototrade.exchange.exchange.Exchange method)</a>
@@ -256,14 +253,18 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.initialise_file_pointers">initialise_file_pointers() (prototrade.position_management.position_manager.PositionManager method)</a>
+</li>
+      <li><a href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.initialise_locks">initialise_locks() (prototrade.position_management.position_manager.PositionManager method)</a>
+</li>
       <li><a href="prototrade.exceptions.html#prototrade.exceptions.exceptions.InvalidOrderSideException">InvalidOrderSideException</a>
 </li>
       <li><a href="prototrade.exceptions.html#prototrade.exceptions.exceptions.InvalidOrderTypeException">InvalidOrderTypeException</a>
 </li>
-      <li><a href="prototrade.exceptions.html#prototrade.exceptions.exceptions.InvalidPriceException">InvalidPriceException</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="prototrade.exceptions.html#prototrade.exceptions.exceptions.InvalidPriceException">InvalidPriceException</a>
+</li>
       <li><a href="prototrade.exceptions.html#prototrade.exceptions.exceptions.InvalidVolumeException">InvalidVolumeException</a>
 </li>
       <li><a href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.alpaca_streamer.AlpacaDataStreamer.is_market_open">is_market_open() (prototrade.ticker_streamer.alpaca_streamer.AlpacaDataStreamer method)</a>
@@ -277,11 +278,7 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="example_strategies.html#example_strategies.minimal_boilerplate.main">main() (in module example_strategies.minimal_boilerplate)</a>
-
-      <ul>
-        <li><a href="example_strategies.html#example_strategies.repeated_market_order.main">(in module example_strategies.repeated_market_order)</a>
 </li>
-      </ul></li>
       <li><a href="prototrade.exceptions.html#prototrade.exceptions.exceptions.MissingParameterException">MissingParameterException</a>
 </li>
       <li>
@@ -289,8 +286,6 @@
 
       <ul>
         <li><a href="example_strategies.html#module-example_strategies.minimal_boilerplate">example_strategies.minimal_boilerplate</a>
-</li>
-        <li><a href="example_strategies.html#module-example_strategies.repeated_market_order">example_strategies.repeated_market_order</a>
 </li>
         <li><a href="prototrade.exceptions.html#module-prototrade.exceptions.exceptions">prototrade.exceptions.exceptions</a>
 </li>
@@ -508,6 +503,8 @@
 </li>
       <li><a href="prototrade.ticker_streamer.html#prototrade.ticker_streamer.subscription_manager.SubscriptionManager.stop_queue_polling">stop_queue_polling() (prototrade.ticker_streamer.subscription_manager.SubscriptionManager method)</a>
 </li>
+      <li><a href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.strategy_number">strategy_number (prototrade.exchange.exchange.Exchange property)</a>
+</li>
       <li><a href="prototrade.html#prototrade.strategy_registry.StrategyRegistry">StrategyRegistry (class in prototrade.strategy_registry)</a>
 </li>
       <li><a href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.subscribe">subscribe() (prototrade.exchange.exchange.Exchange method)</a>
@@ -539,15 +536,11 @@
       <li><a href="prototrade.position_management.html#prototrade.position_management.test_puller.TestPuller.test_pull">test_pull() (prototrade.position_management.test_puller.TestPuller method)</a>
 </li>
       <li><a href="example_strategies.html#example_strategies.minimal_boilerplate.test_strategy">test_strategy() (in module example_strategies.minimal_boilerplate)</a>
-
-      <ul>
-        <li><a href="example_strategies.html#example_strategies.repeated_market_order.test_strategy">(in module example_strategies.repeated_market_order)</a>
 </li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="prototrade.position_management.html#prototrade.position_management.test_puller.TestPuller">TestPuller (class in prototrade.position_management.test_puller)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="prototrade.models.html#prototrade.models.quotes.Quote.timestamp">timestamp (prototrade.models.quotes.Quote property)</a>
 
       <ul>
@@ -592,6 +585,18 @@
         <li><a href="prototrade.models.html#prototrade.models.transaction.Transaction.volume">(prototrade.models.transaction.Transaction property)</a>
 </li>
       </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.write_pnl_to_csv">write_pnl_to_csv() (prototrade.position_management.position_manager.PositionManager method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.write_positions_to_csv">write_positions_to_csv() (prototrade.position_management.position_manager.PositionManager method)</a>
+</li>
   </ul></td>
 </tr></table>
 

@@ -5,9 +5,14 @@ Quickstart
 1. Ensure Python 3.8 or higher is installed (use :code:`python3 --version` to check)
 2. Use ``pip install prototrade -U`` to install the latest version of the package. 
 3. Create a new python file (e.g. ``script.py``) and paste in the `boilerplate strategy <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main>`_ .
-4. Use ``python3 script.py`` to run the boilerplate code. 
-5. Look at the tutorial below and the :py:mod:`Example Strategies <example_strategies>` section for more examples of how the framework operates.
+3. Ensure you have an API username and API key from `Alpaca <https://alpaca.markets/>`\ *
+4. Place in your API username and API Key within the initaliser for the :py:class:`StrategyRegistry <prototrade.strategy_registry.StrategyRegistry>` class. 
+5. Use ``python3 script.py`` to run the boilerplate code. 
 
+\* Alpaca offers a paid subscription alongside a free plan. The only market available with the free plan is `'iex'`.
+With the paid subscription, you can change the market parameter to `'sip'` to receive quotes across all US markets.
+
+Look at the tutorial below and the :py:mod:`Example Strategies <example_strategies>` section for more examples of how the framework operates.
 
 Creating a Strategy Function
 ----------------------------
@@ -42,15 +47,27 @@ Registering Strategies for Execution
 * Use the member function, :py:meth:`register_strategy <prototrade.strategy_registry.StrategyRegistry.register_strategy>` to register a function/strategy to the framework
 * When all strategies are registered, use the member function, :py:meth:`run_strategies <prototrade.strategy_registry.StrategyRegistry.run_strategies>` to start the simulated execution of the strategies.
 
+Creating Graphs
+--------
 
-Common Errors
--------------
+To graph data for a particular stock, use the :py:attr:`Historical <prototrade.exchange.exchange.Exchange.historical>` property in the the :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` class.
 
-* Ensure that the Python script is starting using format below. Without the first line below, a :code:`freeze_support` error can occur.
+The following execerpt was taken from the `plotting stock prices <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_pnl.html#main>`_ example strategy.
 
 .. code-block:: python
 
-   if __name__ == '__main__': 
-      main() # main should contain the code for initalising the StrategyRegistry and registering strategies
+   aapl_price_bars = exchange.historical.get_bars("AAPL", "1minute", "2021-01-13", "2021-01-13").df
+   # Reformat data (drop multiindex, rename columns, reset index)
+   aapl_price_bars.columns = aapl_price_bars.columns.to_flat_index()
+   aapl_price_bars.reset_index(inplace=True)
+
+   # Plot stock price data
+   plot = aapl_price_bars.plot(x="timestamp", y="close")
+   plot.set_xlabel("Date")
+   plot.set_ylabel("Apple Close Price ($)")
+   plt.savefig("aapl_bars")
    
-    
+To graph PnL, you can use the :py:meth:`subscribe <prototrade.exchange.exchange.Exchange.get_pnl_over_time>` method.
+N.B. this function is expensive, so try to not use this every while loop.
+
+The following excerpt is taken from the `plotting pnl <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_pnl.html#main>`_ example strategy.
