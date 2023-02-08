@@ -48,7 +48,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#example_strategies.minimal_boilerplate.test_strategy"><code class="docutils literal notranslate"><span class="pre">test_strategy()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#example-strategies-two-registered-strategies-module">example_strategies.two_registered_strategies module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-example_strategies.two_registered_strategies">example_strategies.two_registered_strategies module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example_strategies.two_registered_strategies.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example_strategies.two_registered_strategies.test_strategy"><code class="docutils literal notranslate"><span class="pre">test_strategy()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#module-example_strategies.plot_stock_price">example_strategies.plot_stock_price module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#example_strategies.plot_stock_price.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#example_strategies.plot_stock_price.plot_aapl"><code class="docutils literal notranslate"><span class="pre">plot_aapl()</span></code></a></li>
@@ -124,8 +128,32 @@ Press the <code class="code docutils literal notranslate"><span class="pre">[sou
 </dd></dl>
 
 </section>
-<section id="example-strategies-two-registered-strategies-module">
-<h2>example_strategies.two_registered_strategies module<a class="headerlink" href="#example-strategies-two-registered-strategies-module" title="Permalink to this heading"></a></h2>
+<section id="module-example_strategies.two_registered_strategies">
+<span id="example-strategies-two-registered-strategies-module"></span><h2>example_strategies.two_registered_strategies module<a class="headerlink" href="#module-example_strategies.two_registered_strategies" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="example_strategies.two_registered_strategies.main">
+<span class="sig-prename descclassname"><span class="pre">example_strategies.two_registered_strategies.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/example_strategies/two_registered_strategies.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#example_strategies.two_registered_strategies.main" title="Permalink to this definition"></a></dt>
+<dd><p>We register two strategies here (both executing the same function but with different function parameters). 
+One strategy repeatedly places orders of low volume, whilst the other places orders with a higher volume.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="example_strategies.two_registered_strategies.test_strategy">
+<span class="sig-prename descclassname"><span class="pre">example_strategies.two_registered_strategies.</span></span><span class="sig-name descname"><span class="pre">test_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exchange</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_volume</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/example_strategies/two_registered_strategies.html#test_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#example_strategies.two_registered_strategies.test_strategy" title="Permalink to this definition"></a></dt>
+<dd><p>Boilerplate strategy that retrieves the price of Apple stock and places a market order every 3 seconds.
+Takes in two arguments, lower_volume and upper_volume. These illustrate how we can pass
+in different parameters to alter the execution of the strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exchange</strong> (<a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange" title="prototrade.exchange.exchange.Exchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exchange</span></code></a>) – The exchange object that the strategy uses to interact with the framework</p></li>
+<li><p><strong>lower_volume</strong> (<em>int</em>) – The lower bound for the order’s random volume</p></li>
+<li><p><strong>upper_volume</strong> (<em>int</em>) – The upper bound for the order’s random volume</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-example_strategies.plot_stock_price">
 <span id="example-strategies-plot-stock-price-module"></span><h2>example_strategies.plot_stock_price module<a class="headerlink" href="#module-example_strategies.plot_stock_price" title="Permalink to this heading"></a></h2>

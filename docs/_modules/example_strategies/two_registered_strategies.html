@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>example_strategies.two_registered_strategies &mdash; Prototrade 0.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Prototrade
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../prototrade.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_strategies.html">Example Strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../common_errors.html">Common Errors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Prototrade</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">example_strategies.two_registered_strategies</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for example_strategies.two_registered_strategies</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">prototrade.strategy_registry</span> <span class="kn">import</span> <span class="n">StrategyRegistry</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../example_strategies.html#example_strategies.two_registered_strategies.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    We register two strategies here (both executing the same function but with different function parameters). </span>
+<span class="sd">    One strategy repeatedly places orders of low volume, whilst the other places orders with a higher volume.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pt</span> <span class="o">=</span> <span class="n">StrategyRegistry</span><span class="p">(</span><span class="s2">&quot;alpaca&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;AKFA6O7FWKEQ30SFPB9H&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;z6Cb3RW4lyp3ykub09tUHjdGF7aNYsGuqXh7WWJs&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;sip&quot;</span><span class="p">)</span>
+    <span class="n">pt</span><span class="o">.</span><span class="n">register_strategy</span><span class="p">(</span><span class="n">test_strategy</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># First variation of the strategy only places small volume orders</span>
+    <span class="n">pt</span><span class="o">.</span><span class="n">register_strategy</span><span class="p">(</span><span class="n">test_strategy</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="c1"># Second variation of the strategy places higher volume orders</span>
+    <span class="n">pt</span><span class="o">.</span><span class="n">run_strategies</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="test_strategy"><a class="viewcode-back" href="../../example_strategies.html#example_strategies.two_registered_strategies.test_strategy">[docs]</a><span class="k">def</span> <span class="nf">test_strategy</span><span class="p">(</span><span class="n">exchange</span><span class="p">,</span> <span class="n">lower_volume</span><span class="p">,</span> <span class="n">upper_volume</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Boilerplate strategy that retrieves the price of Apple stock and places a market order every 3 seconds.</span>
+<span class="sd">    Takes in two arguments, lower_volume and upper_volume. These illustrate how we can pass</span>
+<span class="sd">    in different parameters to alter the execution of the strategy.</span>
+
+<span class="sd">    :param exchange: The exchange object that the strategy uses to interact with the framework</span>
+<span class="sd">    :type exchange: :py:class:`Exchange &lt;prototrade.exchange.exchange.Exchange&gt;`</span>
+<span class="sd">    :param lower_volume: The lower bound for the order&#39;s random volume </span>
+<span class="sd">    :type lower_volume: int</span>
+<span class="sd">    :param upper_volume: The upper bound for the order&#39;s random volume</span>
+<span class="sd">    :type upper_volume: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Lower volume:</span><span class="si">{</span><span class="n">lower_volume</span><span class="si">}</span><span class="s2"> p2:</span><span class="si">{</span><span class="n">upper_volume</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">exchange</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">)</span> <span class="c1"># Subscribe to live data from Apple</span>
+    <span class="k">while</span> <span class="n">exchange</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
+        <span class="n">quotes</span> <span class="o">=</span> <span class="n">exchange</span><span class="o">.</span><span class="n">get_subscribed_quotes</span><span class="p">()</span>
+        <span class="n">aapl_price</span> <span class="o">=</span> <span class="n">quotes</span><span class="p">[</span><span class="s2">&quot;AAPL&quot;</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AAPL BID PRICE: </span><span class="si">{</span><span class="n">aapl_price</span><span class="o">.</span><span class="n">bid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AAPL ASK PRICE: </span><span class="si">{</span><span class="n">aapl_price</span><span class="o">.</span><span class="n">ask</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="n">exchange</span><span class="o">.</span><span class="n">create_order</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">,</span> <span class="s2">&quot;bid&quot;</span><span class="p">,</span> <span class="s2">&quot;market&quot;</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">lower_volume</span><span class="p">,</span> <span class="n">upper_volume</span><span class="p">))</span> <span class="c1"># Example of placing an order with random volume within the limits</span>
+
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">exchange</span><span class="o">.</span><span class="n">get_orders</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transactions:&quot;</span><span class="p">,</span> <span class="n">exchange</span><span class="o">.</span><span class="n">get_transactions</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Positions&quot;</span><span class="p">,</span> <span class="n">exchange</span><span class="o">.</span><span class="n">get_positions</span><span class="p">())</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---------------&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Strategy 0 FINISHED&quot;</span><span class="p">)</span></div>
+    
+
+<span class="c1"># Need this on Windows machines to avoid repeatedly spawning processes</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span> 
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Scott Parker.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
