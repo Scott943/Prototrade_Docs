@@ -5,7 +5,7 @@ Quickstart
 1. Ensure Python 3.8 or higher is installed (use :code:`python3 --version` to check)
 2. Use ``pip install prototrade -U`` to install the latest version of the package. 
 3. Create a new python file (e.g. ``script.py``) and paste in the `boilerplate strategy <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main>`_ .
-3. Ensure you have an API username and API key from `Alpaca <https://alpaca.markets/>`\ \*
+3. Ensure you have an API username and API key from `Alpaca <https://alpaca.markets/>`
 4. Place in your API username and API Key within the initaliser for the :py:class:`StrategyRegistry <prototrade.strategy_registry.StrategyRegistry>` class. 
 5. Use ``python3 script.py`` to run the boilerplate code. 
 
