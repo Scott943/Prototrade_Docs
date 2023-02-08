@@ -11,10 +11,35 @@ example\_strategies.minimal\_boilerplate module
    :undoc-members:
    :show-inheritance:
 
-example\_strategies.repeated\_market\_order module
+example\_strategies.two\_registered\_strategies module
 --------------------------------------------------
 
-.. automodule:: example_strategies.repeated_market_order
+.. automodule:: example_strategies.two_registerd_strategies
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+example\_strategies.plot\_stock\_price module
+--------------------------------------------------
+
+.. automodule:: example_strategies.plot_stock_price
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+example\_strategies.plot\_pnl module
+--------------------------------------------------
+
+.. automodule:: example_strategies.plot_pnl
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+example\_strategies.plot\_positions module
+--------------------------------------------------
+
+.. automodule:: example_strategies.plot_positions
    :members:
    :undoc-members:
    :show-inheritance:
