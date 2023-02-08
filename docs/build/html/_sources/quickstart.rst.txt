@@ -71,6 +71,7 @@ To graph PnL, you can use the :py:meth:`subscribe <prototrade.exchange.exchange.
 N.B. this function is expensive, so try to not use this every while loop.
 
 .. code-block:: python
+   
    pnl_over_time = exchange.get_pnl_over_time() # returns a list of lists.  
    pnl_df = pd.DataFrame(pnl_over_time, columns = ['timestamp', 'pnl']) # convert to dataframe
    plt.plot(pnl_df['timestamp'], pnl_df['pnl'])
