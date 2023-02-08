@@ -455,13 +455,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_rolling_pnl_list_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">pnl_list</span></div>
 
-<div class="viewcode-block" id="PositionManager.get_positions_over_time"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_positions_over_time">[docs]</a>    <span class="k">def</span> <span class="nf">get_positions_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol_filter</span><span class="p">):</span>
+<div class="viewcode-block" id="PositionManager.get_positions_over_time"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.position_manager.PositionManager.get_positions_over_time">[docs]</a>    <span class="k">def</span> <span class="nf">get_positions_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol_filter</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">positions</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">positions_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">csv_reader_positions</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">symbol_filter</span><span class="p">:</span> 
-                <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">symbol_filter</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">csv_reader_positions</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">symbol_filter</span><span class="p">:</span> 
+                    <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">positions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csv_reader_positions</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">positions</span><span class="p">:</span>
             <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">DATETIME_FORMAT</span><span class="p">)</span>

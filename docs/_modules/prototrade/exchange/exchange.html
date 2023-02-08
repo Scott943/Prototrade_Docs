@@ -328,7 +328,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position_manager</span><span class="o">.</span><span class="n">get_pnl_over_time</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Exchange.get_positions_over_time"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_positions_over_time">[docs]</a>    <span class="nd">@_position_manager_decorator</span>
-    <span class="k">def</span> <span class="nf">get_positions_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol_filter</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_positions_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol_filter</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrieves the positions dictionary over several time-intervals (since the strategy started)</span>
 
 <span class="sd">        :param symbol: The symbol to return positions over time for. If not specified, returns a dictionary of every symbol, defaults to *None*</span>

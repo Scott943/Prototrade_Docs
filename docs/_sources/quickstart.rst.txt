@@ -99,9 +99,30 @@ To graph how positions change over time, use the :py:meth:`get_positions_over_ti
 .. code-block:: python
 
    pos_over_time = exchange.get_positions_over_time("AAPL") # returns a list of lists. 
-   pos_df = pd.DataFrame(pos_over_time, columns = ['timestamp', 'symbol', 'position']) # convert to dataframe
-   plt.plot(pos_df['timestamp'], pos_df['position'])
-   plt.xlabel("TimeStamp")
-   plt.ylabel("AAPL Position Amount")
-   plt.gcf().autofmt_xdate()
-   plt.savefig("positions_for_strategy")
+   if pos_over_time:
+      pos_df = pd.DataFrame(pos_over_time, columns = ['timestamp', 'symbol', 'position']) # convert to dataframe
+      plt.plot(pos_df['timestamp'], pos_df['position'])
+      plt.xlabel("TimeStamp")
+      plt.ylabel("AAPL Position Amount")
+      plt.gcf().autofmt_xdate()
+      plt.savefig("positions_for_strategy")
+
+
+With a bit more effort, we can plot position data for multiple symbols on the same data. This is particularly useful
+when a strategy holds positions over multiple stocks (see `plotting positions multi <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/positions_for_strategy_multi.html#main>`_\ ).
+
+.. code-block:: python
+
+   if pos_over_time:
+      pos_df = pd.DataFrame(pos_over_time, columns = ['timestamp', 'symbol', 'position']) # convert to dataframe
+      fig, ax = plt.subplots()
+
+      for symbol in pos_df['symbol'].unique():
+         rows = pos_df[pos_df.symbol==symbol]
+         ax.step(rows.timestamp, rows.position,label=symbol)
+      
+      ax.set_xlabel("TimeStamp")
+      ax.set_ylabel("Position Amount")
+      ax.legend(loc='best')
+      plt.gcf().autofmt_xdate()
+      fig.savefig("positions_for_strategy_multi")
