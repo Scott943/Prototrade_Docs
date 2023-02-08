@@ -70,4 +70,13 @@ The following execerpt was taken from the `plotting stock prices <https://scott9
 To graph PnL, you can use the :py:meth:`subscribe <prototrade.exchange.exchange.Exchange.get_pnl_over_time>` method.
 N.B. this function is expensive, so try to not use this every while loop.
 
-The following excerpt is taken from the `plotting pnl <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_pnl.html#main>`_ example strategy.
+.. code-block:: python
+   pnl_over_time = exchange.get_pnl_over_time() # returns a list of lists.  
+   pnl_df = pd.DataFrame(pnl_over_time, columns = ['timestamp', 'pnl']) # convert to dataframe
+   plt.plot(pnl_df['timestamp'], pnl_df['pnl'])
+   plt.xlabel("TimeStamp")
+   plt.ylabel("Profit / Loss")
+   plt.gcf().autofmt_xdate()
+   plt.savefig("pnl_for_strategy")
+
+See `plotting pnl <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_pnl.html#main>`_ for a complete example of creating PnL graphs.
