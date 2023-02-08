@@ -51,6 +51,7 @@ Creating Graphs
 ---------------
 
 As an example of plotting graphs, we can use pandas and matplotlib:
+
 .. code-block:: python
 
    import pandas as pd
@@ -91,3 +92,16 @@ N.B. this function is expensive, so try to not use this every while loop.
 .. image:: images/pnl_for_strategy.png
 
 See `plotting pnl <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_pnl.html#main>`_ for a complete example of creating PnL graphs.
+
+
+To graph how positions change over time, use the :py:meth:`get_positions_over_time <prototrade.exchange.exchange.Exchange.get_positions_over_time>` method:
+
+.. code-block:: python
+
+   pos_over_time = exchange.get_positions_over_time("AAPL") # returns a list of lists. 
+   pos_df = pd.DataFrame(pos_over_time, columns = ['timestamp', 'symbol', 'position']) # convert to dataframe
+   plt.plot(pos_df['timestamp'], pos_df['position'])
+   plt.xlabel("TimeStamp")
+   plt.ylabel("AAPL Position Amount")
+   plt.gcf().autofmt_xdate()
+   plt.savefig("positions_for_strategy")

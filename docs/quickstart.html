@@ -129,12 +129,11 @@ With the paid subscription, you can change the market parameter to <code class="
 </section>
 <section id="creating-graphs">
 <h2>Creating Graphs<a class="headerlink" href="#creating-graphs" title="Permalink to this heading"></a></h2>
-<p>As an example of plotting graphs, we can use pandas and matplotlib:
-.. code-block:: python</p>
-<blockquote>
-<div><p>import pandas as pd
-import matplotlib.pyplot as plt</p>
-</div></blockquote>
+<p>As an example of plotting graphs, we can use pandas and matplotlib:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
 <p>To graph data for a particular stock, use the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.historical" title="prototrade.exchange.exchange.Exchange.historical"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Historical</span></code></a> property in the the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange" title="prototrade.exchange.exchange.Exchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exchange</span></code></a> class.</p>
 <p>The following execerpt was taken from the <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_pnl.html#main">plotting stock prices</a> example strategy.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">aapl_price_bars</span> <span class="o">=</span> <span class="n">exchange</span><span class="o">.</span><span class="n">historical</span><span class="o">.</span><span class="n">get_bars</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">,</span> <span class="s2">&quot;1minute&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-01-13&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-01-13&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">df</span>
@@ -163,6 +162,16 @@ N.B. this function is expensive, so try to not use this every while loop.</p>
 </div>
 <img alt="_images/pnl_for_strategy.png" src="_images/pnl_for_strategy.png" />
 <p>See <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_pnl.html#main">plotting pnl</a> for a complete example of creating PnL graphs.</p>
+<p>To graph how positions change over time, use the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_positions_over_time" title="prototrade.exchange.exchange.Exchange.get_positions_over_time"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_positions_over_time</span></code></a> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pos_over_time</span> <span class="o">=</span> <span class="n">exchange</span><span class="o">.</span><span class="n">get_positions_over_time</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">)</span> <span class="c1"># returns a list of lists.</span>
+<span class="n">pos_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pos_over_time</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="p">])</span> <span class="c1"># convert to dataframe</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pos_df</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">],</span> <span class="n">pos_df</span><span class="p">[</span><span class="s1">&#39;position&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;TimeStamp&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;AAPL Position Amount&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">autofmt_xdate</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;positions_for_strategy&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 </section>
 
