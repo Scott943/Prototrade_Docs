@@ -50,6 +50,12 @@ Registering Strategies for Execution
 Creating Graphs
 ---------------
 
+As an example of plotting graphs, we can use pandas and matplotlib:
+.. code-block:: python
+   
+   import pandas as pd
+   import matplotlib.pyplot as plt
+
 To graph data for a particular stock, use the :py:attr:`Historical <prototrade.exchange.exchange.Exchange.historical>` property in the the :py:class:`Exchange <prototrade.exchange.exchange.Exchange>` class.
 
 The following execerpt was taken from the `plotting stock prices <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_pnl.html#main>`_ example strategy.

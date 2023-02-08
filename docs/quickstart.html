@@ -129,6 +129,12 @@ With the paid subscription, you can change the market parameter to <code class="
 </section>
 <section id="creating-graphs">
 <h2>Creating Graphs<a class="headerlink" href="#creating-graphs" title="Permalink to this heading"></a></h2>
+<p>As an example of plotting graphs, we can use pandas and matplotlib:
+.. code-block:: python</p>
+<blockquote>
+<div><p>import pandas as pd
+import matplotlib.pyplot as plt</p>
+</div></blockquote>
 <p>To graph data for a particular stock, use the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.historical" title="prototrade.exchange.exchange.Exchange.historical"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Historical</span></code></a> property in the the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange" title="prototrade.exchange.exchange.Exchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exchange</span></code></a> class.</p>
 <p>The following execerpt was taken from the <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_pnl.html#main">plotting stock prices</a> example strategy.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">aapl_price_bars</span> <span class="o">=</span> <span class="n">exchange</span><span class="o">.</span><span class="n">historical</span><span class="o">.</span><span class="n">get_bars</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">,</span> <span class="s2">&quot;1minute&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-01-13&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-01-13&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">df</span>
