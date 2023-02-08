@@ -9,8 +9,8 @@ Quickstart
 4. Place in your API username and API Key within the initaliser for the :py:class:`StrategyRegistry <prototrade.strategy_registry.StrategyRegistry>` class. 
 5. Use ``python3 script.py`` to run the boilerplate code. 
 
-\* Alpaca offers a paid subscription alongside a free plan. The only market available with the free plan is `'iex'`.
-With the paid subscription, you can change the market parameter to `'sip'` to receive quotes across all US markets.
+\* Alpaca offers a paid subscription alongside a free plan. The only market available with the free plan is ``'iex'``.
+With the paid subscription, you can change the market parameter to ``'sip'`` to receive quotes across all US markets.
 
 Look at the tutorial below and the :py:mod:`Example Strategies <example_strategies>` section for more examples of how the framework operates.
 
