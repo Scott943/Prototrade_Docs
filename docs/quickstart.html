@@ -150,7 +150,7 @@ import matplotlib.pyplot as plt</p>
 </pre></div>
 </div>
 <img alt="_images/aapl_bars.png" src="_images/aapl_bars.png" />
-<p>To graph PnL, you can use the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_pnl_over_time" title="prototrade.exchange.exchange.Exchange.get_pnl_over_time"><code class="xref py py-meth docutils literal notranslate"><span class="pre">subscribe</span></code></a> method.
+<p>To graph profit and loss, you can use the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_pnl_over_time" title="prototrade.exchange.exchange.Exchange.get_pnl_over_time"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_pnl_over_time</span></code></a> method.
 N.B. this function is expensive, so try to not use this every while loop.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pnl_over_time</span> <span class="o">=</span> <span class="n">exchange</span><span class="o">.</span><span class="n">get_pnl_over_time</span><span class="p">()</span> <span class="c1"># returns a list of lists.</span>
 <span class="n">pnl_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pnl_over_time</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;pnl&#39;</span><span class="p">])</span> <span class="c1"># convert to dataframe</span>

@@ -52,7 +52,7 @@ Creating Graphs
 
 As an example of plotting graphs, we can use pandas and matplotlib:
 .. code-block:: python
-   
+
    import pandas as pd
    import matplotlib.pyplot as plt
 
@@ -75,7 +75,7 @@ The following execerpt was taken from the `plotting stock prices <https://scott9
 
 .. image:: images/aapl_bars.png
    
-To graph PnL, you can use the :py:meth:`subscribe <prototrade.exchange.exchange.Exchange.get_pnl_over_time>` method.
+To graph profit and loss, you can use the :py:meth:`get_pnl_over_time <prototrade.exchange.exchange.Exchange.get_pnl_over_time>` method.
 N.B. this function is expensive, so try to not use this every while loop.
 
 .. code-block:: python
