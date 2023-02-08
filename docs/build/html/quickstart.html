@@ -175,7 +175,9 @@ N.B. this function is expensive, so try to not use this every while loop.</p>
 </pre></div>
 </div>
 <img alt="_images/positions_for_strategy.png" src="_images/positions_for_strategy.png" />
-<p>With a bit more effort, we can plot position data for multiple symbols on the same data. This is particularly useful
+<p>Like <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_pnl_over_time" title="prototrade.exchange.exchange.Exchange.get_pnl_over_time"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_pnl_over_time</span></code></a>, the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_positions_over_time" title="prototrade.exchange.exchange.Exchange.get_positions_over_time"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_positions_over_time</span></code></a> function
+is also expensive, as it reads &amp; parses data from a CSV file.
+With a bit more effort, we can plot position data for multiple symbols on the same data. This is particularly useful
 when a strategy holds positions over multiple stocks (see <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_positions_multi.html#main">plotting positions multi</a>).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pos_over_time</span> <span class="o">=</span> <span class="n">exchange</span><span class="o">.</span><span class="n">get_positions_over_time</span><span class="p">()</span> <span class="c1"># retrieves position data on all stocks</span>
 <span class="k">if</span> <span class="n">pos_over_time</span><span class="p">:</span>

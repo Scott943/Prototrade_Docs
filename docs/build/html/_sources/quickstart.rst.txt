@@ -110,7 +110,8 @@ To graph how positions change over time, use the :py:meth:`get_positions_over_ti
 
 .. image:: images/positions_for_strategy.png
 
-
+Like :py:meth:`get_pnl_over_time <prototrade.exchange.exchange.Exchange.get_pnl_over_time>`\ , the :py:meth:`get_positions_over_time <prototrade.exchange.exchange.Exchange.get_positions_over_time>` function
+is also expensive, as it reads & parses data from a CSV file.
 With a bit more effort, we can plot position data for multiple symbols on the same data. This is particularly useful
 when a strategy holds positions over multiple stocks (see `plotting positions multi <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_positions_multi.html#main>`_\ ).
 
