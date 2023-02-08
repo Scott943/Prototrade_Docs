@@ -133,3 +133,5 @@ when a strategy holds positions over multiple stocks (see `plotting positions mu
       fig.savefig("positions_for_strategy_multi")
 
 .. image:: images/positions_for_strategy_multi.png
+
+Evidently the strategy used to produce the graph above purchases larges amounts of ``AAPL`` stock compared to smaller amounts of ``PLTR`` and ``MSFT``.
