@@ -143,6 +143,7 @@ With the paid subscription, you can change the market parameter to <code class="
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;aapl_bars&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<img alt="_images/aapl_bars.png" src="_images/aapl_bars.png" />
 <p>To graph PnL, you can use the <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_pnl_over_time" title="prototrade.exchange.exchange.Exchange.get_pnl_over_time"><code class="xref py py-meth docutils literal notranslate"><span class="pre">subscribe</span></code></a> method.
 N.B. this function is expensive, so try to not use this every while loop.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pnl_over_time</span> <span class="o">=</span> <span class="n">exchange</span><span class="o">.</span><span class="n">get_pnl_over_time</span><span class="p">()</span> <span class="c1"># returns a list of lists.</span>
@@ -154,6 +155,7 @@ N.B. this function is expensive, so try to not use this every while loop.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;pnl_for_strategy&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<img alt="_images/pnl_for_strategy.png" src="_images/pnl_for_strategy.png" />
 <p>See <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/plot_pnl.html#main">plotting pnl</a> for a complete example of creating PnL graphs.</p>
 </section>
 </section>
