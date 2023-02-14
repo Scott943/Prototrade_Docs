@@ -42,6 +42,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../example_strategies.html">Example Strategies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../common_errors.html">Common Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../graphing.html">Graphing</a></li>
 </ul>
 
         </div>
@@ -77,8 +78,9 @@
 <span class="kn">import</span> <span class="nn">matplotlib</span>
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../example_strategies.html#example_strategies.plot_positions_multi.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Here we register a single strategy that repeatedly places a market order for Apple with a volume of 5.</span>
+    <span class="sd">&quot;&quot;&quot;We register a strategy that saves a .png of positions</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Starting&quot;</span><span class="p">)</span>
     <span class="n">pt</span> <span class="o">=</span> <span class="n">StrategyRegistry</span><span class="p">(</span><span class="s2">&quot;alpaca&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;AKFA6O7FWKEQ30SFPB9H&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;z6Cb3RW4lyp3ykub09tUHjdGF7aNYsGuqXh7WWJs&quot;</span><span class="p">,</span>
@@ -89,12 +91,11 @@
 
 
 <div class="viewcode-block" id="test_strategy"><a class="viewcode-back" href="../../example_strategies.html#example_strategies.plot_positions_multi.test_strategy">[docs]</a><span class="k">def</span> <span class="nf">test_strategy</span><span class="p">(</span><span class="n">exchange</span><span class="p">,</span> <span class="n">lower_vol_1</span><span class="p">,</span> <span class="n">upper_vol_1</span><span class="p">,</span> <span class="n">lower_vol_2</span><span class="p">,</span> <span class="n">upper_vol_2</span><span class="p">,</span> <span class="n">lower_vol_3</span><span class="p">,</span> <span class="n">upper_vol_3</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Boilerplate strategy that retrieves the price of Apple stock and places a market order every 3 seconds</span>
+    <span class="sd">&quot;&quot;&quot;Saves a .png every second of the number of PLTR, AAPL and MSFT positions that the strategy current holds</span>
 
 <span class="sd">    :param exchange: The exchange object that the strategy uses to interact with the framework</span>
 <span class="sd">    :type exchange: :py:class:`Exchange &lt;prototrade.exchange.exchange.Exchange&gt;`</span>
-<span class="sd">    :param vol_per_order: An example strategy argument where we specify the volume to use for each order</span>
-<span class="sd">    :type vol_per_order: int</span>
+<span class="sd">    :param \*\ args: The volume parameters are used to specifiy the random.randrange arguments when placing market orders</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">exchange</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">)</span> <span class="c1"># Subscribe to live data from Apple</span>
     <span class="n">exchange</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s1">&#39;PLTR&#39;</span><span class="p">)</span>

@@ -42,6 +42,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../example_strategies.html">Example Strategies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../common_errors.html">Common Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../graphing.html">Graphing</a></li>
 </ul>
 
         </div>
@@ -75,7 +76,7 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../example_strategies.html#example_strategies.plot_pnl.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Here we register a single strategy that repeatedly places a market order for Apple with a volume of 5.</span>
+    <span class="sd">&quot;&quot;&quot;Strategy that saves a png of the PnL every 3 seconds</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">pt</span> <span class="o">=</span> <span class="n">StrategyRegistry</span><span class="p">(</span><span class="s2">&quot;alpaca&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;AKFA6O7FWKEQ30SFPB9H&quot;</span><span class="p">,</span>
@@ -87,8 +88,7 @@
 
 
 <div class="viewcode-block" id="test_strategy"><a class="viewcode-back" href="../../example_strategies.html#example_strategies.plot_pnl.test_strategy">[docs]</a><span class="k">def</span> <span class="nf">test_strategy</span><span class="p">(</span><span class="n">exchange</span><span class="p">,</span> <span class="n">vol_per_order</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Boilerplate strategy that retrieves the price of Apple stock and places a market order every 3 seconds</span>
-
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :param exchange: The exchange object that the strategy uses to interact with the framework</span>
 <span class="sd">    :type exchange: :py:class:`Exchange &lt;prototrade.exchange.exchange.Exchange&gt;`</span>
 <span class="sd">    :param vol_per_order: An example strategy argument where we specify the volume to use for each order</span>

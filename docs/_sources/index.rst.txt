@@ -14,6 +14,7 @@ Welcome to prototrade's documentation!
    example_strategies
    quickstart
    common_errors
+   graphing
 
 Indices and tables
 ==================

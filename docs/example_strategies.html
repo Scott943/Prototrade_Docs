@@ -81,6 +81,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="common_errors.html">Common Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphing.html">Graphing</a></li>
 </ul>
 
         </div>
@@ -194,7 +195,7 @@ in different parameters to alter the execution of the strategy.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="example_strategies.plot_pnl.main">
 <span class="sig-prename descclassname"><span class="pre">example_strategies.plot_pnl.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/example_strategies/plot_pnl.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#example_strategies.plot_pnl.main" title="Permalink to this definition"></a></dt>
-<dd><p>Here we register a single strategy that repeatedly places a market order for Apple with a volume of 5.</p>
+<dd><p>Strategy that saves a png of the PnL every 3 seconds</p>
 </dd></dl>
 
 <dl class="py function">
@@ -205,8 +206,7 @@ in different parameters to alter the execution of the strategy.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="example_strategies.plot_pnl.test_strategy">
 <span class="sig-prename descclassname"><span class="pre">example_strategies.plot_pnl.</span></span><span class="sig-name descname"><span class="pre">test_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exchange</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_per_order</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/example_strategies/plot_pnl.html#test_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#example_strategies.plot_pnl.test_strategy" title="Permalink to this definition"></a></dt>
-<dd><p>Boilerplate strategy that retrieves the price of Apple stock and places a market order every 3 seconds</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>exchange</strong> (<a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange" title="prototrade.exchange.exchange.Exchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exchange</span></code></a>) – The exchange object that the strategy uses to interact with the framework</p></li>
@@ -222,7 +222,7 @@ in different parameters to alter the execution of the strategy.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="example_strategies.plot_positions.main">
 <span class="sig-prename descclassname"><span class="pre">example_strategies.plot_positions.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/example_strategies/plot_positions.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#example_strategies.plot_positions.main" title="Permalink to this definition"></a></dt>
-<dd><p>Here we register a single strategy that repeatedly places a market order for Apple with a volume of 5.</p>
+<dd><p>Register a strategy that saves a .png of the positions held by the strategy</p>
 </dd></dl>
 
 <dl class="py function">
@@ -233,13 +233,10 @@ in different parameters to alter the execution of the strategy.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="example_strategies.plot_positions.test_strategy">
 <span class="sig-prename descclassname"><span class="pre">example_strategies.plot_positions.</span></span><span class="sig-name descname"><span class="pre">test_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exchange</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/example_strategies/plot_positions.html#test_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#example_strategies.plot_positions.test_strategy" title="Permalink to this definition"></a></dt>
-<dd><p>Boilerplate strategy that retrieves the price of Apple stock and places a market order every 3 seconds</p>
+<dd><p>Register a strategy that saves a .png of the positions held by the strategy</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>exchange</strong> (<a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange" title="prototrade.exchange.exchange.Exchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exchange</span></code></a>) – The exchange object that the strategy uses to interact with the framework</p></li>
-<li><p><strong>vol_per_order</strong> (<em>int</em>) – An example strategy argument where we specify the volume to use for each order</p></li>
-</ul>
+<dd class="field-odd"><p><strong>exchange</strong> (<a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange" title="prototrade.exchange.exchange.Exchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exchange</span></code></a>) – The exchange object that the strategy uses to interact with the framework</p>
 </dd>
 </dl>
 </dd></dl>
@@ -250,7 +247,7 @@ in different parameters to alter the execution of the strategy.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="example_strategies.plot_positions_multi.main">
 <span class="sig-prename descclassname"><span class="pre">example_strategies.plot_positions_multi.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/example_strategies/plot_positions_multi.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#example_strategies.plot_positions_multi.main" title="Permalink to this definition"></a></dt>
-<dd><p>Here we register a single strategy that repeatedly places a market order for Apple with a volume of 5.</p>
+<dd><p>We register a strategy that saves a .png of positions</p>
 </dd></dl>
 
 <dl class="py function">
@@ -261,12 +258,12 @@ in different parameters to alter the execution of the strategy.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="example_strategies.plot_positions_multi.test_strategy">
 <span class="sig-prename descclassname"><span class="pre">example_strategies.plot_positions_multi.</span></span><span class="sig-name descname"><span class="pre">test_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exchange</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_vol_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_vol_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_vol_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_vol_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_vol_3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_vol_3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/example_strategies/plot_positions_multi.html#test_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#example_strategies.plot_positions_multi.test_strategy" title="Permalink to this definition"></a></dt>
-<dd><p>Boilerplate strategy that retrieves the price of Apple stock and places a market order every 3 seconds</p>
+<dd><p>Saves a .png every second of the number of PLTR, AAPL and MSFT positions that the strategy current holds</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>exchange</strong> (<a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange" title="prototrade.exchange.exchange.Exchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exchange</span></code></a>) – The exchange object that the strategy uses to interact with the framework</p></li>
-<li><p><strong>vol_per_order</strong> (<em>int</em>) – An example strategy argument where we specify the volume to use for each order</p></li>
+<li><p><strong>*args</strong> – The volume parameters are used to specifiy the random.randrange arguments when placing market orders</p></li>
 </ul>
 </dd>
 </dl>

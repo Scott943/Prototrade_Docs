@@ -42,6 +42,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../example_strategies.html">Example Strategies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../common_errors.html">Common Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../graphing.html">Graphing</a></li>
 </ul>
 
         </div>
@@ -69,8 +70,15 @@
            <div itemprop="articleBody">
              
   <h1>Source code for prototrade.strategy_registry</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
-<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Manager</span><span class="p">,</span> <span class="n">Pool</span>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;-</span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="c1"># logger.getLogger(&#39;websockets&#39;).setLevel(&#39;INFO&#39;)</span>
+
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Manager</span><span class="p">,</span> <span class="n">Pool</span><span class="p">,</span> <span class="n">Process</span>
 <span class="kn">from</span> <span class="nn">multiprocessing.managers</span> <span class="kn">import</span> <span class="n">BaseManager</span><span class="p">,</span> <span class="n">NamespaceProxy</span>
 <span class="kn">from</span> <span class="nn">prototrade.ticker_streamer.alpaca_streamer</span> <span class="kn">import</span> <span class="n">AlpacaDataStreamer</span>
 <span class="kn">from</span> <span class="nn">prototrade.ticker_streamer.price_updater</span> <span class="kn">import</span> <span class="n">PriceUpdater</span>
@@ -82,14 +90,14 @@
 <span class="kn">from</span> <span class="nn">prototrade.exceptions.exceptions</span> <span class="kn">import</span> <span class="n">ExchangeNotOpenException</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">prototrade.file_manager.file_manager</span> <span class="kn">import</span> <span class="n">FileManager</span>
+<span class="kn">from</span> <span class="nn">prototrade.models.strategy_file_locks</span> <span class="kn">import</span> <span class="n">_StrategyLocks</span>
+<span class="kn">from</span> <span class="nn">prototrade.grapher.grapher</span> <span class="kn">import</span> <span class="n">_Grapher</span>
 
 <span class="kn">import</span> <span class="nn">traceback</span>
 <span class="kn">import</span> <span class="nn">signal</span>
-<span class="kn">import</span> <span class="nn">logging</span>
+
 
 <span class="n">SENTINEL</span> <span class="o">=</span> <span class="kc">None</span>
-
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
 
 <div class="viewcode-block" id="StrategyRegistry"><a class="viewcode-back" href="../../prototrade.html#prototrade.strategy_registry.StrategyRegistry">[docs]</a><span class="k">class</span> <span class="nc">StrategyRegistry</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;The master class used for initialising &amp; running the framework. Handles allocating processes to each of the registered strategies.</span>
@@ -129,17 +137,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_streamer</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_strategy_process_pool</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_rest_api_manager</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_custom_obj_manager</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_subscription_manager</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_subscription_queue</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_error_queue</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_error_processor</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file_manager</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_graphing_process</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">num_strategies</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># This will be incremented when strategies are added</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_strategy_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file_locks</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">def</span> <span class="nf">_create_processes_for_strategies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of strategies: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_strategies</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of strategies: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_strategies</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="c1"># Temporarily ignore SIGINT to prevent interrupts being handled in child processes</span>
         <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIG_IGN</span><span class="p">)</span>
@@ -149,67 +160,83 @@
         <span class="c1"># Windows only supports spawning processes (instead of forking), so design design has been taking to always spawn regardless of operating system</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_strategy_process_pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">get_context</span><span class="p">(</span><span class="s1">&#39;spawn&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">num_strategies</span><span class="p">)</span>  <span class="c1"># USE SPAWN HERE? Check bloat</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">num_strategies</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># USE SPAWN HERE? Check bloat</span>
         <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span>
 
         <span class="c1"># Set the handler for SIGINT. Now SIGINT is only handled in the main process</span>
         <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exit_handler</span><span class="p">)</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Creating strategy processes&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Creating strategy processes&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span> <span class="o">=</span> <span class="n">FileManager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_data_location</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_strategies</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_file_locks</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file_manager</span> <span class="o">=</span> <span class="n">FileManager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_data_location</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_strategies</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_locks</span><span class="p">)</span>
         
+        <span class="bp">self</span><span class="o">.</span><span class="n">_graphing_process</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">create_grapher</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_error_queue</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_manager</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_locks</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_strategies</span><span class="p">,))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_graphing_process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
         <span class="k">for</span> <span class="n">strategy_num</span><span class="p">,</span> <span class="n">strategy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_strategy_list</span><span class="p">):</span>
-            <span class="n">save_data_location_for_strategy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span><span class="o">.</span><span class="n">get_strategy_save_location</span><span class="p">(</span><span class="n">strategy_num</span><span class="p">)</span>
+            <span class="n">save_data_location_for_strategy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_manager</span><span class="o">.</span><span class="n">get_strategy_save_location</span><span class="p">(</span><span class="n">strategy_num</span><span class="p">)</span>
+            <span class="n">file_locks_for_strategy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_locks</span><span class="p">[</span><span class="n">strategy_num</span><span class="p">]</span>
+
             <span class="n">exchange</span> <span class="o">=</span> <span class="n">Exchange</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscription_queue</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_queue</span><span class="p">,</span> <span class="n">strategy_num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_historical_api</span><span class="p">,</span> <span class="n">save_data_location_for_strategy</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;TEST&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_books_dict_semaphore</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscription_queue</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_queue</span><span class="p">,</span> <span class="n">strategy_num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_historical_api</span><span class="p">,</span> <span class="n">save_data_location_for_strategy</span><span class="p">,</span> <span class="n">file_locks_for_strategy</span><span class="p">)</span>
+
             <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_strategy_process_pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span>
                 <span class="n">_run_strategy</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_error_queue</span><span class="p">,</span> <span class="n">strategy</span><span class="o">.</span><span class="n">strategy_func</span><span class="p">,</span> <span class="n">exchange</span><span class="p">,</span> <span class="o">*</span><span class="n">strategy</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Started strategy </span><span class="si">{</span><span class="n">strategy_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Started strategy </span><span class="si">{</span><span class="n">strategy_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Started strategies&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Started strategies&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_error_processor</span><span class="o">.</span><span class="n">_join_thread</span><span class="p">()</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Error processing thread joined&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error processing thread joined&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">should_exit</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Stopping Program&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Stopping Program&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>  <span class="c1"># Inform child processes to stop</span>
 
-        <span class="c1"># logging.info(self._error_processor.exception)</span>
+        <span class="c1"># logger.info(self._error_processor.exception)</span>
         <span class="c1"># Prevents any other task from being submitted</span>
+
+        <span class="c1"># close file manager before closing processes</span>
+        <span class="c1"># if self._file_manager:</span>
+        <span class="c1">#     self._file_manager.stop()</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_strategy_process_pool</span><span class="p">:</span>  <span class="c1"># Only close pool if it was opened</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Joining processes&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Joining strategy processes&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_strategy_process_pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_strategy_process_pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>  <span class="c1"># Wait for child processes to finish</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Processes terminated&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Processes strategy terminated&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graphing_process</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Joining graph process&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_graphing_process</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Graph process joined&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscription_manager</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_subscription_manager</span><span class="o">.</span><span class="n">stop_queue_polling</span><span class="p">()</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Subscription manager stopped&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Subscription manager stopped&quot;</span><span class="p">)</span>
 
         <span class="c1"># Clean up processes before the streamer as processes rely on streamer</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_api_manager</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_rest_api_manager</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_custom_obj_manager</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_custom_obj_manager</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_streamer</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_streamer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Streamer stopped&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Streamer stopped&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_processor</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_processor</span><span class="o">.</span><span class="n">is_error</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_error_processor</span><span class="o">.</span><span class="n">exception</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PE: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_error_processor</span><span class="o">.</span><span class="n">exception</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_error_processor</span><span class="o">.</span><span class="n">_stop_queue_polling</span><span class="p">()</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Error processor stopped&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error processor stopped&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">should_exit</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Exiting&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Exiting&quot;</span><span class="p">)</span>
             <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># All user work done so can exit</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No exit in stop()&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No exit in stop()&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_create_shared_memory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_readers</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
@@ -221,7 +248,7 @@
 
     <span class="k">def</span> <span class="nf">_exit_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signum</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">signum</span> <span class="o">==</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Stopping...&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Stopping...&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_setup_finished</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
@@ -267,7 +294,8 @@
             <span class="k">raise</span> <span class="n">ExchangeNotOpenException</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The live exchange is currently closed. Try again during trading hours&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_create_shared_rest_api_class</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_custom_obj_manager</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_shared_api_class</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_subscription_queue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
 
@@ -278,7 +306,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_error_processor</span> <span class="o">=</span> <span class="n">ErrorProcessor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_error_queue</span><span class="p">,</span> <span class="n">SENTINEL</span><span class="p">)</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Creating streamer&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Creating streamer&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_setup_finished</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pre_setup_terminate</span><span class="p">:</span>
@@ -286,37 +314,63 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_create_processes_for_strategies</span><span class="p">()</span>
 
-    <span class="c1"># This creates a REST api object that is shareable across strategy processes. This means the user can query historical data</span>
-    <span class="k">def</span> <span class="nf">_create_shared_rest_api_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_register_custom_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">_CustomManager</span><span class="o">.</span><span class="n">register</span><span class="p">(</span>
             <span class="s1">&#39;HistoricalAPI&#39;</span><span class="p">,</span> <span class="n">_HistoricalAPI</span><span class="p">,</span> <span class="n">_HistoricalAPIProxy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_rest_api_manager</span> <span class="o">=</span> <span class="n">_CustomManager</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_rest_api_manager</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="n">rest_api</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_api_manager</span><span class="o">.</span><span class="n">HistoricalAPI</span><span class="p">(</span>
+        <span class="n">_CustomManager</span><span class="o">.</span><span class="n">register</span><span class="p">(</span>
+            <span class="s1">&#39;FileManager&#39;</span><span class="p">,</span> <span class="n">FileManager</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_start_custom_obj_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_custom_objects</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_custom_obj_manager</span> <span class="o">=</span> <span class="n">_CustomManager</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_custom_obj_manager</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># This creates a REST api object that is shareable across strategy processes. This means the user can query historical data</span>
+    <span class="k">def</span> <span class="nf">_create_shared_api_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rest_api</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_custom_obj_manager</span><span class="o">.</span><span class="n">HistoricalAPI</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_streamer</span><span class="o">.</span><span class="n">get_rest_api</span><span class="p">())</span>  <span class="c1"># Pass in the actual rest api as a parameter</span>
         <span class="c1"># Get the api object within the class wrapper</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_historical_api</span> <span class="o">=</span> <span class="n">rest_api</span><span class="o">.</span><span class="n">api</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_historical_api</span> <span class="o">=</span> <span class="n">rest_api</span><span class="o">.</span><span class="n">api</span>
+
+<div class="viewcode-block" id="StrategyRegistry.create_file_locks"><a class="viewcode-back" href="../../prototrade.html#prototrade.strategy_registry.StrategyRegistry.create_file_locks">[docs]</a>    <span class="k">def</span> <span class="nf">create_file_locks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_strategies</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_file_locks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_StrategyLocks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">Lock</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">Lock</span><span class="p">()))</span> <span class="c1">#cannot be created inside FileManager as its a shared object</span></div></div>
+
 
 <span class="c1"># This has to be outside the class, as otherwise all class members would have to be pickled when sending arguments to the new process</span>
-
-
 <span class="k">def</span> <span class="nf">_run_strategy</span><span class="p">(</span><span class="n">error_queue</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">exchange</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>  <span class="c1"># Wrap the user strategy in a try/catch block so we can catch any errors and forward them to the main process</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running </span><span class="si">{</span><span class="n">exchange</span><span class="o">.</span><span class="n">exchange_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running </span><span class="si">{</span><span class="n">exchange</span><span class="o">.</span><span class="n">exchange_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">func</span><span class="p">(</span><span class="n">exchange</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>       
             <span class="n">_handle_error</span><span class="p">(</span><span class="n">error_queue</span><span class="p">,</span> <span class="n">exchange</span><span class="o">.</span><span class="n">exchange_num</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e2</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;During handling of a strategy error, another error occured: </span><span class="si">{</span><span class="n">e2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">exchange</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span> <span class="c1"># stop and cleanup main thread in exchange</span>
         <span class="c1"># At this point the process has finished and can be joined with the main process</span>
 
+<div class="viewcode-block" id="create_grapher"><a class="viewcode-back" href="../../prototrade.html#prototrade.strategy_registry.create_grapher">[docs]</a><span class="k">def</span> <span class="nf">create_grapher</span><span class="p">(</span><span class="n">error_queue</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>  <span class="c1"># Wrap the user strategy in a try/catch block so we can catch any errors and forward them to the main process</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">_Grapher</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">run_dash_app</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;G ERROR: </span><span class="si">{</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">_handle_error</span><span class="p">(</span><span class="n">error_queue</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e2</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;During handling of a graphing error, another error occured: </span><span class="si">{</span><span class="n">e2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">g</span><span class="p">:</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span> <span class="c1"># stop grapher cleanly (e.g. remove locks)</span></div>
 
 <span class="k">def</span> <span class="nf">_handle_error</span><span class="p">(</span><span class="n">error_queue</span><span class="p">,</span> <span class="n">exchange_num</span><span class="p">):</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Process </span><span class="si">{</span><span class="n">exchange_num</span><span class="si">}</span><span class="s2"> EXCEPTION&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Process </span><span class="si">{</span><span class="n">exchange_num</span><span class="si">}</span><span class="s2"> EXCEPTION&quot;</span><span class="p">)</span>
     <span class="c1"># Get a string with full original stack trace</span>
     <span class="n">exception_info</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
     <span class="n">error_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">ErrorEvent</span><span class="p">(</span><span class="n">exchange_num</span><span class="p">,</span> <span class="n">exception_info</span><span class="p">))</span>
@@ -332,6 +386,12 @@
     <span class="c1"># We need to expose the same __dunder__ methods as NamespaceProxy,</span>
     <span class="c1"># in addition to the b method.</span>
     <span class="n">_exposed_</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;__getattribute__&#39;</span><span class="p">,</span> <span class="s1">&#39;__setattr__&#39;</span><span class="p">,</span> <span class="s1">&#39;__delattr__&#39;</span><span class="p">,</span> <span class="s1">&#39;api&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_FileManagerProxy</span><span class="p">(</span><span class="n">NamespaceProxy</span><span class="p">):</span>
+    <span class="c1"># We need to expose the same __dunder__ methods as NamespaceProxy,</span>
+    <span class="c1"># in addition to the b method.</span>
+    <span class="n">_exposed_</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;__getattribute__&#39;</span><span class="p">,</span> <span class="s1">&#39;__setattr__&#39;</span><span class="p">,</span> <span class="s1">&#39;__delattr__&#39;</span><span class="p">,</span> <span class="s1">&#39;pnl_file_pointers&#39;</span><span class="p">,</span> <span class="s1">&#39;pos_file_pointers&#39;</span><span class="p">)</span>
 
 </pre></div>
 

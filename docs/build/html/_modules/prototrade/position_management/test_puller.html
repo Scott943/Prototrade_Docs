@@ -42,6 +42,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../example_strategies.html">Example Strategies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../common_errors.html">Common Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../graphing.html">Graphing</a></li>
 </ul>
 
         </div>
@@ -84,25 +85,25 @@
       <span class="bp">self</span><span class="o">.</span><span class="n">stop_event</span> <span class="o">=</span> <span class="n">stop_event</span>
      
 <div class="viewcode-block" id="TestPuller.test_pull"><a class="viewcode-back" href="../../../prototrade.position_management.html#prototrade.position_management.test_puller.TestPuller.test_pull">[docs]</a>   <span class="k">def</span> <span class="nf">test_pull</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;TESTS&quot;</span><span class="p">)</span>
+      <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;TESTS&quot;</span><span class="p">)</span>
       <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">order_books_dict_semaphore</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
          <span class="n">symbol</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_symbols</span><span class="p">)</span>
 
          <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_books_dict</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">order_books_dict_semaphore</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;strategy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy_num</span><span class="si">}</span><span class="s2"> tries to pull, but no quote for </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;strategy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy_num</span><span class="si">}</span><span class="s2"> tries to pull, but no quote for </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">continue</span>
 
          <span class="n">quote</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_books_dict</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span>
 
          <span class="bp">self</span><span class="o">.</span><span class="n">order_books_dict_semaphore</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
          
-         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;strategy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy_num</span><span class="si">}</span><span class="s2"> pulled: </span><span class="se">\n</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;strategy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy_num</span><span class="si">}</span><span class="s2"> pulled: </span><span class="se">\n</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
          <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.2</span><span class="p">))</span>
       
-      <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Positions Manager </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy_num</span><span class="si">}</span><span class="s2"> stopping&quot;</span><span class="p">)</span></div></div>
+      <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Positions Manager </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy_num</span><span class="si">}</span><span class="s2"> stopping&quot;</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

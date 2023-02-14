@@ -50,10 +50,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-prototrade.strategy_registry">prototrade.strategy_registry module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#prototrade.strategy_registry.StrategyRegistry"><code class="docutils literal notranslate"><span class="pre">StrategyRegistry</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prototrade.strategy_registry.StrategyRegistry.create_file_locks"><code class="docutils literal notranslate"><span class="pre">StrategyRegistry.create_file_locks()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#prototrade.strategy_registry.StrategyRegistry.register_strategy"><code class="docutils literal notranslate"><span class="pre">StrategyRegistry.register_strategy()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#prototrade.strategy_registry.StrategyRegistry.run_strategies"><code class="docutils literal notranslate"><span class="pre">StrategyRegistry.run_strategies()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#prototrade.strategy_registry.create_grapher"><code class="docutils literal notranslate"><span class="pre">create_grapher()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -61,6 +63,7 @@
 <li class="toctree-l1"><a class="reference internal" href="example_strategies.html">Example Strategies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="common_errors.html">Common Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphing.html">Graphing</a></li>
 </ul>
 
         </div>
@@ -193,6 +196,11 @@
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="prototrade.strategy_registry.StrategyRegistry.create_file_locks">
+<span class="sig-name descname"><span class="pre">create_file_locks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/strategy_registry.html#StrategyRegistry.create_file_locks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.strategy_registry.StrategyRegistry.create_file_locks" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="prototrade.strategy_registry.StrategyRegistry.register_strategy">
 <span class="sig-name descname"><span class="pre">register_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strategy_func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/strategy_registry.html#StrategyRegistry.register_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.strategy_registry.StrategyRegistry.register_strategy" title="Permalink to this definition"></a></dt>
 <dd><p>Register a function to be executed. Include any arguments that the strategy function should be provided (any number of arguments is permissible). N.B. When the strategies are started, each strategy function
@@ -214,6 +222,11 @@ is always provided with an <a class="reference internal" href="prototrade.exchan
 </dd></dl>
 
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="prototrade.strategy_registry.create_grapher">
+<span class="sig-prename descclassname"><span class="pre">prototrade.strategy_registry.</span></span><span class="sig-name descname"><span class="pre">create_grapher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_queue</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/strategy_registry.html#create_grapher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.strategy_registry.create_grapher" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 </section>
 </section>

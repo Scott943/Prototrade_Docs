@@ -42,6 +42,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../example_strategies.html">Example Strategies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../common_errors.html">Common Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../graphing.html">Graphing</a></li>
 </ul>
 
         </div>
@@ -69,11 +70,15 @@
            <div itemprop="articleBody">
              
   <h1>Source code for prototrade.ticker_streamer.subscription_manager</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">prototrade.models.subscription_event</span> <span class="kn">import</span> <span class="n">SubscribeType</span>
 <span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
-<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">prototrade.exceptions.exceptions</span> <span class="kn">import</span> <span class="n">UnavailableSymbolException</span>
+
 
 <div class="viewcode-block" id="SubscriptionManager"><a class="viewcode-back" href="../../../prototrade.ticker_streamer.html#prototrade.ticker_streamer.subscription_manager.SubscriptionManager">[docs]</a><span class="k">class</span> <span class="nc">SubscriptionManager</span><span class="p">:</span>
 
@@ -92,28 +97,28 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_streamer</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">symbol_to_strategies_dict</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">strategy_num</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Strategy </span><span class="si">{</span><span class="n">strategy_num</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2"> subscribes to </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Strategy </span><span class="si">{</span><span class="n">strategy_num</span><span class="si">}</span><span class="s2"> subscribes to </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">symbol_to_strategies_dict</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">strategy_num</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Strategy </span><span class="si">{</span><span class="n">strategy_num</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2"> subscribes to </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">. Entry added&quot;</span><span class="p">)</span></div>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Strategy </span><span class="si">{</span><span class="n">strategy_num</span><span class="si">}</span><span class="s2"> subscribes to </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">. Entry added&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SubscriptionManager.unsubscribe"><a class="viewcode-back" href="../../../prototrade.ticker_streamer.html#prototrade.ticker_streamer.subscription_manager.SubscriptionManager.unsubscribe">[docs]</a>    <span class="k">def</span> <span class="nf">unsubscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy_num</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_to_strategies_dict</span> <span class="ow">or</span> <span class="n">strategy_num</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_to_strategies_dict</span><span class="p">[</span><span class="n">symbol</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="n">UnavailableSymbolException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Strategy </span><span class="si">{</span><span class="n">strategy_num</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2"> attempted to unsubscribe from &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39;, which is not subscribed to&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">UnavailableSymbolException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Strategy </span><span class="si">{</span><span class="n">strategy_num</span><span class="si">}</span><span class="s2"> attempted to unsubscribe from &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39;, which is not subscribed to&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">symbol_to_strategies_dict</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">strategy_num</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Strategy </span><span class="si">{</span><span class="n">strategy_num</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2"> unsubs from </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Strategy </span><span class="si">{</span><span class="n">strategy_num</span><span class="si">}</span><span class="s2"> unsubscribes from </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="c1"># if no strategies interested... unsubscribe permanantly</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_to_strategies_dict</span><span class="p">[</span><span class="n">symbol</span><span class="p">]:</span> 
             <span class="bp">self</span><span class="o">.</span><span class="n">_streamer</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
-            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_to_strategies_dict</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="c1"># remove the entry for the symbol (removes the set of strategies)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;No strategies interested in </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_to_strategies_dict</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="c1"># remove the entry for the symbol (removes the set of strategies)</span></div>
+            <span class="c1"># logger.info(</span>
+            <span class="c1">#     f&quot;No strategies interested in {symbol}&quot;)</span>
 
 <div class="viewcode-block" id="SubscriptionManager.print_books_subscribed_to"><a class="viewcode-back" href="../../../prototrade.ticker_streamer.html#prototrade.ticker_streamer.subscription_manager.SubscriptionManager.print_books_subscribed_to">[docs]</a>    <span class="k">def</span> <span class="nf">print_books_subscribed_to</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_to_strategies_dict</span><span class="p">],</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span></div>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol_to_strategies_dict</span><span class="p">],</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_create_thread_to_poll_queue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_queue_polling_thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span>
@@ -132,7 +137,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">strategy_num</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">symbol</span><span class="p">)</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Subscription queue reader finished&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Subscription queue reader finished&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SubscriptionManager.stop_queue_polling"><a class="viewcode-back" href="../../../prototrade.ticker_streamer.html#prototrade.ticker_streamer.subscription_manager.SubscriptionManager.stop_queue_polling">[docs]</a>    <span class="k">def</span> <span class="nf">stop_queue_polling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue_polling_thread</span><span class="p">:</span>

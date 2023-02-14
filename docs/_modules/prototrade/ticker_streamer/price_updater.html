@@ -42,6 +42,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../example_strategies.html">Example Strategies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../common_errors.html">Common Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../graphing.html">Graphing</a></li>
 </ul>
 
         </div>
@@ -86,7 +87,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">order_books_dict_semaphore</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">order_books_dict</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">=</span> <span class="n">quote</span>
-        <span class="c1"># logging.info(&quot;PriceUpdater writes&quot;, symbol)</span>
+        <span class="c1"># logging.debug(&quot;PriceUpdater writes&quot;, symbol)</span>
 
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_strategies</span><span class="p">):</span>
             <span class="c1"># release all</span>
