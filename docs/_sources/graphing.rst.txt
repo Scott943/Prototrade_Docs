@@ -4,7 +4,7 @@ Graphing
 In-Built Graphing App
 -----------------------
 To access visualisations of strategy performance, a web app is available
-on `localhost:8050 <https://localhost:8050`_ whilst the framework is running.
+on `localhost:8050 <https://localhost:8050>`_ whilst the framework is running.
 
 You can compare the PnL and the Positions held by each strategy. This tool reads
 the PnL.csv and Positions.csv files for the respective strategy.
