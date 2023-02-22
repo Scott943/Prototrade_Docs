@@ -41,6 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="prototrade.html">Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="prototrade.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="prototrade.exchange.html">prototrade.exchange package</a></li>
@@ -57,9 +58,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="example_strategies.html">Example Strategies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="common_errors.html">Common Errors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="graphing.html">Graphing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common_errors.html">Common Errors</a></li>
 </ul>
 
         </div>
@@ -105,13 +105,13 @@
 <dl class="py property">
 <dt class="sig sig-object py" id="prototrade.models.order.Order.order_side">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">order_side</span></span><a class="headerlink" href="#prototrade.models.order.Order.order_side" title="Permalink to this definition"></a></dt>
-<dd><p>Side of the order book. Either ‘bid’ or ‘ask’</p>
+<dd><p>Side of the order book. Either OrderSide.BID or OrderSide.ASK</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="prototrade.models.order.Order.order_type">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">order_type</span></span><a class="headerlink" href="#prototrade.models.order.Order.order_type" title="Permalink to this definition"></a></dt>
-<dd><p>Type of order e.g. ‘market’, ‘limit’ or ‘fok’</p>
+<dd><p>Type of order e.g. OrderType.MARKET, OrderType.LIMIT or OrderType.FOK</p>
 </dd></dl>
 
 <dl class="py property">
@@ -199,13 +199,13 @@ and one for the ask side) as well as the timestamp.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="prototrade.models.transaction.Transaction.order_side">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">order_side</span></span><a class="headerlink" href="#prototrade.models.transaction.Transaction.order_side" title="Permalink to this definition"></a></dt>
-<dd><p>Side of the order book. Either ‘bid’ or ‘ask’</p>
+<dd><p>Side of the order book. Either OrderSide.BID or OrderSide.ASK</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="prototrade.models.transaction.Transaction.order_type">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">order_type</span></span><a class="headerlink" href="#prototrade.models.transaction.Transaction.order_type" title="Permalink to this definition"></a></dt>
-<dd><p>Type of order e.g. ‘market’, ‘limit’ or ‘fok’</p>
+<dd><p>Type of order e.g. OrderType.MARKET, OrderType.LIMIT or OrderType.FOK</p>
 </dd></dl>
 
 <dl class="py property">

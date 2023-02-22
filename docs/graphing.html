@@ -20,7 +20,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Common Errors" href="common_errors.html" /> 
+    <link rel="next" title="Common Errors" href="common_errors.html" />
+    <link rel="prev" title="Example Strategies" href="example_strategies.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -40,15 +41,15 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prototrade.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example_strategies.html">Example Strategies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="common_errors.html">Common Errors</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Graphing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#in-built-graphing-app">In-Built Graphing App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-pandas-and-matplotlib">Using pandas and matplotlib</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="common_errors.html">Common Errors</a></li>
 </ul>
 
         </div>
@@ -81,6 +82,9 @@
 <h2>In-Built Graphing App<a class="headerlink" href="#in-built-graphing-app" title="Permalink to this heading"></a></h2>
 <p>To access visualisations of strategy performance, a web app is available
 on <a class="reference external" href="https://localhost:8050">localhost:8050</a> whilst the framework is running.</p>
+<img alt="_images/dash_grid_search.JPG" src="_images/dash_grid_search.JPG" />
+<p>The above 24 strategies are all mean reversion strategies. The varying performance is due to different hyperparameters
+(e.g. exponential bias factor) specified when registering each strategy. This can be done easily doing a grid search over parameters.</p>
 <p>You can compare the PnL and the Positions held by each strategy. This tool reads
 the PnL.csv and Positions.csv files for the respective strategy.</p>
 </section>
@@ -162,7 +166,8 @@ when a strategy holds positions over multiple stocks (see <a class="reference ex
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="common_errors.html" class="btn btn-neutral float-left" title="Common Errors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example_strategies.html" class="btn btn-neutral float-left" title="Example Strategies" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="common_errors.html" class="btn btn-neutral float-right" title="Common Errors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

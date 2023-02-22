@@ -38,11 +38,11 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../prototrade.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../example_strategies.html">Example Strategies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../common_errors.html">Common Errors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../graphing.html">Graphing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common_errors.html">Common Errors</a></li>
 </ul>
 
         </div>
@@ -70,19 +70,27 @@
            <div itemprop="articleBody">
              
   <h1>Source code for prototrade.models.quotes</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="HalfQuote"><a class="viewcode-back" href="../../../prototrade.models.html#prototrade.models.quotes.HalfQuote">[docs]</a><span></span><span class="k">class</span> <span class="nc">HalfQuote</span><span class="p">:</span>
+<span></span><span class="kn">from</span> <span class="nn">prototrade.models.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
+
+<div class="viewcode-block" id="HalfQuote"><a class="viewcode-back" href="../../../prototrade.models.html#prototrade.models.quotes.HalfQuote">[docs]</a><span class="k">class</span> <span class="nc">HalfQuote</span><span class="p">:</span>
    <span class="sd">&quot;&quot;&quot;A class that represents one half of a :py:class:`Quote&lt;prototrade.models.quotes.Quote&gt;` object.</span>
 <span class="sd">   &quot;&quot;&quot;</span>
    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">order_side</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_volume</span> <span class="o">=</span> <span class="n">volume</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_price</span> <span class="o">=</span> <span class="n">price</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">_order_side</span> <span class="o">=</span> <span class="n">order_side</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_order_side</span> <span class="o">=</span> <span class="n">order_side</span>
    
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
       <span class="sd">&quot;&quot;&quot;Volume at the corresponding price in the order book</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_volume</span>
+
+   <span class="nd">@volume</span><span class="o">.</span><span class="n">setter</span>
+   <span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vol</span><span class="p">):</span>
+      <span class="sd">&quot;&quot;&quot;Volume at the corresponding price in the order book</span>
+<span class="sd">      &quot;&quot;&quot;</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_volume</span> <span class="o">=</span> <span class="n">vol</span>
    
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">price</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -90,11 +98,20 @@
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_price</span>
 
+   <span class="nd">@price</span><span class="o">.</span><span class="n">setter</span>
+   <span class="k">def</span> <span class="nf">price</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_price</span> <span class="o">=</span> <span class="n">price</span>
+      
+
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">order_side</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
       <span class="sd">&quot;&quot;&quot;The side of the order book</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_side</span>
+
+   <span class="nd">@order_side</span><span class="o">.</span><span class="n">setter</span>
+   <span class="k">def</span> <span class="nf">order_side</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_side</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">order_side</span> <span class="o">=</span> <span class="n">order_side</span>
 
    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
       <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">order_side</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> volume: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_volume</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> price: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_price</span><span class="si">}</span><span class="s2">&quot;</span></div>
@@ -105,8 +122,8 @@
 <span class="sd">   and one for the ask side) as well as the timestamp.</span>
 <span class="sd">   &quot;&quot;&quot;</span>
    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bid_volume</span><span class="p">,</span> <span class="n">bid_price</span><span class="p">,</span> <span class="n">ask_volume</span><span class="p">,</span> <span class="n">ask_price</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">):</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">_bid</span> <span class="o">=</span> <span class="n">HalfQuote</span><span class="p">(</span><span class="n">bid_volume</span><span class="p">,</span> <span class="n">bid_price</span><span class="p">,</span> <span class="s2">&quot;bid&quot;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">_ask</span> <span class="o">=</span> <span class="n">HalfQuote</span><span class="p">(</span><span class="n">ask_volume</span><span class="p">,</span> <span class="n">ask_price</span><span class="p">,</span> <span class="s2">&quot;ask&quot;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_bid</span> <span class="o">=</span> <span class="n">HalfQuote</span><span class="p">(</span><span class="n">bid_volume</span><span class="p">,</span> <span class="n">bid_price</span><span class="p">,</span> <span class="n">OrderSide</span><span class="o">.</span><span class="n">BID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_ask</span> <span class="o">=</span> <span class="n">HalfQuote</span><span class="p">(</span><span class="n">ask_volume</span><span class="p">,</span> <span class="n">ask_price</span><span class="p">,</span> <span class="n">OrderSide</span><span class="o">.</span><span class="n">ASK</span><span class="p">)</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span> <span class="o">=</span> <span class="n">timestamp</span>
 
    <span class="nd">@property</span>

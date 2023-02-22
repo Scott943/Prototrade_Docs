@@ -38,11 +38,11 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../prototrade.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../example_strategies.html">Example Strategies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../common_errors.html">Common Errors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../graphing.html">Graphing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common_errors.html">Common Errors</a></li>
 </ul>
 
         </div>
@@ -81,6 +81,7 @@
 <span class="kn">from</span> <span class="nn">prototrade.position_management.position_manager</span> <span class="kn">import</span> <span class="n">PositionManager</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
 
 <span class="n">SYMBOL_REQUEST_TIMEOUT</span> <span class="o">=</span> <span class="mi">8</span>
 
@@ -227,14 +228,14 @@
 
 <div class="viewcode-block" id="Exchange.create_order"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.create_order">[docs]</a>    <span class="nd">@_position_manager_decorator</span>
     <span class="k">def</span> <span class="nf">create_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Submit an order to the framework. When a *&#39;market&#39;* or *&#39;limit&#39;* order is submitted, the framework will repeatedly check whether it can be executed.</span>
-<span class="sd">        When a *&#39;fok&#39;* (Fill-Or-Kill) order is submitted, the framework will check whether it can be executed once. If it cannot be executed at the specified price, the order will be cancelled.</span>
+        <span class="sd">&quot;&quot;&quot;Submit an order to the framework. When a *OrderType.MARKET* or *OrderType.LIMIT* order is submitted, the framework will repeatedly check whether it can be executed.</span>
+<span class="sd">        When a *OrderType.FOK* (Fill-Or-Kill) order is submitted, the framework will check whether it can be executed once. If it cannot be executed at the specified price, the order will be cancelled.</span>
 
 <span class="sd">        :param symbol: The symbol to place the order for</span>
 <span class="sd">        :type symbol: *str*</span>
-<span class="sd">        :param order_side: The side of the order book to place the order in. Either *&#39;bid&#39;* or *&#39;ask&#39;*.</span>
+<span class="sd">        :param order_side: The side of the order book to place the order in. Either *OrderSide.BID* or *OrderSide.ASK*.</span>
 <span class="sd">        :type order_side: *str*</span>
-<span class="sd">        :param order_type: The type of order to submit. One of *&#39;market&#39;*, *&#39;limit&#39;*, *&#39;fok&#39;*. If *&#39;limit&#39;* or *&#39;fok&#39;* specified, then the price parameter must also be specified</span>
+<span class="sd">        :param order_type: The type of order to submit. One of *OrderType.MARKET*, *OrderType.LIMIT*, *OrderType.FOK*. If *OrderType.LIMIT* or *OrderType.FOK* specified, then the price parameter must also be specified</span>
 <span class="sd">        :type order_type: *str*</span>
 <span class="sd">        :param volume: The volume of the order. Must be &gt; 0</span>
 <span class="sd">        :type volume: *int*</span>

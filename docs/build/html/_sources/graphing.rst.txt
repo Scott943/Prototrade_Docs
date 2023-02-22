@@ -6,8 +6,14 @@ In-Built Graphing App
 To access visualisations of strategy performance, a web app is available
 on `localhost:8050 <https://localhost:8050>`_ whilst the framework is running.
 
+.. image:: images/dash_grid_search.JPG
+
+The above 24 strategies are all mean reversion strategies. The varying performance is due to different hyperparameters
+(e.g. exponential bias factor) specified when registering each strategy. This can be done easily doing a grid search over parameters.
+
 You can compare the PnL and the Positions held by each strategy. This tool reads
 the PnL.csv and Positions.csv files for the respective strategy.
+
 
 Using pandas and matplotlib
 ---------------------------

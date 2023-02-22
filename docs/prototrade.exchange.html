@@ -41,6 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="prototrade.html">Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="prototrade.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">prototrade.exchange package</a><ul>
@@ -55,9 +56,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="example_strategies.html">Example Strategies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="common_errors.html">Common Errors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="graphing.html">Graphing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common_errors.html">Common Errors</a></li>
 </ul>
 
         </div>
@@ -114,14 +114,14 @@ Then, each Exchange object is passed as the first parameter to the corresponding
 <dl class="py method">
 <dt class="sig sig-object py" id="prototrade.exchange.exchange.Exchange.create_order">
 <span class="sig-name descname"><span class="pre">create_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_side</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/exchange/exchange.html#Exchange.create_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.exchange.exchange.Exchange.create_order" title="Permalink to this definition"></a></dt>
-<dd><p>Submit an order to the framework. When a <em>‘market’</em> or <em>‘limit’</em> order is submitted, the framework will repeatedly check whether it can be executed.
-When a <em>‘fok’</em> (Fill-Or-Kill) order is submitted, the framework will check whether it can be executed once. If it cannot be executed at the specified price, the order will be cancelled.</p>
+<dd><p>Submit an order to the framework. When a <em>OrderType.MARKET</em> or <em>OrderType.LIMIT</em> order is submitted, the framework will repeatedly check whether it can be executed.
+When a <em>OrderType.FOK</em> (Fill-Or-Kill) order is submitted, the framework will check whether it can be executed once. If it cannot be executed at the specified price, the order will be cancelled.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>symbol</strong> (<em>str</em>) – The symbol to place the order for</p></li>
-<li><p><strong>order_side</strong> (<em>str</em>) – The side of the order book to place the order in. Either <em>‘bid’</em> or <em>‘ask’</em>.</p></li>
-<li><p><strong>order_type</strong> (<em>str</em>) – The type of order to submit. One of <em>‘market’</em>, <em>‘limit’</em>, <em>‘fok’</em>. If <em>‘limit’</em> or <em>‘fok’</em> specified, then the price parameter must also be specified</p></li>
+<li><p><strong>order_side</strong> (<em>str</em>) – The side of the order book to place the order in. Either <em>OrderSide.BID</em> or <em>OrderSide.ASK</em>.</p></li>
+<li><p><strong>order_type</strong> (<em>str</em>) – The type of order to submit. One of <em>OrderType.MARKET</em>, <em>OrderType.LIMIT</em>, <em>OrderType.FOK</em>. If <em>OrderType.LIMIT</em> or <em>OrderType.FOK</em> specified, then the price parameter must also be specified</p></li>
 <li><p><strong>volume</strong> (<em>int</em>) – The volume of the order. Must be &gt; 0</p></li>
 <li><p><strong>price</strong> (<em>float</em> | <em>int</em>, optional) – The limit price / Fill-Or-Kill price, defaults to <em>None</em></p></li>
 </ul>

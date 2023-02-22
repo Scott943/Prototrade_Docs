@@ -10,11 +10,12 @@ Welcome to prototrade's documentation!
    :maxdepth: 4
    :caption: Contents:
 
+   quickstart
    prototrade
    example_strategies
-   quickstart
-   common_errors
    graphing
+   common_errors
+
 
 Indices and tables
 ==================

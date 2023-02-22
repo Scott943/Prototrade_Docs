@@ -38,11 +38,11 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../prototrade.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../example_strategies.html">Example Strategies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../common_errors.html">Common Errors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../graphing.html">Graphing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common_errors.html">Common Errors</a></li>
 </ul>
 
         </div>
@@ -97,13 +97,13 @@
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">order_side</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;Side of the order book. Either &#39;bid&#39; or &#39;ask&#39;</span>
+      <span class="sd">&quot;&quot;&quot;Side of the order book. Either OrderSide.BID or OrderSide.ASK</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_side</span>
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">order_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;Type of order e.g. &#39;market&#39;, &#39;limit&#39; or &#39;fok&#39;</span>
+      <span class="sd">&quot;&quot;&quot;Type of order e.g. OrderType.MARKET, OrderType.LIMIT or OrderType.FOK</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_type</span>
 
@@ -122,7 +122,7 @@
       <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_side</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">order_side</span><span class="p">:</span>
          <span class="k">raise</span> <span class="n">InvalidOrderSideException</span><span class="p">(</span><span class="s2">&quot;Two objects in same heap have different order side types&quot;</span><span class="p">)</span>
       
-      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_side</span> <span class="o">==</span> <span class="s2">&quot;bid&quot;</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_side</span> <span class="o">==</span> <span class="n">OrderSide</span><span class="o">.</span><span class="n">BID</span><span class="p">:</span>
          <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">price</span> <span class="c1"># max bid at the top of heap</span>
 
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">price</span> <span class="c1"># min ask at the top of heap</span>
