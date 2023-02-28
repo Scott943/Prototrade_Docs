@@ -47,6 +47,7 @@
 <li class="toctree-l3"><a class="reference internal" href="prototrade.exchange.html">prototrade.exchange package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="prototrade.exceptions.html">prototrade.exceptions package</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">prototrade.models package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-prototrade.models.enums">prototrade.models.enums module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-prototrade.models.order">prototrade.models.order module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-prototrade.models.quotes">prototrade.models.quotes module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-prototrade.models.transaction">prototrade.models.transaction module</a></li>
@@ -89,6 +90,64 @@
              
   <section id="prototrade-models-package">
 <h1>prototrade.models package<a class="headerlink" href="#prototrade-models-package" title="Permalink to this heading"></a></h1>
+<section id="module-prototrade.models.enums">
+<span id="prototrade-models-enums-module"></span><h2>prototrade.models.enums module<a class="headerlink" href="#module-prototrade.models.enums" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="prototrade.models.enums.MarketDataSource">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.models.enums.</span></span><span class="sig-name descname"><span class="pre">MarketDataSource</span></span><a class="reference internal" href="_modules/prototrade/models/enums.html#MarketDataSource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.models.enums.MarketDataSource" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="prototrade.models.enums.MarketDataSource.ALPACA">
+<span class="sig-name descname"><span class="pre">ALPACA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#prototrade.models.enums.MarketDataSource.ALPACA" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="prototrade.models.enums.MarketDataSource.SIMULATED">
+<span class="sig-name descname"><span class="pre">SIMULATED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#prototrade.models.enums.MarketDataSource.SIMULATED" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="prototrade.models.enums.OrderSide">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.models.enums.</span></span><span class="sig-name descname"><span class="pre">OrderSide</span></span><a class="reference internal" href="_modules/prototrade/models/enums.html#OrderSide"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.models.enums.OrderSide" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The side of the order book to place the order in</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="prototrade.models.enums.OrderSide.ASK">
+<span class="sig-name descname"><span class="pre">ASK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#prototrade.models.enums.OrderSide.ASK" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="prototrade.models.enums.OrderSide.BID">
+<span class="sig-name descname"><span class="pre">BID</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#prototrade.models.enums.OrderSide.BID" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="prototrade.models.enums.OrderType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.models.enums.</span></span><span class="sig-name descname"><span class="pre">OrderType</span></span><a class="reference internal" href="_modules/prototrade/models/enums.html#OrderType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.models.enums.OrderType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The order type (used when creating orders)</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="prototrade.models.enums.OrderType.FOK">
+<span class="sig-name descname"><span class="pre">FOK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#prototrade.models.enums.OrderType.FOK" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="prototrade.models.enums.OrderType.LIMIT">
+<span class="sig-name descname"><span class="pre">LIMIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#prototrade.models.enums.OrderType.LIMIT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="prototrade.models.enums.OrderType.MARKET">
+<span class="sig-name descname"><span class="pre">MARKET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#prototrade.models.enums.OrderType.MARKET" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-prototrade.models.order">
 <span id="prototrade-models-order-module"></span><h2>prototrade.models.order module<a class="headerlink" href="#module-prototrade.models.order" title="Permalink to this heading"></a></h2>
 <dl class="py class">

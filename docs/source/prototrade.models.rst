@@ -1,6 +1,14 @@
 prototrade.models package
 =========================
 
+prototrade.models.enums module
+------------------------------
+
+.. automodule:: prototrade.models.enums
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 prototrade.models.order module
 ------------------------------
 

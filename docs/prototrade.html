@@ -137,6 +137,25 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="prototrade.models.html">prototrade.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.enums">prototrade.models.enums module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.enums.MarketDataSource"><code class="docutils literal notranslate"><span class="pre">MarketDataSource</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.enums.MarketDataSource.ALPACA"><code class="docutils literal notranslate"><span class="pre">MarketDataSource.ALPACA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.enums.MarketDataSource.SIMULATED"><code class="docutils literal notranslate"><span class="pre">MarketDataSource.SIMULATED</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.enums.OrderSide"><code class="docutils literal notranslate"><span class="pre">OrderSide</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.enums.OrderSide.ASK"><code class="docutils literal notranslate"><span class="pre">OrderSide.ASK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.enums.OrderSide.BID"><code class="docutils literal notranslate"><span class="pre">OrderSide.BID</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.enums.OrderType"><code class="docutils literal notranslate"><span class="pre">OrderType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.enums.OrderType.FOK"><code class="docutils literal notranslate"><span class="pre">OrderType.FOK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.enums.OrderType.LIMIT"><code class="docutils literal notranslate"><span class="pre">OrderType.LIMIT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.enums.OrderType.MARKET"><code class="docutils literal notranslate"><span class="pre">OrderType.MARKET</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="prototrade.models.html#module-prototrade.models.order">prototrade.models.order module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order"><code class="docutils literal notranslate"><span class="pre">Order</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="prototrade.models.html#prototrade.models.order.Order.order_id"><code class="docutils literal notranslate"><span class="pre">Order.order_id</span></code></a></li>
@@ -197,7 +216,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>streamer_name</strong> (<em>str</em>) – The name of the streamer to use. Recommended: <code class="docutils literal notranslate"><span class="pre">'alpaca'</span></code></p></li>
+<li><p><strong>streamer_name</strong> (<a class="reference internal" href="prototrade.models.html#prototrade.models.enums.MarketDataSource" title="prototrade.models.enums.MarketDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">MarketDataSource</span></code></a>) – The name of the streamer to use. Recommended: <code class="docutils literal notranslate"><span class="pre">'MarketDataSource.ALPACA'</span></code></p></li>
 <li><p><strong>streamer_username</strong> (<em>str</em>) – The API usesrname</p></li>
 <li><p><strong>streamer_key</strong> (<em>str</em>) – The corresponding API key</p></li>
 <li><p><strong>exchange_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The exchange to use. For alpaca, this can be <code class="docutils literal notranslate"><span class="pre">sip</span></code> (all US exchanges - paid subscription only) or <code class="docutils literal notranslate"><span class="pre">iex</span></code>, defaults to “iex”</p></li>

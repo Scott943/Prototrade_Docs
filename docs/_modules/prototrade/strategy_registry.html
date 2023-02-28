@@ -110,8 +110,8 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">streamer_name</span><span class="p">,</span> <span class="n">streamer_username</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">streamer_key</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">exchange_name</span><span class="o">=</span><span class="s2">&quot;iex&quot;</span><span class="p">,</span> <span class="n">save_data_location</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initalise the virtual exchange. This should be done inside a main() function within the user&#39;s program.</span>
 
-<span class="sd">        :param streamer_name: The name of the streamer to use. Recommended: ``&#39;alpaca&#39;``</span>
-<span class="sd">        :type streamer_name: str</span>
+<span class="sd">        :param streamer_name: The name of the streamer to use. Recommended: ``&#39;MarketDataSource.ALPACA&#39;``</span>
+<span class="sd">        :type streamer_name: :py:class:`MarketDataSource &lt;prototrade.models.enums.MarketDataSource&gt;`</span>
 <span class="sd">        :param streamer_username: The API usesrname</span>
 <span class="sd">        :type streamer_username: str</span>
 <span class="sd">        :param streamer_key: The corresponding API key</span>
