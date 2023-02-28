@@ -125,7 +125,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;A REST API proxy that allows access to historical API functions (depends on the market data source being used). </span>
 <span class="sd">        If using alpaca, all functions in the `REST &lt;https://github.com/alpacahq/alpaca-trade-api-python/blob/master/alpaca_trade_api/rest.py&gt;`_ module are available.</span>
 <span class="sd">        Example usage within a user strategy: ``exchange.historical.get_bars(&quot;PLTR&quot;, &quot;1minute&quot;, &quot;2022-01-18&quot;, &quot;2022-01-18&quot;).df``. This retrieves changes in the price</span>
-<span class="sd">        of PLTR stock over the given date with a 1 minute granularity.</span>
+<span class="sd">        of PLTR stock over the given date with a 1 minute granularity. N.B. When the data source is set to ``MarketDataSource.SIMULATED``, the historical property </span>
+<span class="sd">        is not available.</span>
 
 <span class="sd">        :return: REST API Proxy (market data source dependent)</span>
 <span class="sd">        &quot;&quot;&quot;</span>

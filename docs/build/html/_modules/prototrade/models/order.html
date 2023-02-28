@@ -71,6 +71,7 @@
              
   <h1>Source code for prototrade.models.order</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">prototrade.exceptions.exceptions</span> <span class="kn">import</span> <span class="n">InvalidOrderSideException</span>
+<span class="kn">from</span> <span class="nn">prototrade.models.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
 
 <div class="viewcode-block" id="Order"><a class="viewcode-back" href="../../../prototrade.models.html#prototrade.models.order.Order">[docs]</a><span class="k">class</span> <span class="nc">Order</span><span class="p">:</span>
 <span class="w">   </span><span class="sd">&quot;&quot;&quot;A class that represents an order that has not been fufilled yet (i.e. an open order).</span>
@@ -97,13 +98,13 @@
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">order_side</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">      </span><span class="sd">&quot;&quot;&quot;Side of the order book. Either OrderSide.BID or OrderSide.ASK</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Side of the order book. Either ``OrderSide.BID`` or ``OrderSide.ASK``</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_side</span>
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">order_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">      </span><span class="sd">&quot;&quot;&quot;Type of order e.g. OrderType.MARKET, OrderType.LIMIT or OrderType.FOK</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Type of order e.g. ``OrderType.MARKET``, ``OrderType.LIMIT`` or ``OrderType.FOK``</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_type</span>
 

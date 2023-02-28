@@ -305,7 +305,8 @@ e.g. to access latest volume at ask price for AAPL, use exchange.get_subscribed_
 <dd><p>A REST API proxy that allows access to historical API functions (depends on the market data source being used). 
 If using alpaca, all functions in the <a class="reference external" href="https://github.com/alpacahq/alpaca-trade-api-python/blob/master/alpaca_trade_api/rest.py">REST</a> module are available.
 Example usage within a user strategy: <code class="docutils literal notranslate"><span class="pre">exchange.historical.get_bars(&quot;PLTR&quot;,</span> <span class="pre">&quot;1minute&quot;,</span> <span class="pre">&quot;2022-01-18&quot;,</span> <span class="pre">&quot;2022-01-18&quot;).df</span></code>. This retrieves changes in the price
-of PLTR stock over the given date with a 1 minute granularity.</p>
+of PLTR stock over the given date with a 1 minute granularity. N.B. When the data source is set to <code class="docutils literal notranslate"><span class="pre">MarketDataSource.SIMULATED</span></code>, the historical property 
+is not available.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>REST API Proxy (market data source dependent)</p>
