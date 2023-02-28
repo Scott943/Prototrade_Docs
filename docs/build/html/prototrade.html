@@ -216,10 +216,10 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>streamer_name</strong> (<a class="reference internal" href="prototrade.models.html#prototrade.models.enums.MarketDataSource" title="prototrade.models.enums.MarketDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">MarketDataSource</span></code></a>) – The name of the streamer to use. Recommended: <code class="docutils literal notranslate"><span class="pre">'MarketDataSource.ALPACA'</span></code></p></li>
+<li><p><strong>streamer_name</strong> (<a class="reference internal" href="prototrade.models.html#prototrade.models.enums.MarketDataSource" title="prototrade.models.enums.MarketDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">MarketDataSource</span></code></a>) – The name of the streamer to use. Recommended: <code class="docutils literal notranslate"><span class="pre">MarketDataSource.ALPACA</span></code></p></li>
 <li><p><strong>streamer_username</strong> (<em>str</em>) – The API usesrname</p></li>
-<li><p><strong>streamer_key</strong> (<em>str</em>) – The corresponding API key</p></li>
-<li><p><strong>exchange_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The exchange to use. For alpaca, this can be <code class="docutils literal notranslate"><span class="pre">sip</span></code> (all US exchanges - paid subscription only) or <code class="docutils literal notranslate"><span class="pre">iex</span></code>, defaults to “iex”</p></li>
+<li><p><strong>streamer_key</strong> (<em>str</em>) – The corresponding API key. (Not required for MarketDataSource.SIMULATED)</p></li>
+<li><p><strong>exchange_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The exchange to use. For alpaca, this can be <code class="docutils literal notranslate"><span class="pre">sip</span></code> (all US exchanges - paid subscription only) or <code class="docutils literal notranslate"><span class="pre">iex</span></code>, defaults to “iex”. (Not required for MarketDataSource.SIMULATED)</p></li>
 <li><p><strong>save_data_location</strong> (<em>str</em><em>, </em><em>optional</em>) – The relative file location (from the user strategy script) to save data about each run, defaults to None</p></li>
 </ul>
 </dd>

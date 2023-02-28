@@ -228,15 +228,15 @@
 
 <div class="viewcode-block" id="Exchange.create_order"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.create_order">[docs]</a>    <span class="nd">@_position_manager_decorator</span>
     <span class="k">def</span> <span class="nf">create_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Submit an order to the framework. When a *OrderType.MARKET* or *OrderType.LIMIT* order is submitted, the framework will repeatedly check whether it can be executed.</span>
-<span class="sd">        When a *OrderType.FOK* (Fill-Or-Kill) order is submitted, the framework will check whether it can be executed once. If it cannot be executed at the specified price, the order will be cancelled.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Submit an order to the framework. When a ``OrderType.MARKET`` or ``OrderType.LIMIT`` order is submitted, the framework will repeatedly check whether it can be executed.</span>
+<span class="sd">        When a ``OrderType.FOK`` (Fill-Or-Kill) order is submitted, the framework will check whether it can be executed once. If it cannot be executed at the specified price, the order will be cancelled.</span>
 
 <span class="sd">        :param symbol: The symbol to place the order for</span>
 <span class="sd">        :type symbol: *str*</span>
-<span class="sd">        :param order_side: The side of the order book to place the order in. Either *OrderSide.BID* or *OrderSide.ASK*.</span>
-<span class="sd">        :type order_side: *str*</span>
-<span class="sd">        :param order_type: The type of order to submit. One of *OrderType.MARKET*, *OrderType.LIMIT*, *OrderType.FOK*. If *OrderType.LIMIT* or *OrderType.FOK* specified, then the price parameter must also be specified</span>
-<span class="sd">        :type order_type: *str*</span>
+<span class="sd">        :param order_side: The side of the order book to place the order in. Either ``OrderSide.BID`` or ``OrderSide.ASK``.</span>
+<span class="sd">        :type order_side: :py:class:`MarketDataSource &lt;prototrade.models.enums.OrderSide&gt;`</span>
+<span class="sd">        :param order_type: The type of order to submit. One of ``OrderType.MARKET``, ``OrderType.LIMIT``, ``OrderType.FOK``. If ``OrderType.LIMIT`` or ``OrderType.FOK`` specified, then the price parameter must also be specified</span>
+<span class="sd">        :type order_type: :py:class:`MarketDataSource &lt;prototrade.models.enums.OrderType&gt;`</span>
 <span class="sd">        :param volume: The volume of the order. Must be &gt; 0</span>
 <span class="sd">        :type volume: *int*</span>
 <span class="sd">        :param price: The limit price / Fill-Or-Kill price, defaults to *None*</span>
