@@ -44,7 +44,11 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prototrade.html">Documentation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Example Strategies</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#example-strategies-minimal-boilerplate-module">example_strategies.minimal_boilerplate module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-example_strategies.minimal_boilerplate">example_strategies.minimal_boilerplate module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example_strategies.minimal_boilerplate.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example_strategies.minimal_boilerplate.test_strategy"><code class="docutils literal notranslate"><span class="pre">test_strategy()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#example-strategies-two-registered-strategies-module">example_strategies.two_registered_strategies module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#example-strategies-plot-stock-price-module">example_strategies.plot_stock_price module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#example-strategies-plot-pnl-module">example_strategies.plot_pnl module</a></li>
@@ -84,8 +88,28 @@
 <h1>Example Strategies<a class="headerlink" href="#example-strategies" title="Permalink to this heading"></a></h1>
 <p>This package contains some example strategies to help learn the framework.
 Press the <code class="code docutils literal notranslate"><span class="pre">[source]</span></code> button to view the code for each strategy.</p>
-<section id="example-strategies-minimal-boilerplate-module">
-<h2>example_strategies.minimal_boilerplate module<a class="headerlink" href="#example-strategies-minimal-boilerplate-module" title="Permalink to this heading"></a></h2>
+<section id="module-example_strategies.minimal_boilerplate">
+<span id="example-strategies-minimal-boilerplate-module"></span><h2>example_strategies.minimal_boilerplate module<a class="headerlink" href="#module-example_strategies.minimal_boilerplate" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="example_strategies.minimal_boilerplate.main">
+<span class="sig-prename descclassname"><span class="pre">example_strategies.minimal_boilerplate.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/example_strategies/minimal_boilerplate.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#example_strategies.minimal_boilerplate.main" title="Permalink to this definition"></a></dt>
+<dd><p>Here we register a single strategy that repeatedly places a market order for Apple with a volume of 5.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="example_strategies.minimal_boilerplate.test_strategy">
+<span class="sig-prename descclassname"><span class="pre">example_strategies.minimal_boilerplate.</span></span><span class="sig-name descname"><span class="pre">test_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exchange</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_per_order</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/example_strategies/minimal_boilerplate.html#test_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#example_strategies.minimal_boilerplate.test_strategy" title="Permalink to this definition"></a></dt>
+<dd><p>Boilerplate strategy that retrieves the price of Apple stock and places a market order every 3 seconds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exchange</strong> (<a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange" title="prototrade.exchange.exchange.Exchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exchange</span></code></a>) – The exchange object that the strategy uses to interact with the framework (this parameter is provided by the StrategyRegistery)</p></li>
+<li><p><strong>vol_per_order</strong> (<em>int</em>) – An example strategy argument where we specify the volume to use for each order</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="example-strategies-two-registered-strategies-module">
 <h2>example_strategies.two_registered_strategies module<a class="headerlink" href="#example-strategies-two-registered-strategies-module" title="Permalink to this heading"></a></h2>
