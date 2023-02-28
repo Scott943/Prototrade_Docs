@@ -86,7 +86,7 @@
 <span class="n">SYMBOL_REQUEST_TIMEOUT</span> <span class="o">=</span> <span class="mi">8</span>
 
 <div class="viewcode-block" id="Exchange"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange">[docs]</a><span class="k">class</span> <span class="nc">Exchange</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    To interact with the framework, the user calls functions in the Exchange object.</span>
 <span class="sd">    Allows user to place orders, retrieve information on transactions/positions, (un)subscribe to stock data, and retrieve the latest prices for subscribed stocks.</span>
 <span class="sd">    Within the :py:class:`StrategyRegistry &lt;prototrade.strategy_registry.StrategyRegistry&gt;` object, Exchange objects are created for every strategy function that has been registered.</span>
@@ -94,7 +94,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_books_dict</span><span class="p">,</span> <span class="n">order_books_dict_semaphore</span><span class="p">,</span> <span class="n">subscription_queue</span><span class="p">,</span> <span class="n">error_queue</span><span class="p">,</span> <span class="n">exchange_num</span><span class="p">,</span> <span class="n">stop_event</span><span class="p">,</span> <span class="n">shared_rest_api</span><span class="p">,</span> <span class="n">save_data_location</span><span class="p">,</span> <span class="n">file_locks</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initalises an exchange object (initialisation performed automatically in the :py:class:`StrategyRegistry &lt;prototrade.strategy_registry.StrategyRegistry&gt;` class)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
@@ -113,7 +113,7 @@
 
     <span class="nd">@property</span> 
     <span class="k">def</span> <span class="nf">strategy_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Retrieve the strategy number of the calling strategy</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve the strategy number of the calling strategy</span>
 
 <span class="sd">        :return: The strategy number (1 indexed)</span>
 <span class="sd">        :rtype: int</span>
@@ -122,7 +122,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">historical</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;A REST API proxy that allows access to historical API functions (depends on the market data source being used). </span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A REST API proxy that allows access to historical API functions (depends on the market data source being used). </span>
 <span class="sd">        If using alpaca, all functions in the `REST &lt;https://github.com/alpacahq/alpaca-trade-api-python/blob/master/alpaca_trade_api/rest.py&gt;`_ module are available.</span>
 <span class="sd">        Example usage within a user strategy: ``exchange.historical.get_bars(&quot;PLTR&quot;, &quot;1minute&quot;, &quot;2022-01-18&quot;, &quot;2022-01-18&quot;).df``. This retrieves changes in the price</span>
 <span class="sd">        of PLTR stock over the given date with a 1 minute granularity.</span>
@@ -132,7 +132,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_historical</span>
 
 <div class="viewcode-block" id="Exchange.get_subscribed_quotes"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_subscribed_quotes">[docs]</a>    <span class="k">def</span> <span class="nf">get_subscribed_quotes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Retrieves the latest quotes for the symbols that are subscribed to.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieves the latest quotes for the symbols that are subscribed to.</span>
 <span class="sd">        e.g. to access latest bid price for AAPL, use exchange.get_subscribed_quotes()[&quot;AAPL&quot;].bid.price</span>
 <span class="sd">        e.g. to access latest volume at ask price for AAPL, use exchange.get_subscribed_quotes()[&quot;AAPL&quot;].ask.volume</span>
 
@@ -171,7 +171,7 @@
                     <span class="sa">f</span><span class="s2">&quot;Interrupt while waiting for symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39; to arrive in strategy number </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">exchange_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Exchange.get_subscriptions"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_subscriptions">[docs]</a>    <span class="k">def</span> <span class="nf">get_subscriptions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns a set symbols that the strategy is currently subscribed to</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a set symbols that the strategy is currently subscribed to</span>
 
 <span class="sd">        :return: set of symbols that the strategy is currently subscribed to</span>
 <span class="sd">        :rtype: *set*</span>
@@ -179,7 +179,7 @@
         <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_subscribed_symbols</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Exchange.subscribe"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.subscribe">[docs]</a>    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Subscribes to the specified symbol.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Subscribes to the specified symbol.</span>
 <span class="sd">        Once a symbol is subscribed to, market data for that symbol will be avaiable using the get_subscribed_quotes() member function</span>
 
 <span class="sd">        :param symbol: The symbol to subscribe to</span>
@@ -190,7 +190,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_subscribed_symbols</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Exchange.unsubscribe"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.unsubscribe">[docs]</a>    <span class="k">def</span> <span class="nf">unsubscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Unsubscribes from a symbol. Data for the specified symbol will no longer be subscribed to.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Unsubscribes from a symbol. Data for the specified symbol will no longer be subscribed to.</span>
 
 <span class="sd">        :param symbol: The symbol to unsubscribe from</span>
 <span class="sd">        :type symbol: *str*</span>
@@ -205,7 +205,7 @@
                 <span class="sa">f</span><span class="s2">&quot;Strategy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">exchange_num</span><span class="si">}</span><span class="s2"> attempted to unsubscribe from a symbol that was not subscribed to&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Exchange.is_running"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.is_running">[docs]</a>    <span class="k">def</span> <span class="nf">is_running</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Check whether the framework is still running. If the user exits or any strategy encounters an exception, this will return &#39;False&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check whether the framework is still running. If the user exits or any strategy encounters an exception, this will return &#39;False&#39;</span>
 <span class="sd">        This should be used in the main &#39;while&#39; loop condition for the user strategy. This way, the user can perform clearup operations or data analysis </span>
 <span class="sd">        operations after their strategy has finished execution.</span>
 
@@ -228,7 +228,7 @@
 
 <div class="viewcode-block" id="Exchange.create_order"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.create_order">[docs]</a>    <span class="nd">@_position_manager_decorator</span>
     <span class="k">def</span> <span class="nf">create_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Submit an order to the framework. When a *OrderType.MARKET* or *OrderType.LIMIT* order is submitted, the framework will repeatedly check whether it can be executed.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Submit an order to the framework. When a *OrderType.MARKET* or *OrderType.LIMIT* order is submitted, the framework will repeatedly check whether it can be executed.</span>
 <span class="sd">        When a *OrderType.FOK* (Fill-Or-Kill) order is submitted, the framework will check whether it can be executed once. If it cannot be executed at the specified price, the order will be cancelled.</span>
 
 <span class="sd">        :param symbol: The symbol to place the order for</span>
@@ -248,7 +248,7 @@
 
 <div class="viewcode-block" id="Exchange.get_orders"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_orders">[docs]</a>    <span class="nd">@_position_manager_decorator</span>
     <span class="k">def</span> <span class="nf">get_orders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Retrive the open orders for a strategy. If the symbol argument is specified, then only retrieves orders for that particular symbol.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrive the open orders for a strategy. If the symbol argument is specified, then only retrieves orders for that particular symbol.</span>
 <span class="sd">        Otherwise, all open orders for the strategy are returned.</span>
 
 <span class="sd">        :param symbol: The symbol to retrieve open orders for, defaults to *None*</span>
@@ -260,7 +260,7 @@
 
 <div class="viewcode-block" id="Exchange.get_strategy_best_bid"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_strategy_best_bid">[docs]</a>    <span class="nd">@_position_manager_decorator</span>
     <span class="k">def</span> <span class="nf">get_strategy_best_bid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get the current best bid in the strategy&#39;s open orders for a specified symbol. Simply, this is the highest price that the strategy is &#39;willing to pay&#39; for a particular stock.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current best bid in the strategy&#39;s open orders for a specified symbol. Simply, this is the highest price that the strategy is &#39;willing to pay&#39; for a particular stock.</span>
 <span class="sd">        In the framework implementation, this reads the top of bid heap for the particular symbol.</span>
 
 <span class="sd">        :param symbol: symbol</span>
@@ -272,7 +272,7 @@
 
 <div class="viewcode-block" id="Exchange.get_strategy_best_ask"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_strategy_best_ask">[docs]</a>    <span class="nd">@_position_manager_decorator</span>
     <span class="k">def</span> <span class="nf">get_strategy_best_ask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get the current best ask in the strategy&#39;s open orders for a specified symbol. Simply, this is the lowest price that the strategy is &#39;willing to sell&#39; a particular stock at.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current best ask in the strategy&#39;s open orders for a specified symbol. Simply, this is the lowest price that the strategy is &#39;willing to sell&#39; a particular stock at.</span>
 <span class="sd">        In the framework implementation, this reads the top of ask heap for the particular symbol.</span>
 
 <span class="sd">        :param symbol: symbol</span>
@@ -284,7 +284,7 @@
 
 <div class="viewcode-block" id="Exchange.cancel_order"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.cancel_order">[docs]</a>    <span class="nd">@_position_manager_decorator</span>
     <span class="k">def</span> <span class="nf">cancel_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_id</span><span class="p">,</span> <span class="n">volume_requested</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Removes the order with order_id from the list of open orders.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Removes the order with order_id from the list of open orders.</span>
 
 <span class="sd">        :param order_id: The id of the order to remove</span>
 <span class="sd">        :type order_id: *int*</span>
@@ -295,7 +295,7 @@
 
 <div class="viewcode-block" id="Exchange.get_positions"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_positions">[docs]</a>    <span class="nd">@_position_manager_decorator</span>
     <span class="k">def</span> <span class="nf">get_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol_filter</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Retrieve a dictionary of the strategy&#39;s current positions held. Here, a negative value in the dictionary implies a short position is being held.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve a dictionary of the strategy&#39;s current positions held. Here, a negative value in the dictionary implies a short position is being held.</span>
 
 <span class="sd">        :param symbol_filter: The symbol to retrieve positions data for. If not symbol specified, retrieves positions for all stocks held, defaults to *None*</span>
 <span class="sd">        :type symbol_filter: *int*, optional</span>
@@ -306,7 +306,7 @@
 
 <div class="viewcode-block" id="Exchange.get_transactions"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_transactions">[docs]</a>    <span class="nd">@_position_manager_decorator</span>
     <span class="k">def</span> <span class="nf">get_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol_filter</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get a list of all previous transactions made (for a particular symbol)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a list of all previous transactions made (for a particular symbol)</span>
 
 <span class="sd">        :param symbol_filter: If specified, returns transactions for a particular symbol. Otherwise returns all transactions in chronological order, defaults to *None*</span>
 <span class="sd">        :type symbol_filter: *str*, optional</span>
@@ -317,7 +317,7 @@
 
 <div class="viewcode-block" id="Exchange.get_pnl"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_pnl">[docs]</a>    <span class="nd">@_position_manager_decorator</span>
     <span class="k">def</span> <span class="nf">get_pnl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Retrieves the Profit-And-Loss for the calling strategy.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieves the Profit-And-Loss for the calling strategy.</span>
 
 <span class="sd">        :return: PnL</span>
 <span class="sd">        :rtype: *int*</span>
@@ -326,7 +326,7 @@
 
 <div class="viewcode-block" id="Exchange.get_pnl_over_time"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_pnl_over_time">[docs]</a>    <span class="nd">@_position_manager_decorator</span>
     <span class="k">def</span> <span class="nf">get_pnl_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Retrieves the PnL for a strategy over several time-intervals (since the strategy started)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieves the PnL for a strategy over several time-intervals (since the strategy started)</span>
 
 <span class="sd">        :return: A list of (*timestamp*, *int*) where each entry indicated the PnL at the specified timestamp</span>
 <span class="sd">        :rtype: *list*\ (\ *tuple*\ (\ *timestamp*\ , \ *int*\ ))</span>
@@ -335,7 +335,7 @@
 
 <div class="viewcode-block" id="Exchange.get_positions_over_time"><a class="viewcode-back" href="../../../prototrade.exchange.html#prototrade.exchange.exchange.Exchange.get_positions_over_time">[docs]</a>    <span class="nd">@_position_manager_decorator</span>
     <span class="k">def</span> <span class="nf">get_positions_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol_filter</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Retrieves the positions dictionary over several time-intervals (since the strategy started)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieves the positions dictionary over several time-intervals (since the strategy started)</span>
 
 <span class="sd">        :param symbol: The symbol to return positions over time for. If not specified, returns a dictionary of every symbol, defaults to *None*</span>
 <span class="sd">        :type symbol: *str*, optional</span>

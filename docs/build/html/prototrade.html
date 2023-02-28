@@ -49,16 +49,7 @@
 <li class="toctree-l3"><a class="reference internal" href="prototrade.models.html">prototrade.models package</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-prototrade.strategy_registry">prototrade.strategy_registry module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#prototrade.strategy_registry.StrategyRegistry"><code class="docutils literal notranslate"><span class="pre">StrategyRegistry</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#prototrade.strategy_registry.StrategyRegistry.create_file_locks"><code class="docutils literal notranslate"><span class="pre">StrategyRegistry.create_file_locks()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#prototrade.strategy_registry.StrategyRegistry.register_strategy"><code class="docutils literal notranslate"><span class="pre">StrategyRegistry.register_strategy()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#prototrade.strategy_registry.StrategyRegistry.run_strategies"><code class="docutils literal notranslate"><span class="pre">StrategyRegistry.run_strategies()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#prototrade.strategy_registry.create_grapher"><code class="docutils literal notranslate"><span class="pre">create_grapher()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#prototrade-strategy-registry-module">prototrade.strategy_registry module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="example_strategies.html">Example Strategies</a></li>
@@ -183,51 +174,8 @@
 </ul>
 </div>
 </section>
-<section id="module-prototrade.strategy_registry">
-<span id="prototrade-strategy-registry-module"></span><h2>prototrade.strategy_registry module<a class="headerlink" href="#module-prototrade.strategy_registry" title="Permalink to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="prototrade.strategy_registry.StrategyRegistry">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">prototrade.strategy_registry.</span></span><span class="sig-name descname"><span class="pre">StrategyRegistry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">streamer_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streamer_username</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streamer_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'iex'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_data_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/strategy_registry.html#StrategyRegistry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.strategy_registry.StrategyRegistry" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>The master class used for initialising &amp; running the framework. Handles allocating processes to each of the registered strategies.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference internal" href="prototrade.exceptions.html#prototrade.exceptions.exceptions.ExchangeNotOpenException" title="prototrade.exceptions.exceptions.ExchangeNotOpenException"><strong>ExchangeNotOpenException</strong></a> – If the exchange is currently closed, this error is raised</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="prototrade.strategy_registry.StrategyRegistry.create_file_locks">
-<span class="sig-name descname"><span class="pre">create_file_locks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/strategy_registry.html#StrategyRegistry.create_file_locks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.strategy_registry.StrategyRegistry.create_file_locks" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="prototrade.strategy_registry.StrategyRegistry.register_strategy">
-<span class="sig-name descname"><span class="pre">register_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strategy_func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/strategy_registry.html#StrategyRegistry.register_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.strategy_registry.StrategyRegistry.register_strategy" title="Permalink to this definition"></a></dt>
-<dd><p>Register a function to be executed. Include any arguments that the strategy function should be provided (any number of arguments is permissible). N.B. When the strategies are started, each strategy function
-is always provided with an <a class="reference internal" href="prototrade.exchange.html#prototrade.exchange.exchange.Exchange" title="prototrade.exchange.exchange.Exchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exchange</span></code></a> object as the first parameter. This enables the strategy to interact with the framework.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>strategy_func</strong> (<em>function</em>) – A strategy function to register</p></li>
-<li><p><strong>*args</strong> (<em>any</em>) – the parameters to pass to the strategy function, optional</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="prototrade.strategy_registry.StrategyRegistry.run_strategies">
-<span class="sig-name descname"><span class="pre">run_strategies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/strategy_registry.html#StrategyRegistry.run_strategies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.strategy_registry.StrategyRegistry.run_strategies" title="Permalink to this definition"></a></dt>
-<dd><p>Begins the execution of all strategies</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="prototrade.strategy_registry.create_grapher">
-<span class="sig-prename descclassname"><span class="pre">prototrade.strategy_registry.</span></span><span class="sig-name descname"><span class="pre">create_grapher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_queue</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototrade/strategy_registry.html#create_grapher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prototrade.strategy_registry.create_grapher" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
+<section id="prototrade-strategy-registry-module">
+<h2>prototrade.strategy_registry module<a class="headerlink" href="#prototrade-strategy-registry-module" title="Permalink to this heading"></a></h2>
 </section>
 </section>
 

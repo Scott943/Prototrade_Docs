@@ -73,7 +73,7 @@
 <span></span><span class="kn">from</span> <span class="nn">prototrade.exceptions.exceptions</span> <span class="kn">import</span> <span class="n">InvalidOrderSideException</span>
 
 <div class="viewcode-block" id="Order"><a class="viewcode-back" href="../../../prototrade.models.html#prototrade.models.order.Order">[docs]</a><span class="k">class</span> <span class="nc">Order</span><span class="p">:</span>
-   <span class="sd">&quot;&quot;&quot;A class that represents an order that has not been fufilled yet (i.e. an open order).</span>
+<span class="w">   </span><span class="sd">&quot;&quot;&quot;A class that represents an order that has not been fufilled yet (i.e. an open order).</span>
 <span class="sd">   &quot;&quot;&quot;</span>
    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_id</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_order_id</span> <span class="o">=</span> <span class="n">order_id</span>
@@ -85,37 +85,37 @@
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">order_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;The integer order id of the Order object</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;The integer order id of the Order object</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_id</span>
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;The symbol that the order pertains to</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;The symbol that the order pertains to</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symbol</span>
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">order_side</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;Side of the order book. Either OrderSide.BID or OrderSide.ASK</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Side of the order book. Either OrderSide.BID or OrderSide.ASK</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_side</span>
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">order_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;Type of order e.g. OrderType.MARKET, OrderType.LIMIT or OrderType.FOK</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Type of order e.g. OrderType.MARKET, OrderType.LIMIT or OrderType.FOK</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_type</span>
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;Volume at the corresponding price in the order book</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Volume at the corresponding price in the order book</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_volume</span>
    
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">price</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;Price in the order book&quot;&quot;&quot;</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Price in the order book&quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_price</span>
 
    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>

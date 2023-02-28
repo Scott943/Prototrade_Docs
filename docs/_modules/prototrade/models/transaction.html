@@ -73,7 +73,7 @@
 <span></span>
 
 <div class="viewcode-block" id="Transaction"><a class="viewcode-back" href="../../../prototrade.models.html#prototrade.models.transaction.Transaction">[docs]</a><span class="k">class</span> <span class="nc">Transaction</span><span class="p">:</span>
-   <span class="sd">&quot;&quot;&quot;A class that represents a transaction that has occurred on a particular stock.</span>
+<span class="w">   </span><span class="sd">&quot;&quot;&quot;A class that represents a transaction that has occurred on a particular stock.</span>
 <span class="sd">   &quot;&quot;&quot;</span>
    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">order_side</span><span class="p">,</span> <span class="n">order_type</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_symbol</span> <span class="o">=</span> <span class="n">symbol</span>
@@ -85,36 +85,36 @@
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;The symbol that the transaction pertains to</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;The symbol that the transaction pertains to</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symbol</span>
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">order_side</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;Side of the order book. Either OrderSide.BID or OrderSide.ASK</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Side of the order book. Either OrderSide.BID or OrderSide.ASK</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_side</span>
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">order_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;Type of order e.g. OrderType.MARKET, OrderType.LIMIT or OrderType.FOK</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Type of order e.g. OrderType.MARKET, OrderType.LIMIT or OrderType.FOK</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_type</span>
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;Volume (number of lots) for the Transaction</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Volume (number of lots) for the Transaction</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_volume</span>
    
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">price</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;Price in the Transaction was executed at&quot;&quot;&quot;</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Price in the Transaction was executed at&quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_price</span>
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;Timestamp of when the Transaction was made</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Timestamp of when the Transaction was made</span>
 <span class="sd">      &quot;&quot;&quot;</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span>
 
