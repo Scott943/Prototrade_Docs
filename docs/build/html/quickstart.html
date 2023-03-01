@@ -42,6 +42,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#connecting-to-live-market-data">Connecting to live market data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#creating-a-strategy-function">Creating a Strategy Function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#retrieving-stock-data">Retrieving Stock data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#placing-orders">Placing Orders</a></li>
@@ -83,14 +84,23 @@
 <ol class="arabic simple">
 <li><p>Ensure Python 3.8 or higher is installed (use <code class="code docutils literal notranslate"><span class="pre">python3</span> <span class="pre">--version</span></code> to check)</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">prototrade</span> <span class="pre">-U</span></code> to install the latest version of the package.</p></li>
-<li><p>Create a new python file (e.g. <code class="docutils literal notranslate"><span class="pre">script.py</span></code>) and paste in the <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main">boilerplate strategy</a> .</p></li>
-<li><p>Ensure you have an API username and API key from <a class="reference external" href="https://alpaca.markets">Alpaca</a>.</p></li>
-<li><p>Place in your API username and API Key within the initaliser for the <a class="reference internal" href="prototrade.html#prototrade.strategy_registry.StrategyRegistry" title="prototrade.strategy_registry.StrategyRegistry"><code class="xref py py-class docutils literal notranslate"><span class="pre">StrategyRegistry</span></code></a> class.</p></li>
+<li><p>Create a new python file (e.g. <code class="docutils literal notranslate"><span class="pre">script.py</span></code>) and paste in the <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main">boilerplate strategy</a> . This will run the strategy on a simulated exchange with no connection to live data.</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">script.py</span></code> to run the boilerplate code.</p></li>
 </ol>
-<p>* Alpaca offers a paid subscription alongside a free plan. The only market available with the free plan is <code class="docutils literal notranslate"><span class="pre">'iex'</span></code>.
+<section id="connecting-to-live-market-data">
+<h2>Connecting to live market data<a class="headerlink" href="#connecting-to-live-market-data" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Ensure you have an API username and API key from <a class="reference external" href="https://alpaca.markets">Alpaca</a>.</p></li>
+<li><p>To use Alpaca data feed instead of the Simulated exchange, change the data source to <code class="docutils literal notranslate"><span class="pre">MarketDataSource.ALPACA</span></code> within the initaliser for the <a class="reference internal" href="prototrade.html#prototrade.strategy_registry.StrategyRegistry" title="prototrade.strategy_registry.StrategyRegistry"><code class="xref py py-class docutils literal notranslate"><span class="pre">StrategyRegistry</span></code></a>.</p></li>
+<li><p>Also place your Alpaca API username and API Key within the initialiser:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pt</span> <span class="o">=</span> <span class="n">StrategyRegistry</span><span class="p">(</span><span class="n">MarketDataSource</span><span class="o">.</span><span class="n">ALPACA</span><span class="p">,</span> <span class="s2">&quot;[API USERNAME]&quot;</span><span class="p">,</span> <span class="s2">&quot;[API KEY]&quot;</span><span class="p">,</span> <span class="s2">&quot;iex&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Alpaca offers a paid subscription alongside a free plan. The only market available with the free plan is <code class="docutils literal notranslate"><span class="pre">'iex'</span></code>.
 With the paid subscription, you can change the market parameter to <code class="docutils literal notranslate"><span class="pre">'sip'</span></code> to receive quotes across all US markets.</p>
 <p>Look at the tutorial below and the <code class="xref py py-mod docutils literal notranslate"><span class="pre">Example</span> <span class="pre">Strategies</span></code> section for more examples of how the framework operates.</p>
+</section>
 <section id="creating-a-strategy-function">
 <h2>Creating a Strategy Function<a class="headerlink" href="#creating-a-strategy-function" title="Permalink to this heading"></a></h2>
 <p>Below are the key components needed for creating a strategy, following the same format as the <a class="reference external" href="https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main">boilerplate strategy</a> .</p>

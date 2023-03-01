@@ -4,12 +4,20 @@ Quickstart
 
 1. Ensure Python 3.8 or higher is installed (use :code:`python3 --version` to check)
 2. Use ``pip install prototrade -U`` to install the latest version of the package. 
-3. Create a new python file (e.g. ``script.py``) and paste in the `boilerplate strategy <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main>`_ .
-4. Ensure you have an API username and API key from `Alpaca <https://alpaca.markets>`_\ .
-5. Place in your API username and API Key within the initaliser for the :py:class:`StrategyRegistry <prototrade.strategy_registry.StrategyRegistry>` class. 
-6. Use ``python3 script.py`` to run the boilerplate code. 
+3. Create a new python file (e.g. ``script.py``) and paste in the `boilerplate strategy <https://scott943.github.io/Prototrade_Docs/_modules/example_strategies/minimal_boilerplate.html#main>`_ . This will run the strategy on a simulated exchange with no connection to live data.
+4. Use ``python3 script.py`` to run the boilerplate code. 
 
-\* Alpaca offers a paid subscription alongside a free plan. The only market available with the free plan is ``'iex'``.
+Connecting to live market data
+------------------------------
+1. Ensure you have an API username and API key from `Alpaca <https://alpaca.markets>`_\ .
+2. To use Alpaca data feed instead of the Simulated exchange, change the data source to ``MarketDataSource.ALPACA`` within the initaliser for the :py:class:`StrategyRegistry <prototrade.strategy_registry.StrategyRegistry>`.
+3. Also place your Alpaca API username and API Key within the initialiser:
+
+.. code-block:: python
+
+   pt = StrategyRegistry(MarketDataSource.ALPACA, "[API USERNAME]", "[API KEY]", "iex")
+
+Alpaca offers a paid subscription alongside a free plan. The only market available with the free plan is ``'iex'``.
 With the paid subscription, you can change the market parameter to ``'sip'`` to receive quotes across all US markets.
 
 Look at the tutorial below and the :py:mod:`Example Strategies <example_strategies>` section for more examples of how the framework operates.
